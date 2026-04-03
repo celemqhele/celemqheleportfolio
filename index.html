@@ -510,7 +510,87 @@
   @keyframes fallback-show { to { opacity: 1; transform: none; } }
   .fade-in { animation: fallback-show 0s 1.2s forwards; }
 
-  /* RESPONSIVE */
+  /* CALC STEPS */
+  .calc-step { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #222; }
+  .step-label { font-size: 0.8rem; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.6rem; }
+  .step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--meta); color: #fff; font-size: 0.7rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .goal-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+  .goal-card { background: #1e1e1e; border: 1px solid #2a2a2a; border-radius: 1rem; padding: 1.1rem; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+  .goal-card:hover { border-color: #444; }
+  .goal-card.active { border-color: var(--meta); background: rgba(8,102,255,0.06); }
+  .goal-icon { width: 36px; height: 36px; border-radius: 8px; background: #2a2a2a; display: flex; align-items: center; justify-content: center; color: #888; margin-bottom: 0.75rem; transition: background 0.2s, color 0.2s; }
+  .goal-card.active .goal-icon { background: rgba(8,102,255,0.15); color: var(--meta); }
+  .goal-name { font-size: 0.9rem; font-weight: 500; color: #ddd; margin-bottom: 0.25rem; }
+  .goal-desc { font-size: 0.72rem; color: #555; line-height: 1.4; margin-bottom: 0.6rem; }
+  .goal-badge { font-size: 0.65rem; font-weight: 500; padding: 0.2rem 0.6rem; border-radius: 2rem; background: #2a2a2a; color: #666; width: fit-content; }
+  .goal-card.active .goal-badge { background: rgba(8,102,255,0.15); color: #6ea8ff; }
+  .plat-select-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .plat-sel-card { background: #1e1e1e; border: 1px solid #2a2a2a; border-radius: 1rem; padding: 1rem; cursor: pointer; display: flex; align-items: center; gap: 0.85rem; transition: border-color 0.2s, background 0.2s; }
+  .plat-sel-card:hover { border-color: #444; }
+  .plat-sel-card.active { border-color: var(--pc); background: var(--pb); }
+  .plat-sel-icon { width: 38px; height: 38px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 800; flex-shrink: 0; }
+  .plat-sel-info { flex: 1; min-width: 0; }
+  .plat-sel-name { font-size: 0.88rem; font-weight: 500; color: #ddd; }
+  .plat-sel-sub { font-size: 0.68rem; color: #555; margin-top: 0.1rem; }
+  .plat-sel-fees { display: flex; flex-direction: column; gap: 0.2rem; text-align: right; flex-shrink: 0; }
+  .plat-fee-line { font-size: 0.65rem; color: #444; }
+  .plat-sel-card.active .plat-fee-line { color: #888; }
+  .plat-check { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid #333; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: transparent; transition: all 0.2s; }
+  .plat-sel-card.active .plat-check { background: var(--pc); border-color: var(--pc); color: white; }
+
+  /* TOOL ADD-ONS */
+  .tools-section { margin-top: 2rem; }
+  .tools-header { margin-bottom: 1rem; }
+  .tools-title { font-size: 0.8rem; font-weight: 500; color: #ccc; text-transform: uppercase; letter-spacing: 0.08em; display: block; }
+  .tools-subtitle { font-size: 0.75rem; color: #555; margin-top: 0.2rem; display: block; }
+  .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .tool-card {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 0.875rem;
+    padding: 1rem 1.1rem;
+    transition: border-color 0.25s;
+  }
+  .tool-card.active { border-color: #444; }
+  .tool-top { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.65rem; }
+  .tool-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.04em; flex-shrink: 0; }
+  .tool-info { flex: 1; }
+  .tool-name { font-size: 0.85rem; font-weight: 500; color: #ddd; }
+  .tool-rec { font-size: 0.7rem; color: #555; margin-top: 0.1rem; }
+  .tool-costs { display: flex; gap: 1rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
+  .tool-cost-item { font-size: 0.72rem; color: #666; display: flex; align-items: center; gap: 0.35rem; }
+  .tool-cost-item strong { color: #999; }
+  .tool-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .tool-desc { font-size: 0.75rem; color: #555; line-height: 1.55; }
+
+  /* Toggle switch */
+  .toggle { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider {
+    position: absolute; inset: 0;
+    background: #333; border-radius: 22px; cursor: pointer;
+    transition: background 0.25s;
+  }
+  .toggle-slider::before {
+    content: '';
+    position: absolute;
+    width: 16px; height: 16px;
+    left: 3px; top: 3px;
+    background: #666; border-radius: 50%;
+    transition: transform 0.25s, background 0.25s;
+  }
+  .toggle input:checked + .toggle-slider { background: rgba(8,102,255,0.3); }
+  .toggle input:checked + .toggle-slider::before { transform: translateX(18px); background: var(--meta); }
+
+  /* Tools total */
+  .tools-total-wrap { margin-top: 1rem; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 0.875rem; padding: 1rem 1.25rem; }
+  .tools-total-line { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
+  .tools-total-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
+  .tools-total-breakdown { font-size: 0.72rem; color: #555; line-height: 1.6; }
+  .tools-total-val { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; color: #ddd; }
+  .tools-grand-wrap { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #2a2a2a; padding-top: 0.75rem; }
+  .tools-grand-label { font-size: 0.8rem; color: #888; }
+  .tools-grand-val { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--white); letter-spacing: -0.02em; }
   @media (max-width: 768px) {
     .hero { grid-template-columns: 1fr; }
     .hero-left { min-height: 60vh; }
@@ -669,26 +749,151 @@
 <section class="calc-section" id="calculator">
   <div class="container">
     <p class="section-eyebrow fade-in">Budget calculator</p>
-    <h2 class="section-title fade-in">Tell me what you have.<br>I'll tell you what you get.</h2>
-    <p class="section-sub fade-in">No packages. No minimum tiers. Enter your total budget and see exactly how it's split between management, ad spend, and testing — and what results to expect.</p>
+    <h2 class="section-title fade-in">Build your campaign.<br>See the exact cost.</h2>
+    <p class="section-sub fade-in">Pick your goal, select your platforms, then enter your budget. Everything updates in real time.</p>
 
     <div class="calc-wrap fade-in">
-      <div class="slider-wrap">
-        <div class="slider-top">
-          <span class="slider-label">Your total monthly budget</span>
-          <span class="slider-val" id="budget-display">R8,000</span>
-        </div>
-        <input type="range" id="budget-slider" min="2000" max="60000" step="500" value="8000">
-        <div style="display:flex;justify-content:space-between;margin-top:0.4rem;">
-          <span style="font-size:0.7rem;color:#444;">R2,000</span>
-          <span style="font-size:0.7rem;color:#444;">R60,000</span>
+
+      <!-- STEP 1: GOAL -->
+      <div class="calc-step">
+        <div class="step-label"><span class="step-num">1</span> What's your goal?</div>
+        <div class="goal-grid">
+          <div class="goal-card active" data-goal="engagement" onclick="setGoal('engagement', this)">
+            <div class="goal-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <div class="goal-name">Engagement</div>
+            <div class="goal-desc">Likes, views, follows, shares</div>
+            <div class="goal-badge">Lower budget</div>
+          </div>
+          <div class="goal-card" data-goal="leads" onclick="setGoal('leads', this)">
+            <div class="goal-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+            </div>
+            <div class="goal-name">Lead Generation</div>
+            <div class="goal-desc">Forms, calls, WhatsApp enquiries</div>
+            <div class="goal-badge">Medium budget</div>
+          </div>
+          <div class="goal-card" data-goal="sales" onclick="setGoal('sales', this)">
+            <div class="goal-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="goal-name">Sales</div>
+            <div class="goal-desc">Direct purchases, transactions</div>
+            <div class="goal-badge">Higher budget</div>
+          </div>
+          <div class="goal-card" data-goal="other" onclick="setGoal('other', this)">
+            <div class="goal-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+            </div>
+            <div class="goal-name">Other</div>
+            <div class="goal-desc">Brand awareness, app installs, traffic</div>
+            <div class="goal-badge">Standard budget</div>
+          </div>
         </div>
       </div>
 
-      <div class="low-warn" id="low-warn">
-        <strong>Heads up:</strong> Below R4,000 total, there isn't enough ad spend to get meaningful results. I'll still work with you, but results will be limited.
+      <!-- STEP 2: PLATFORMS -->
+      <div class="calc-step">
+        <div class="step-label"><span class="step-num">2</span> Which platforms? <span style="font-size:0.72rem;color:#555;font-weight:400;margin-left:0.5rem;">Select at least one</span></div>
+        <div class="plat-select-grid">
+          <div class="plat-sel-card" data-pid="meta" onclick="togglePlat('meta', this)" style="--pc:#0866FF;--pb:rgba(8,102,255,0.08);">
+            <div class="plat-sel-icon" style="background:rgba(8,102,255,0.12);color:#0866FF;">f</div>
+            <div class="plat-sel-info">
+              <div class="plat-sel-name">Meta Ads</div>
+              <div class="plat-sel-sub">Facebook + Instagram</div>
+            </div>
+            <div class="plat-sel-fees">
+              <div class="plat-fee-line">+R3,500 mgmt</div>
+              <div class="plat-fee-line">R3,000 min spend</div>
+            </div>
+            <div class="plat-check">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </div>
+          <div class="plat-sel-card" data-pid="boosting" onclick="togglePlat('boosting', this)" style="--pc:#0866FF;--pb:rgba(8,102,255,0.08);">
+            <div class="plat-sel-icon" style="background:rgba(8,102,255,0.12);color:#0866FF;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            </div>
+            <div class="plat-sel-info">
+              <div class="plat-sel-name">Post Boosting</div>
+              <div class="plat-sel-sub">FB/IG engagement campaign</div>
+            </div>
+            <div class="plat-sel-fees">
+              <div class="plat-fee-line">+R2,500 mgmt</div>
+              <div class="plat-fee-line">R2,000 min spend</div>
+            </div>
+            <div class="plat-check">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </div>
+          <div class="plat-sel-card" data-pid="google" onclick="togglePlat('google', this)" style="--pc:#4285F4;--pb:rgba(66,133,244,0.08);">
+            <div class="plat-sel-icon" style="background:rgba(66,133,244,0.12);color:#4285F4;">G</div>
+            <div class="plat-sel-info">
+              <div class="plat-sel-name">Google Ads</div>
+              <div class="plat-sel-sub">Search + Display + YouTube</div>
+            </div>
+            <div class="plat-sel-fees">
+              <div class="plat-fee-line">+R3,000 mgmt</div>
+              <div class="plat-fee-line">R5,000 min spend</div>
+            </div>
+            <div class="plat-check">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </div>
+          <div class="plat-sel-card" data-pid="linkedin" onclick="togglePlat('linkedin', this)" style="--pc:#0A66C2;--pb:rgba(10,102,194,0.08);">
+            <div class="plat-sel-icon" style="background:rgba(10,102,194,0.12);color:#0A66C2;">in</div>
+            <div class="plat-sel-info">
+              <div class="plat-sel-name">LinkedIn Ads</div>
+              <div class="plat-sel-sub">B2B + professional targeting</div>
+            </div>
+            <div class="plat-sel-fees">
+              <div class="plat-fee-line">+R4,000 mgmt</div>
+              <div class="plat-fee-line">R8,000 min spend</div>
+            </div>
+            <div class="plat-check">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </div>
+          <div class="plat-sel-card" data-pid="tiktok" onclick="togglePlat('tiktok', this)" style="--pc:#69C9D0;--pb:rgba(105,201,208,0.08);">
+            <div class="plat-sel-icon" style="background:rgba(105,201,208,0.12);color:#69C9D0;font-size:0.6rem;font-weight:800;letter-spacing:0.02em;">TKTK</div>
+            <div class="plat-sel-info">
+              <div class="plat-sel-name">TikTok Ads</div>
+              <div class="plat-sel-sub">Short video, younger audiences</div>
+            </div>
+            <div class="plat-sel-fees">
+              <div class="plat-fee-line">+R2,500 mgmt</div>
+              <div class="plat-fee-line">R2,500 min spend</div>
+            </div>
+            <div class="plat-check">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </div>
+        </div>
+        <div id="no-plat-warn" style="display:none;font-size:0.8rem;color:#ff6b6b;margin-top:0.5rem;">Select at least one platform to continue.</div>
       </div>
 
+      <!-- STEP 3: BUDGET -->
+      <div class="calc-step">
+        <div class="step-label"><span class="step-num">3</span> Set your budget</div>
+        <div id="min-budget-note" style="font-size:0.78rem;color:var(--amber);background:rgba(245,159,0,0.08);border:1px solid rgba(245,159,0,0.2);border-radius:0.6rem;padding:0.6rem 1rem;margin-bottom:1rem;display:none;"></div>
+        <div class="slider-wrap">
+          <div class="slider-top">
+            <span class="slider-label">Your total monthly budget</span>
+            <span class="slider-val" id="budget-display">R8,000</span>
+          </div>
+          <input type="range" id="budget-slider" min="2000" max="80000" step="500" value="8000">
+          <div style="display:flex;justify-content:space-between;margin-top:0.4rem;">
+            <span style="font-size:0.7rem;color:#444;" id="slider-min-label">R2,000</span>
+            <span style="font-size:0.7rem;color:#444;">R80,000</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- BREAKDOWN -->
+      <div class="low-warn" id="low-warn" style="display:none;">
+        <strong>Heads up:</strong> This budget is below the recommended minimum for your platform and goal selection. Results will be limited.
+      </div>
       <div class="split-bar-wrap">
         <div class="split-bar">
           <div class="bar-mgmt" id="bar-mgmt" style="width:40%"></div>
@@ -721,7 +926,7 @@
         <div class="b-card total">
           <div class="b-card-label">Total you pay</div>
           <div class="b-card-val" id="total-val">R8,000</div>
-          <div class="b-card-sub">that's it. no extras.</div>
+          <div class="b-card-sub" id="total-sub">ads only, no extras</div>
         </div>
       </div>
 
@@ -729,6 +934,183 @@
         <div class="test-note-icon">T</div>
         <div class="test-note-text">
           <strong>What the testing budget does:</strong> Weeks 1-2, a small separate pot is used to test 2-3 creative variations and audience segments. Once we find what works, the full ad spend goes behind the winner. Your main budget is never wasted on guesswork.
+        </div>
+      </div>
+
+      <!-- TOOL ADD-ONS -->
+      <div class="tools-section">
+        <div class="tools-header">
+          <span class="tools-title">Optional add-ons</span>
+          <span class="tools-subtitle">Toggle the tools you want. Costs added to your total.</span>
+        </div>
+        <div class="tools-grid">
+
+          <div class="tool-card" id="tool-pm">
+            <div class="tool-top">
+              <div class="tool-icon" style="background:#7B68EE20;color:#7B68EE;">PM</div>
+              <div class="tool-info">
+                <div class="tool-name">Project Management</div>
+                <div class="tool-rec">ClickUp</div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="toggle-pm" onchange="updateTools()">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="tool-costs">
+              <span class="tool-cost-item"><span class="tool-dot" style="background:#7B68EE"></span>Tool: <strong>R150/mo</strong></span>
+              <span class="tool-cost-item"><span class="tool-dot" style="background:#7B68EE"></span>Management: <strong>R500/mo</strong></span>
+            </div>
+            <div class="tool-desc">Task tracking, client onboarding workflows, campaign timelines. You get a shared workspace to track everything in real time.</div>
+          </div>
+
+          <div class="tool-card" id="tool-crm">
+            <div class="tool-top">
+              <div class="tool-icon" style="background:#FF7A5920;color:#FF7A59;">CRM</div>
+              <div class="tool-info">
+                <div class="tool-name">CRM</div>
+                <div class="tool-rec">HubSpot / Pipedrive</div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="toggle-crm" onchange="updateTools()">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="tool-costs">
+              <span class="tool-cost-item"><span class="tool-dot" style="background:#FF7A59"></span>Tool: <strong>R0-R450/mo</strong></span>
+              <span class="tool-cost-item"><span class="tool-dot" style="background:#FF7A59"></span>Management: <strong>R800/mo</strong></span>
+            </div>
+            <div class="tool-desc">Lead tracking, follow-up automation, deal pipelines. Every lead from your ads lands in one place and gets followed up properly.</div>
+          </div>
+
+          <div class="tool-card" id="tool-lp">
+            <div class="tool-top">
+              <div class="tool-icon" style="background:#0866FF20;color:#0866FF;">LP</div>
+              <div class="tool-info">
+                <div class="tool-name">Landing Pages</div>
+                <div class="tool-rec">Carrd / Unbounce</div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="toggle-lp" onchange="updateTools()">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="tool-costs">
+              <span class="tool-cost-item"><span class="tool-dot" style="background:#0866FF"></span>Tool: <strong>R90-R750/mo</strong></span>
+              <span class="tool-cost-item"><span class="tool-dot" style="background:#0866FF"></span>Management: <strong>R1,200/mo</strong></span>
+            </div>
+            <div class="tool-desc">Dedicated landing pages for each campaign — no more sending ad traffic to a generic homepage. Includes A/B testing and conversion tracking.</div>
+          </div>
+
+          <div class="tool-card" id="tool-web">
+            <div class="tool-top">
+              <div class="tool-icon" style="background:#34A85320;color:#34A853;">WEB</div>
+              <div class="tool-info">
+                <div class="tool-name">Website</div>
+                <div class="tool-rec">Wix / Webflow</div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="toggle-web" onchange="updateTools()">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="tool-costs">
+              <span class="tool-cost-item"><span class="tool-dot" style="background:#34A853"></span>Tool: <strong>R200-R600/mo</strong></span>
+              <span class="tool-cost-item"><span class="tool-dot" style="background:#34A853"></span>Management: <strong>R1,500/mo</strong></span>
+            </div>
+            <div class="tool-desc">Full business website built, hosted and maintained. Updates, SEO basics, and performance monitoring included. Your ad traffic has somewhere credible to land.</div>
+          </div>
+
+          <div class="tool-card" id="tool-email">
+            <div class="tool-top">
+              <div class="tool-icon" style="background:#FF9B0020;color:#FF9B00;">@</div>
+              <div class="tool-info">
+                <div class="tool-name">Email Marketing</div>
+                <div class="tool-rec">Mailchimp / Brevo</div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="toggle-email" onchange="updateTools()">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="tool-costs">
+              <span class="tool-cost-item"><span class="tool-dot" style="background:#FF9B00"></span>Tool: <strong>R0-R350/mo</strong></span>
+              <span class="tool-cost-item"><span class="tool-dot" style="background:#FF9B00"></span>Management: <strong>R900/mo</strong></span>
+            </div>
+            <div class="tool-desc">Automated email sequences that nurture every lead your ads generate. Welcome flows, follow-ups, promos. Leads from ads that don't buy immediately get followed up automatically.</div>
+          </div>
+
+          <div class="tool-card" id="tool-wa-auto">
+            <div class="tool-top">
+              <div class="tool-icon" style="background:#25D36620;color:#25D366;">WA</div>
+              <div class="tool-info">
+                <div class="tool-name">WhatsApp Automation</div>
+                <div class="tool-rec">Chatfuel / WhatChimp</div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="toggle-wa-auto" onchange="updateTools()">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="tool-costs">
+              <span class="tool-cost-item"><span class="tool-dot" style="background:#25D366"></span>Tool: <strong>R200-R500/mo</strong></span>
+              <span class="tool-cost-item"><span class="tool-dot" style="background:#25D366"></span>Management: <strong>R1,000/mo</strong></span>
+            </div>
+            <div class="tool-desc">AI chatbot that qualifies and follows up leads on WhatsApp 24/7. When your ads send people to WhatsApp, the bot handles them instantly — asking the right questions, routing hot leads to you.</div>
+          </div>
+
+          <div class="tool-card" id="tool-analytics">
+            <div class="tool-top">
+              <div class="tool-icon" style="background:#4285F420;color:#4285F4;">DA</div>
+              <div class="tool-info">
+                <div class="tool-name">Analytics Dashboard</div>
+                <div class="tool-rec">Looker Studio</div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="toggle-analytics" onchange="updateTools()">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="tool-costs">
+              <span class="tool-cost-item"><span class="tool-dot" style="background:#4285F4"></span>Tool: <strong>Free</strong></span>
+              <span class="tool-cost-item"><span class="tool-dot" style="background:#4285F4"></span>Management: <strong>R600/mo</strong></span>
+            </div>
+            <div class="tool-desc">Live dashboard pulling all your campaign data into one place — Meta, Google, website traffic, leads. Updated in real time so you always know exactly what's working.</div>
+          </div>
+
+          <div class="tool-card" id="tool-creative">
+            <div class="tool-top">
+              <div class="tool-icon" style="background:#A259FF20;color:#A259FF;">AD</div>
+              <div class="tool-info">
+                <div class="tool-name">Ad Creative</div>
+                <div class="tool-rec">Canva Pro + Copywriting</div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="toggle-creative" onchange="updateTools()">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="tool-costs">
+              <span class="tool-cost-item"><span class="tool-dot" style="background:#A259FF"></span>Tool: <strong>R250/mo</strong></span>
+              <span class="tool-cost-item"><span class="tool-dot" style="background:#A259FF"></span>Management: <strong>R1,200/mo</strong></span>
+            </div>
+            <div class="tool-desc">I design and write your ad creatives — static images, carousel ads, video scripts, and copy. Most clients underestimate how much bad creative kills good targeting.</div>
+          </div>
+
+        </div>
+
+        <div class="tools-total-wrap" id="tools-total-wrap" style="display:none;">
+          <div class="tools-total-line">
+            <div>
+              <div class="tools-total-label">Add-ons total</div>
+              <div class="tools-total-breakdown" id="tools-breakdown"></div>
+            </div>
+            <div class="tools-total-val" id="tools-total-val">R0</div>
+          </div>
+          <div class="tools-grand-wrap">
+            <span class="tools-grand-label">Grand total (ads + add-ons)</span>
+            <span class="tools-grand-val" id="grand-total">R8,000</span>
+          </div>
         </div>
       </div>
 
@@ -774,9 +1156,61 @@
         </div>
         <p style="font-size:0.7rem;color:#444;margin-top:0.75rem;">Estimates based on live campaign benchmarks from real accounts. Actual results vary by industry, creative quality and audience. These are benchmarks, not guarantees.</p>
       </div>
+
+      <!-- INVOICE BUTTON -->
+      <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid #2a2a2a;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+        <div>
+          <div style="font-size:0.8rem;font-weight:500;color:#ccc;">Ready to proceed?</div>
+          <div style="font-size:0.72rem;color:#555;margin-top:0.2rem;">Generate an invoice with your selected services and payment details.</div>
+        </div>
+        <button id="invoice-btn" onclick="openInvoiceModal()" style="font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;padding:0.8rem 1.75rem;border-radius:2rem;background:var(--white);color:var(--black);border:none;cursor:pointer;display:flex;align-items:center;gap:0.5rem;transition:opacity 0.2s;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
+          Generate Invoice
+        </button>
+      </div>
     </div>
   </div>
 </section>
+
+<!-- INVOICE MODAL -->
+<div id="invoice-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;overflow-y:auto;padding:2rem;">
+  <div style="max-width:480px;margin:auto;background:#1a1a1a;border:1px solid #333;border-radius:1.25rem;padding:2rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;color:#fff;">Generate Invoice</div>
+        <div style="font-size:0.75rem;color:#666;margin-top:0.2rem;">We'll generate a PDF with your payment details.</div>
+      </div>
+      <button onclick="closeInvoiceModal()" style="background:none;border:none;color:#666;cursor:pointer;font-size:1.4rem;line-height:1;">×</button>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:1rem;">
+      <div>
+        <label style="font-size:0.72rem;color:#666;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:0.4rem;">Your name *</label>
+        <input id="inv-name" type="text" placeholder="e.g. Thabo Nkosi" style="width:100%;padding:0.7rem 1rem;background:#111;border:1px solid #333;border-radius:0.6rem;color:#fff;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;">
+      </div>
+      <div>
+        <label style="font-size:0.72rem;color:#666;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:0.4rem;">Company (optional)</label>
+        <input id="inv-company" type="text" placeholder="e.g. Nkosi Holdings" style="width:100%;padding:0.7rem 1rem;background:#111;border:1px solid #333;border-radius:0.6rem;color:#fff;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;">
+      </div>
+      <div>
+        <label style="font-size:0.72rem;color:#666;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:0.4rem;">Email address *</label>
+        <input id="inv-email" type="email" placeholder="e.g. thabo@company.co.za" style="width:100%;padding:0.7rem 1rem;background:#111;border:1px solid #333;border-radius:0.6rem;color:#fff;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;">
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem;background:#111;border:1px solid #2a2a2a;border-radius:0.75rem;padding:1rem 1.1rem;">
+      <div style="font-size:0.7rem;color:#555;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;">Invoice summary</div>
+      <div id="inv-summary" style="font-size:0.82rem;color:#888;line-height:1.8;"></div>
+    </div>
+
+    <div id="inv-error" style="display:none;margin-top:0.75rem;font-size:0.8rem;color:#ff6b6b;background:rgba(255,107,107,0.08);padding:0.6rem 0.9rem;border-radius:0.5rem;"></div>
+
+    <button onclick="generateInvoice()" style="width:100%;margin-top:1.25rem;font-family:'DM Sans',sans-serif;font-size:0.95rem;font-weight:500;padding:0.9rem;border-radius:2rem;background:var(--meta);color:#fff;border:none;cursor:pointer;transition:opacity 0.2s;">
+      Download Invoice PDF
+    </button>
+    <div style="font-size:0.7rem;color:#444;text-align:center;margin-top:0.75rem;">Invoice generated in your browser. Nothing is sent or stored.</div>
+  </div>
+</div>
 
 <!-- ORGANIC / ABOUT -->
 <section class="organic" id="about">
@@ -888,25 +1322,114 @@
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const slider = document.getElementById('budget-slider');
 
-  function fmt(n) {
-    return 'R' + Math.round(n).toLocaleString('en-ZA');
+  // Platform data
+  const PLATFORMS = {
+    meta:     { mgmt: 3500, minSpend: 3000 },
+    boosting: { mgmt: 2500, minSpend: 2000 },
+    google:   { mgmt: 3000, minSpend: 5000 },
+    linkedin: { mgmt: 4000, minSpend: 8000 },
+    tiktok:   { mgmt: 2500, minSpend: 2500 },
+  };
+  const BASE_MGMT = 1500;
+  const GOAL_MULT = { engagement: 0.8, leads: 1.2, sales: 1.5, other: 1.0 };
+
+  let currentGoal = 'engagement';
+  let selectedPlatforms = new Set(['meta']);
+
+  // Init meta as selected
+  document.querySelector('[data-pid="meta"]').classList.add('active');
+
+  function setGoal(goal, el) {
+    currentGoal = goal;
+    document.querySelectorAll('.goal-card').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    calc();
+  }
+
+  function togglePlat(pid, el) {
+    if (selectedPlatforms.has(pid)) {
+      if (selectedPlatforms.size === 1) return; // must have at least 1
+      selectedPlatforms.delete(pid);
+      el.classList.remove('active');
+    } else {
+      selectedPlatforms.add(pid);
+      el.classList.add('active');
+    }
+    calc();
+  }
+
+  function getMinBudget() {
+    let mgmt = BASE_MGMT;
+    let minSpend = 0;
+    selectedPlatforms.forEach(pid => {
+      mgmt += PLATFORMS[pid].mgmt;
+      minSpend += PLATFORMS[pid].minSpend;
+    });
+    minSpend = Math.round(minSpend * GOAL_MULT[currentGoal]);
+    return { mgmt, minSpend, minBudget: mgmt + minSpend };
+  }
+
+  const tools = [
+    { id: 'pm',       name: 'Project Management',   toolCost: 150,  mgmt: 500  },
+    { id: 'crm',      name: 'CRM',                  toolCost: 450,  mgmt: 800  },
+    { id: 'lp',       name: 'Landing Pages',         toolCost: 750,  mgmt: 1200 },
+    { id: 'web',      name: 'Website',               toolCost: 600,  mgmt: 1500 },
+    { id: 'email',    name: 'Email Marketing',       toolCost: 350,  mgmt: 900  },
+    { id: 'wa-auto',  name: 'WhatsApp Automation',   toolCost: 500,  mgmt: 1000 },
+    { id: 'analytics',name: 'Analytics Dashboard',   toolCost: 0,    mgmt: 600  },
+    { id: 'creative', name: 'Ad Creative',            toolCost: 250,  mgmt: 1200 },
+  ];
+
+  function fmt(n) { return 'R' + Math.round(n).toLocaleString('en-ZA'); }
+
+  function updateTools() {
+    const budget = parseInt(slider.value);
+    let toolsTotal = 0;
+    let breakdownLines = [];
+    tools.forEach(t => {
+      const cb = document.getElementById('toggle-' + t.id);
+      const card = document.getElementById('tool-' + t.id);
+      if (cb && cb.checked) {
+        const lineTotal = t.toolCost + t.mgmt;
+        toolsTotal += lineTotal;
+        breakdownLines.push(t.name + ': ' + fmt(lineTotal) + '/mo');
+        card.classList.add('active');
+      } else if (card) {
+        card.classList.remove('active');
+      }
+    });
+    const grandTotal = budget + toolsTotal;
+    const wrap = document.getElementById('tools-total-wrap');
+    wrap.style.display = toolsTotal > 0 ? 'block' : 'none';
+    document.getElementById('tools-total-val').textContent = fmt(toolsTotal);
+    document.getElementById('tools-breakdown').innerHTML = breakdownLines.join('<br>');
+    document.getElementById('grand-total').textContent = fmt(grandTotal);
+    document.getElementById('total-sub').textContent = toolsTotal > 0 ? 'ads only — see grand total below' : 'ads only, no extras';
   }
 
   function calc() {
+    const { mgmt: platformMgmt, minSpend, minBudget } = getMinBudget();
+
+    // Update slider min
+    const roundedMin = Math.ceil(minBudget / 500) * 500;
+    slider.min = roundedMin;
+    document.getElementById('slider-min-label').textContent = fmt(roundedMin);
+    if (parseInt(slider.value) < roundedMin) slider.value = roundedMin;
+
     const budget = parseInt(slider.value);
     document.getElementById('budget-display').textContent = fmt(budget);
 
-    // Low budget warning
-    document.getElementById('low-warn').style.display = budget < 4000 ? 'block' : 'none';
+    // Min budget note
+    const noteEl = document.getElementById('min-budget-note');
+    const platNames = [...selectedPlatforms].map(p => ({meta:'Meta',boosting:'Post Boosting',google:'Google',linkedin:'LinkedIn',tiktok:'TikTok'}[p]));
+    noteEl.style.display = 'block';
+    noteEl.textContent = `Minimum for ${platNames.join(' + ')} with ${currentGoal} goal: ${fmt(roundedMin)}/mo (${fmt(platformMgmt)} management + ${fmt(minSpend)} ad spend)`;
 
-    // Split logic
-    let labourPct;
-    if (budget < 8000) labourPct = 0.40;
-    else if (budget <= 20000) labourPct = 0.35;
-    else labourPct = 0.30;
+    // Low warn
+    document.getElementById('low-warn').style.display = budget < roundedMin ? 'block' : 'none';
 
-    let labour = Math.max(3000, Math.round(budget * labourPct));
-    if (labour > budget - 500) labour = budget - 500;
+    // Management is now platform-based, ad spend is the rest
+    const labour = platformMgmt;
     const totalAdspend = budget - labour;
     const testing = Math.round(totalAdspend * 0.20);
     const liveSpend = totalAdspend - testing;
@@ -921,25 +1444,22 @@
 
     // Cards
     document.getElementById('mgmt-val').textContent = fmt(labour);
-    document.getElementById('mgmt-pct').textContent = Math.round(lp * 100) + '% of budget';
+    document.getElementById('mgmt-pct').textContent = `${[...selectedPlatforms].length} platform${selectedPlatforms.size > 1 ? 's' : ''} + base overhead`;
     document.getElementById('test-val').textContent = fmt(testing);
     document.getElementById('test-pct').textContent = '20% of ' + fmt(totalAdspend) + ' ad spend';
-    document.getElementById('spend-val').textContent = fmt(liveSpend);
+    document.getElementById('spend-val').textContent = fmt(liveSpend > 0 ? liveSpend : 0);
     document.getElementById('spend-pct').textContent = 'main campaign, direct to ad account';
     document.getElementById('total-val').textContent = fmt(budget);
 
-    // Platforms (based on total ad spend)
-    const lock = (id, on) => document.getElementById(id).classList.toggle('locked', !on);
-    lock('p-meta',   totalAdspend >= 500);
-    lock('p-wa',     totalAdspend >= 1500);
-    lock('p-tt',     totalAdspend >= 2000);
-    lock('p-google', totalAdspend >= 3000);
-    lock('p-li',     totalAdspend >= 5000);
+    // Results based on goal + live spend
+    const cpe = currentGoal === 'engagement' ? 0.51 : currentGoal === 'leads' ? 0.51 : 0.8;
+    const cpl = currentGoal === 'leads' ? 43 : currentGoal === 'sales' ? 80 : 43;
+    const cpm = 13.13;
+    document.getElementById('res-eng').textContent   = liveSpend > 0 ? Math.round(liveSpend / cpe).toLocaleString('en-ZA') : '0';
+    document.getElementById('res-leads').textContent = liveSpend > 0 ? Math.round(liveSpend / cpl).toLocaleString('en-ZA') : '0';
+    document.getElementById('res-wa').textContent    = liveSpend > 0 ? Math.round(liveSpend / cpm).toLocaleString('en-ZA') : '0';
 
-    // Results (based on live spend only)
-    document.getElementById('res-eng').textContent   = Math.round(liveSpend / 0.51).toLocaleString('en-ZA');
-    document.getElementById('res-leads').textContent = Math.round(liveSpend / 43).toLocaleString('en-ZA');
-    document.getElementById('res-wa').textContent    = Math.round(liveSpend / 13.13).toLocaleString('en-ZA');
+    updateTools();
   }
 
   slider.addEventListener('input', calc);
@@ -953,6 +1473,294 @@
   }, { threshold: 0.1 });
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  function generateToken() {
+    const now = new Date();
+    const date = now.getFullYear().toString() +
+      String(now.getMonth()+1).padStart(2,'0') +
+      String(now.getDate()).padStart(2,'0');
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let rand = '';
+    for (let i = 0; i < 6; i++) rand += chars[Math.floor(Math.random() * chars.length)];
+    return 'MC-' + date + '-' + rand;
+  }
+
+  function getInvoiceData() {
+    const budget = parseInt(document.getElementById('budget-slider').value);
+    const { mgmt: labour } = getMinBudget();
+    const totalAd = budget - labour;
+    const testing = Math.round(totalAd * 0.20);
+    const liveSpend = totalAd - testing;
+
+    const toolsData = [
+      { id: 'pm',       name: 'Project Management (ClickUp)',        toolCost: 150,  mgmt: 500  },
+      { id: 'crm',      name: 'CRM (HubSpot / Pipedrive)',           toolCost: 450,  mgmt: 800  },
+      { id: 'lp',       name: 'Landing Pages (Carrd / Unbounce)',    toolCost: 750,  mgmt: 1200 },
+      { id: 'web',      name: 'Website (Wix / Webflow)',             toolCost: 600,  mgmt: 1500 },
+      { id: 'email',    name: 'Email Marketing (Mailchimp / Brevo)', toolCost: 350,  mgmt: 900  },
+      { id: 'wa-auto',  name: 'WhatsApp Automation (Chatfuel)',      toolCost: 500,  mgmt: 1000 },
+      { id: 'analytics',name: 'Analytics Dashboard (Looker Studio)', toolCost: 0,    mgmt: 600  },
+      { id: 'creative', name: 'Ad Creative (Canva Pro + Copy)',       toolCost: 250,  mgmt: 1200 },
+    ];
+
+    let addons = [];
+    let toolsTotal = 0;
+    toolsData.forEach(t => {
+      const cb = document.getElementById('toggle-' + t.id);
+      if (cb && cb.checked) {
+        const total = t.toolCost + t.mgmt;
+        toolsTotal += total;
+        addons.push({ name: t.name, toolCost: t.toolCost, mgmt: t.mgmt, total });
+      }
+    });
+
+    return { budget, labour, totalAd, testing, liveSpend, addons, toolsTotal, grand: budget + toolsTotal };
+  }
+
+  function openInvoiceModal() {
+    const data = getInvoiceData();
+    const f = n => 'R' + Math.round(n).toLocaleString('en-ZA');
+    let summary = `Paid Media Management: ${f(data.labour)}/mo\n`;
+    summary += `Ad Spend (to your account): ${f(data.totalAd)}/mo\n`;
+    summary += `  incl. Testing Budget: ${f(data.testing)}\n`;
+    summary += `  incl. Live Campaign: ${f(data.liveSpend)}\n`;
+    if (data.addons.length > 0) {
+      summary += `\nAdd-ons:\n`;
+      data.addons.forEach(a => { summary += `${a.name}: ${f(a.total)}/mo\n`; });
+    }
+    summary += `\nTotal: ${f(data.grand)}/mo`;
+    document.getElementById('inv-summary').innerText = summary;
+    document.getElementById('invoice-modal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeInvoiceModal() {
+    document.getElementById('invoice-modal').style.display = 'none';
+    document.body.style.overflow = '';
+    document.getElementById('inv-error').style.display = 'none';
+  }
+
+  function generateInvoice() {
+    const name = document.getElementById('inv-name').value.trim();
+    const company = document.getElementById('inv-company').value.trim();
+    const email = document.getElementById('inv-email').value.trim();
+    const errEl = document.getElementById('inv-error');
+
+    if (!name || !email) {
+      errEl.textContent = 'Please enter your name and email address.';
+      errEl.style.display = 'block';
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errEl.textContent = 'Please enter a valid email address.';
+      errEl.style.display = 'block';
+      return;
+    }
+    errEl.style.display = 'none';
+
+    const data = getInvoiceData();
+    const token = generateToken();
+    const f = n => 'R ' + Math.round(n).toLocaleString('en-ZA');
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-ZA', { day:'2-digit', month:'long', year:'numeric' });
+    const dueDate = new Date(now); dueDate.setDate(dueDate.getDate() + 7);
+    const dueDateStr = dueDate.toLocaleDateString('en-ZA', { day:'2-digit', month:'long', year:'numeric' });
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+    const W = 210, H = 297;
+    const L = 20, R = W - 20;
+
+    // Header block
+    doc.setFillColor(10, 10, 10);
+    doc.rect(0, 0, W, 42, 'F');
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(22);
+    doc.setTextColor(255, 255, 255);
+    doc.text('INVOICE', L, 20);
+
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(136, 136, 136);
+    doc.text('PAID MEDIA SERVICES', L, 27);
+
+    // Token badge
+    doc.setFillColor(8, 102, 255);
+    doc.roundedRect(R - 58, 10, 58, 10, 2, 2, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    doc.setTextColor(255, 255, 255);
+    doc.text(token, R - 29, 16.5, { align: 'center' });
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7);
+    doc.setTextColor(136, 136, 136);
+    doc.text('Payment Reference', R - 29, 24, { align: 'center' });
+
+    // From / To
+    let y = 54;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7);
+    doc.setTextColor(136, 136, 136);
+    doc.text('FROM', L, y);
+    doc.text('TO', W/2, y);
+
+    y += 5;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(10, 10, 10);
+    doc.text('Mqhele Kingdom Cele', L, y);
+    doc.text(name, W/2, y);
+
+    y += 5;
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8);
+    doc.setTextColor(100, 100, 100);
+    doc.text('Paid Media Specialist', L, y);
+    if (company) { doc.text(company, W/2, y); y += 4; } else y += 4;
+    doc.text('Johannesburg, South Africa', L, y);
+    doc.text(email, W/2, y);
+    y += 4;
+    doc.text('mqhele03@gmail.com', L, y);
+    y += 4;
+    doc.text('+27 73 250 9506', L, y);
+
+    // Dates
+    y += 10;
+    doc.setDrawColor(230, 230, 230);
+    doc.setLineWidth(0.3);
+    doc.line(L, y, R, y);
+    y += 6;
+
+    doc.setFontSize(7.5);
+    doc.setTextColor(136, 136, 136);
+    doc.text('Invoice Date', L, y);
+    doc.text('Due Date', W/2, y);
+    y += 4;
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(10, 10, 10);
+    doc.text(dateStr, L, y);
+    doc.text(dueDateStr, W/2, y);
+    y += 8;
+    doc.setLineWidth(0.3);
+    doc.line(L, y, R, y);
+
+    // Line items table header
+    y += 7;
+    doc.setFillColor(245, 245, 245);
+    doc.rect(L, y - 4, R - L, 7, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7.5);
+    doc.setTextColor(100, 100, 100);
+    doc.text('DESCRIPTION', L + 2, y);
+    doc.text('AMOUNT/MO', R - 2, y, { align: 'right' });
+    y += 5;
+
+    // Line items
+    const lineItems = [
+      { desc: 'Paid Media Management', sub: 'Campaign strategy, setup, optimisation & reporting', amt: data.labour },
+      { desc: 'Ad Spend (Campaign Testing)', sub: `Testing budget — weeks 1-2 (20% of ad spend)`, amt: data.testing },
+      { desc: 'Ad Spend (Live Campaign)', sub: 'Main campaign spend — direct to your ad account', amt: data.liveSpend },
+    ];
+    data.addons.forEach(a => {
+      lineItems.push({ desc: a.name, sub: `Tool: R${a.toolCost.toLocaleString()} + Management: R${a.mgmt.toLocaleString()}`, amt: a.total });
+    });
+
+    lineItems.forEach((item, idx) => {
+      if (idx % 2 === 1) {
+        doc.setFillColor(252, 252, 252);
+        doc.rect(L, y - 3, R - L, 11, 'F');
+      }
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8.5);
+      doc.setTextColor(10, 10, 10);
+      doc.text(item.desc, L + 2, y + 1);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8.5);
+      doc.text(f(item.amt), R - 2, y + 1, { align: 'right' });
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7);
+      doc.setTextColor(150, 150, 150);
+      doc.text(item.sub, L + 2, y + 5.5);
+      y += 12;
+    });
+
+    // Total
+    y += 2;
+    doc.setLineWidth(0.3);
+    doc.line(L, y, R, y);
+    y += 6;
+    doc.setFillColor(10, 10, 10);
+    doc.roundedRect(L, y - 4, R - L, 11, 2, 2, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.setTextColor(255, 255, 255);
+    doc.text('TOTAL DUE', L + 4, y + 3);
+    doc.text(f(data.grand), R - 4, y + 3, { align: 'right' });
+    y += 16;
+
+    // Bank details
+    doc.setFillColor(231, 240, 255);
+    doc.roundedRect(L, y, R - L, 38, 3, 3, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    doc.setTextColor(8, 102, 255);
+    doc.text('PAYMENT DETAILS', L + 4, y + 7);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8);
+    doc.setTextColor(30, 30, 30);
+    const bankDetails = [
+      ['Bank', 'Capitec Bank'],
+      ['Account Name', 'Mqhele Kingdom Cele'],
+      ['Account Number', '1680111904'],
+      ['Branch Code', '470010'],
+      ['Account Type', 'Savings Account'],
+      ['Payment Reference', token],
+    ];
+    let bx = L + 4, by = y + 13;
+    bankDetails.forEach(([label, value]) => {
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(120, 120, 120);
+      doc.text(label + ':', bx, by);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(label === 'Payment Reference' ? 8 : 10, label === 'Payment Reference' ? 102 : 10, label === 'Payment Reference' ? 255 : 10);
+      doc.text(value, bx + 42, by);
+      by += 5;
+    });
+    y += 42;
+
+    // POP instruction
+    y += 6;
+    doc.setFillColor(255, 248, 225);
+    doc.roundedRect(L, y, R - L, 20, 3, 3, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    doc.setTextColor(180, 100, 0);
+    doc.text('SEND PROOF OF PAYMENT TO:', L + 4, y + 7);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(80, 80, 80);
+    doc.setFontSize(8);
+    doc.text('Email: mqhele03@gmail.com', L + 4, y + 13);
+    doc.text('WhatsApp: +27 73 250 9506', L + 80, y + 13);
+    doc.setFontSize(7);
+    doc.setTextColor(150, 150, 150);
+    doc.text('Please use ' + token + ' as your payment reference so we can match your payment quickly.', L + 4, y + 18);
+
+    // Footer
+    doc.setFillColor(10, 10, 10);
+    doc.rect(0, H - 14, W, 14, 'F');
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7);
+    doc.setTextColor(80, 80, 80);
+    doc.text('Mqhele Cele Paid Media  |  mqhele03@gmail.com  |  +27 73 250 9506  |  Johannesburg, South Africa', W/2, H - 7, { align: 'center' });
+
+    doc.save('Invoice-' + token + '.pdf');
+    closeInvoiceModal();
+  }
 </script>
 </body>
 </html>
