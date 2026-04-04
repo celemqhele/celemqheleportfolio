@@ -553,7 +553,7 @@
   .wiz-eyebrow { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--meta); margin-bottom: 0.5rem; }
   .wiz-title { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: -0.03em; color: var(--white); line-height: 1.1; margin-bottom: 0.5rem; }
   .wiz-sub { font-size: 0.88rem; color: #666; line-height: 1.6; }
-  .wiz-goal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; margin-bottom: 2rem; }
+  .wiz-goal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 0.75rem; margin-bottom: 2rem; }
   .wiz-goal-card { background: #1a1a1a; border: 1.5px solid #2a2a2a; border-radius: 1rem; padding: 1.25rem; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
   .wiz-goal-card:hover { border-color: #444; }
   .wiz-goal-card.active { border-color: var(--meta); background: rgba(8,102,255,0.07); }
@@ -804,52 +804,64 @@
         <div class="wiz-step-header">
           <div class="wiz-eyebrow">Step 1 of 4</div>
           <h3 class="wiz-title">What's the goal?</h3>
-          <p class="wiz-sub">This shapes which campaign type we run and the minimum budget needed.</p>
+          <p class="wiz-sub">This determines platforms, what we optimise for, and the minimum budget.</p>
         </div>
         <div class="wiz-goal-grid">
           <div class="wiz-goal-card active" data-goal="engagement" onclick="wSelectGoal('engagement',this)">
             <div class="wiz-goal-top">
-              <div class="wiz-goal-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-              </div>
-              <div class="wiz-goal-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="wiz-goal-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+              <div class="wiz-goal-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             </div>
             <div class="wiz-goal-name">Engagement</div>
-            <div class="wiz-goal-desc">Likes, views, follows, shares, comments</div>
-            <div class="wiz-goal-tag">Lower minimum budget</div>
+            <div class="wiz-goal-desc">Likes, comments, shares, follows</div>
           </div>
           <div class="wiz-goal-card" data-goal="leads" onclick="wSelectGoal('leads',this)">
             <div class="wiz-goal-top">
-              <div class="wiz-goal-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="23" y1="21" x2="23" y2="15"/><line x1="20" y1="18" x2="26" y2="18"/></svg>
-              </div>
-              <div class="wiz-goal-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="wiz-goal-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="23" y1="21" x2="23" y2="15"/><line x1="20" y1="18" x2="26" y2="18"/></svg></div>
+              <div class="wiz-goal-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             </div>
             <div class="wiz-goal-name">Lead Generation</div>
             <div class="wiz-goal-desc">Form fills, WhatsApp enquiries, calls</div>
-            <div class="wiz-goal-tag">Medium minimum budget</div>
           </div>
           <div class="wiz-goal-card" data-goal="sales" onclick="wSelectGoal('sales',this)">
             <div class="wiz-goal-top">
-              <div class="wiz-goal-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-              </div>
-              <div class="wiz-goal-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="wiz-goal-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+              <div class="wiz-goal-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             </div>
             <div class="wiz-goal-name">Sales</div>
-            <div class="wiz-goal-desc">Direct purchases and transactions</div>
-            <div class="wiz-goal-tag">Higher minimum budget</div>
+            <div class="wiz-goal-desc">Direct purchases and conversions</div>
           </div>
-          <div class="wiz-goal-card" data-goal="other" onclick="wSelectGoal('other',this)">
+          <div class="wiz-goal-card" data-goal="traffic" onclick="wSelectGoal('traffic',this)">
             <div class="wiz-goal-top">
-              <div class="wiz-goal-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              </div>
-              <div class="wiz-goal-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="wiz-goal-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+              <div class="wiz-goal-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             </div>
-            <div class="wiz-goal-name">Other</div>
-            <div class="wiz-goal-desc">Brand awareness, app installs, traffic</div>
-            <div class="wiz-goal-tag">Standard minimum budget</div>
+            <div class="wiz-goal-name">Website Traffic</div>
+            <div class="wiz-goal-desc">Clicks, visits, page views</div>
+          </div>
+          <div class="wiz-goal-card" data-goal="awareness" onclick="wSelectGoal('awareness',this)">
+            <div class="wiz-goal-top">
+              <div class="wiz-goal-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.9 1.11h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+              <div class="wiz-goal-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            </div>
+            <div class="wiz-goal-name">Brand Awareness</div>
+            <div class="wiz-goal-desc">Reach, impressions, visibility</div>
+          </div>
+          <div class="wiz-goal-card" data-goal="whatsapp" onclick="wSelectGoal('whatsapp',this)">
+            <div class="wiz-goal-top">
+              <div class="wiz-goal-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+              <div class="wiz-goal-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            </div>
+            <div class="wiz-goal-name">WhatsApp Conversations</div>
+            <div class="wiz-goal-desc">Direct conversations via WhatsApp</div>
+          </div>
+          <div class="wiz-goal-card" data-goal="video" onclick="wSelectGoal('video',this)">
+            <div class="wiz-goal-top">
+              <div class="wiz-goal-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div>
+              <div class="wiz-goal-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            </div>
+            <div class="wiz-goal-name">Video Views</div>
+            <div class="wiz-goal-desc">Views, watch time, video engagement</div>
           </div>
         </div>
         <div class="wiz-nav">
@@ -858,82 +870,14 @@
         </div>
       </div>
 
-      <!-- STEP 2: PLATFORMS -->
+      <!-- STEP 2: PLATFORMS (rendered dynamically by JS) -->
       <div class="wiz-step" id="wstep-2" style="display:none;">
         <div class="wiz-step-header">
           <div class="wiz-eyebrow">Step 2 of 4</div>
           <h3 class="wiz-title">Which platforms?</h3>
-          <p class="wiz-sub">Select all you want. Each platform adds to your management fee and minimum ad spend.</p>
+          <p class="wiz-sub">Showing platforms relevant to your goal. Each adds to your management fee and minimum ad spend.</p>
         </div>
-        <div class="wiz-plat-grid">
-          <div class="wiz-plat-card active" data-pid="meta" onclick="wTogglePlat('meta',this)" style="--pc:#0866FF;">
-            <div class="wiz-plat-left">
-              <div class="wiz-plat-icon" style="background:rgba(8,102,255,0.15);color:#0866FF;">f</div>
-              <div>
-                <div class="wiz-plat-name">Meta Ads</div>
-                <div class="wiz-plat-sub">Facebook + Instagram</div>
-              </div>
-            </div>
-            <div class="wiz-plat-right">
-              <div class="wiz-plat-cost">+R800 mgmt · R2,000 min spend</div>
-              <div class="wiz-plat-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-            </div>
-          </div>
-          <div class="wiz-plat-card" data-pid="boosting" onclick="wTogglePlat('boosting',this)" style="--pc:#0866FF;">
-            <div class="wiz-plat-left">
-              <div class="wiz-plat-icon" style="background:rgba(8,102,255,0.15);color:#0866FF;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-              </div>
-              <div>
-                <div class="wiz-plat-name">Post Boosting</div>
-                <div class="wiz-plat-sub">FB/IG rotational engagement</div>
-              </div>
-            </div>
-            <div class="wiz-plat-right">
-              <div class="wiz-plat-cost">+R600 mgmt · R1,500 min spend</div>
-              <div class="wiz-plat-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-            </div>
-          </div>
-          <div class="wiz-plat-card" data-pid="google" onclick="wTogglePlat('google',this)" style="--pc:#4285F4;">
-            <div class="wiz-plat-left">
-              <div class="wiz-plat-icon" style="background:rgba(66,133,244,0.15);color:#4285F4;">G</div>
-              <div>
-                <div class="wiz-plat-name">Google Ads</div>
-                <div class="wiz-plat-sub">Search, Display + YouTube</div>
-              </div>
-            </div>
-            <div class="wiz-plat-right">
-              <div class="wiz-plat-cost">+R800 mgmt · R3,000 min spend</div>
-              <div class="wiz-plat-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-            </div>
-          </div>
-          <div class="wiz-plat-card" data-pid="linkedin" onclick="wTogglePlat('linkedin',this)" style="--pc:#0A66C2;">
-            <div class="wiz-plat-left">
-              <div class="wiz-plat-icon" style="background:rgba(10,102,194,0.15);color:#0A66C2;">in</div>
-              <div>
-                <div class="wiz-plat-name">LinkedIn Ads</div>
-                <div class="wiz-plat-sub">B2B + professional targeting</div>
-              </div>
-            </div>
-            <div class="wiz-plat-right">
-              <div class="wiz-plat-cost">+R1,000 mgmt · R5,000 min spend</div>
-              <div class="wiz-plat-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-            </div>
-          </div>
-          <div class="wiz-plat-card" data-pid="tiktok" onclick="wTogglePlat('tiktok',this)" style="--pc:#69C9D0;">
-            <div class="wiz-plat-left">
-              <div class="wiz-plat-icon" style="background:rgba(105,201,208,0.15);color:#69C9D0;font-size:0.55rem;font-weight:800;">TKTK</div>
-              <div>
-                <div class="wiz-plat-name">TikTok Ads</div>
-                <div class="wiz-plat-sub">Short video, younger audiences</div>
-              </div>
-            </div>
-            <div class="wiz-plat-right">
-              <div class="wiz-plat-cost">+R600 mgmt · R2,000 min spend</div>
-              <div class="wiz-plat-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-            </div>
-          </div>
-        </div>
+        <div class="wiz-plat-grid" id="wiz-plat-container"></div>
         <div id="wiz-plat-err" style="display:none;font-size:0.8rem;color:#ff6b6b;margin-top:0.5rem;">Pick at least one platform to continue.</div>
         <div class="wiz-nav">
           <button class="wiz-btn-back" onclick="wBack(2)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Back</button>
@@ -967,79 +911,14 @@
         </div>
       </div>
 
-      <!-- STEP 4: ADD-ONS -->
+      <!-- STEP 4: ADD-ONS (rendered dynamically by JS) -->
       <div class="wiz-step" id="wstep-4" style="display:none;">
         <div class="wiz-step-header">
           <div class="wiz-eyebrow">Step 4 of 4 — Optional</div>
           <h3 class="wiz-title">Any extra services?</h3>
-          <p class="wiz-sub">These are optional add-ons on top of your ad campaign. Skip if you just want ads.</p>
+          <p class="wiz-sub">Add-ons tailored to your goal. All optional — skip straight to results if you just want ads.</p>
         </div>
-        <div class="wiz-addon-grid">
-          <div class="wiz-addon-card" data-aid="pm" onclick="wToggleAddon('pm',this)">
-            <div class="wiz-addon-top">
-              <div class="wiz-addon-icon" style="background:rgba(123,104,238,0.12);color:#7B68EE;">PM</div>
-              <div class="wiz-addon-info"><div class="wiz-addon-name">Project Management</div><div class="wiz-addon-tool">ClickUp</div></div>
-              <div class="wiz-addon-price">R650/mo</div>
-              <div class="wiz-addon-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-            </div>
-          </div>
-          <div class="wiz-addon-card" data-aid="crm" onclick="wToggleAddon('crm',this)">
-            <div class="wiz-addon-top">
-              <div class="wiz-addon-icon" style="background:rgba(255,122,89,0.12);color:#FF7A59;">CRM</div>
-              <div class="wiz-addon-info"><div class="wiz-addon-name">CRM</div><div class="wiz-addon-tool">HubSpot / Pipedrive</div></div>
-              <div class="wiz-addon-price">R1,250/mo</div>
-              <div class="wiz-addon-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-            </div>
-          </div>
-          <div class="wiz-addon-card" data-aid="lp" onclick="wToggleAddon('lp',this)">
-            <div class="wiz-addon-top">
-              <div class="wiz-addon-icon" style="background:rgba(8,102,255,0.12);color:#0866FF;">LP</div>
-              <div class="wiz-addon-info"><div class="wiz-addon-name">Landing Pages</div><div class="wiz-addon-tool">Carrd / Unbounce</div></div>
-              <div class="wiz-addon-price">R1,950/mo</div>
-              <div class="wiz-addon-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-            </div>
-          </div>
-          <div class="wiz-addon-card" data-aid="web" onclick="wToggleAddon('web',this)">
-            <div class="wiz-addon-top">
-              <div class="wiz-addon-icon" style="background:rgba(52,168,83,0.12);color:#34A853;">WEB</div>
-              <div class="wiz-addon-info"><div class="wiz-addon-name">Website</div><div class="wiz-addon-tool">Wix / Webflow</div></div>
-              <div class="wiz-addon-price">R2,100/mo</div>
-              <div class="wiz-addon-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-            </div>
-          </div>
-          <div class="wiz-addon-card" data-aid="email" onclick="wToggleAddon('email',this)">
-            <div class="wiz-addon-top">
-              <div class="wiz-addon-icon" style="background:rgba(255,155,0,0.12);color:#FF9B00;">@</div>
-              <div class="wiz-addon-info"><div class="wiz-addon-name">Email Marketing</div><div class="wiz-addon-tool">Mailchimp / Brevo</div></div>
-              <div class="wiz-addon-price">R1,250/mo</div>
-              <div class="wiz-addon-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-            </div>
-          </div>
-          <div class="wiz-addon-card" data-aid="wa" onclick="wToggleAddon('wa',this)">
-            <div class="wiz-addon-top">
-              <div class="wiz-addon-icon" style="background:rgba(37,211,102,0.12);color:#25D366;">WA</div>
-              <div class="wiz-addon-info"><div class="wiz-addon-name">WhatsApp Automation</div><div class="wiz-addon-tool">Chatfuel / WhatChimp</div></div>
-              <div class="wiz-addon-price">R1,500/mo</div>
-              <div class="wiz-addon-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-            </div>
-          </div>
-          <div class="wiz-addon-card" data-aid="analytics" onclick="wToggleAddon('analytics',this)">
-            <div class="wiz-addon-top">
-              <div class="wiz-addon-icon" style="background:rgba(66,133,244,0.12);color:#4285F4;">DA</div>
-              <div class="wiz-addon-info"><div class="wiz-addon-name">Analytics Dashboard</div><div class="wiz-addon-tool">Looker Studio</div></div>
-              <div class="wiz-addon-price">R600/mo</div>
-              <div class="wiz-addon-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-            </div>
-          </div>
-          <div class="wiz-addon-card" data-aid="creative" onclick="wToggleAddon('creative',this)">
-            <div class="wiz-addon-top">
-              <div class="wiz-addon-icon" style="background:rgba(162,89,255,0.12);color:#A259FF;">AD</div>
-              <div class="wiz-addon-info"><div class="wiz-addon-name">Ad Creative</div><div class="wiz-addon-tool">Canva Pro + Copywriting</div></div>
-              <div class="wiz-addon-price">R1,450/mo</div>
-              <div class="wiz-addon-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-            </div>
-          </div>
-        </div>
+        <div class="wiz-addon-grid" id="wiz-addon-container"></div>
         <div class="wiz-nav">
           <button class="wiz-btn-back" onclick="wBack(4)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Back</button>
           <button class="wiz-btn-next" onclick="wNext(4)" style="background:#0866FF;color:#fff;border-color:#0866FF;">See my results <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
@@ -1261,13 +1140,13 @@
 <footer style="background:#0a0a0a;border-top:1px solid #1a1a1a;padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
   <div style="font-family:'Syne',sans-serif;font-weight:800;color:#fafafa;font-size:0.9rem;">Mqhele Cele</div>
   <div style="font-size:0.75rem;color:#555;">
-    <a href="mailto:mqhele03@gmail.com" style="color:#666;text-decoration:none;">mqhele03@gmail.com</a>
+    <a href="/cdn-cgi/l/email-protection#96fbe7fef3faf3a6a5d6f1fbf7fffab8f5f9fb" style="color:#666;text-decoration:none;"><span class="__cf_email__" data-cfemail="c3aeb2aba6afa6f3f083a4aea2aaafeda0acae">[email&#160;protected]</span></a>
     &nbsp;&middot;&nbsp;
     <a href="tel:+27732509506" style="color:#666;text-decoration:none;">+27 73 250 9506</a>
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
   // ── Data ──────────────────────────────────────────────
   const PLATFORMS = {
@@ -1278,35 +1157,96 @@
     tiktok:   { mgmt: 600,  minSpend: 2000, name: 'TikTok Ads' },
   };
   const BASE_MGMT = 200;
-  const GOAL_MULT = { engagement: 0.8, leads: 1.2, sales: 1.5, other: 1.0 };
 
-  // Benchmarks from real campaigns (Mqhele Cele case studies)
-  // CPE: 1,933 interactions / R273.62 = R0.14 (live engagement content campaign)
-  // CPL: Benjamin Stevens £1.87 lettings CPL = ~R35 at R18.50/£
-  // Sales CPL: higher conversion cost, estimated R65
-  // WhatsApp: R13.13 per conversation (Hyundai SA campaign, direct data)
+  const PLATFORM_BY_GOAL = {
+    engagement: ['meta', 'boosting', 'tiktok'],
+    leads:      ['meta', 'google', 'linkedin', 'tiktok'],
+    sales:      ['meta', 'google', 'tiktok'],
+    traffic:    ['meta', 'google', 'tiktok', 'linkedin'],
+    awareness:  ['meta', 'boosting', 'tiktok', 'google'],
+    whatsapp:   ['meta'],
+    video:      ['meta', 'boosting', 'tiktok', 'google'],
+  };
+
+  const GOAL_MULT = {
+    engagement: 0.8, leads: 1.2, sales: 1.5,
+    traffic: 1.0, awareness: 0.8, whatsapp: 1.0, video: 0.8,
+  };
+
+  const GOAL_NAMES = {
+    engagement: 'Engagement', leads: 'Lead Generation', sales: 'Sales',
+    traffic: 'Website Traffic', awareness: 'Brand Awareness',
+    whatsapp: 'WhatsApp Conversations', video: 'Video Views',
+  };
+
   const BENCH = {
-    engagement: { cpe: 0.14, cpl: 35,  wa: 13.13, label: 'Based on live engagement campaign (R0.14 CPE)' },
-    leads:      { cpe: 0.14, cpl: 35,  wa: 13.13, label: 'Based on Benjamin Stevens lettings campaign (R35 CPL)' },
-    sales:      { cpe: 0.30, cpl: 65,  wa: 13.13, label: 'Higher conversion costs estimated from case study data' },
-    other:      { cpe: 0.20, cpl: 45,  wa: 13.13, label: 'Estimated from campaign benchmarks' },
+    engagement: {
+      metrics: [
+        { label: 'Engagements',   calc: l => Math.round(l / 0.14), bench: 'R0.14 CPE · live campaign', color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',   border: 'rgba(8,102,255,0.18)' },
+        { label: 'People Reached',calc: l => Math.round(l/50*1000), bench: 'R50 CPM · Meta SA',         color: '#A259FF', bg: 'rgba(162,89,255,0.07)',  border: 'rgba(162,89,255,0.18)' },
+      ],
+      note: 'Based on live engagement campaign: 1,933 interactions at R0.14 each.',
+    },
+    leads: {
+      metrics: [
+        { label: 'Leads',          calc: l => Math.round(l / 35),    bench: 'R35 CPL · Benjamin Stevens', color: '#34A853', bg: 'rgba(52,168,83,0.07)',   border: 'rgba(52,168,83,0.18)' },
+        { label: 'WhatsApp Convos',calc: l => Math.round(l / 13.13), bench: 'R13.13 · Hyundai campaign',  color: '#25D366', bg: 'rgba(37,211,102,0.07)', border: 'rgba(37,211,102,0.18)' },
+      ],
+      note: 'Leads: Benjamin Stevens lettings campaign (£1.87 CPL). WhatsApp: Hyundai SA campaign (R13.13 per conversation).',
+    },
+    sales: {
+      metrics: [
+        { label: 'Est. Purchases', calc: l => Math.round(l / 65),  bench: 'R65 est. cost per purchase',color: '#34A853', bg: 'rgba(52,168,83,0.07)',  border: 'rgba(52,168,83,0.18)' },
+        { label: 'Ad Clicks',      calc: l => Math.round(l / 5),   bench: 'R5 avg CPC · Meta SA',      color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',  border: 'rgba(8,102,255,0.18)' },
+      ],
+      note: 'Purchase cost varies by product price and industry. Clicks based on SA Meta CPC averages R3–R8.',
+    },
+    traffic: {
+      metrics: [
+        { label: 'Website Clicks', calc: l => Math.round(l / 5),    bench: 'R5 avg CPC · Meta SA',    color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',  border: 'rgba(8,102,255,0.18)' },
+        { label: 'People Reached', calc: l => Math.round(l/50*1000), bench: 'R50 CPM · Meta SA',       color: '#A259FF', bg: 'rgba(162,89,255,0.07)', border: 'rgba(162,89,255,0.18)' },
+      ],
+      note: 'SA Meta CPC averages R3–R8. Google Search CPCs vary by industry (R5–R50).',
+    },
+    awareness: {
+      metrics: [
+        { label: 'People Reached', calc: l => Math.round(l/50*1000), bench: 'R50 CPM · Meta SA',    color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',  border: 'rgba(8,102,255,0.18)' },
+        { label: 'Impressions',    calc: l => Math.round(l/30*1000), bench: 'R30 CPM estimate',      color: '#A259FF', bg: 'rgba(162,89,255,0.07)', border: 'rgba(162,89,255,0.18)' },
+      ],
+      note: 'SA Meta CPM averages R30–R70, among the lowest globally. Small budgets reach large audiences here.',
+    },
+    whatsapp: {
+      metrics: [
+        { label: 'Conversations',  calc: l => Math.round(l / 13.13), bench: 'R13.13 · Hyundai campaign', color: '#25D366', bg: 'rgba(37,211,102,0.07)', border: 'rgba(37,211,102,0.18)' },
+        { label: 'People Reached', calc: l => Math.round(l/50*1000),  bench: 'R50 CPM estimate',         color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',   border: 'rgba(8,102,255,0.18)' },
+      ],
+      note: 'Direct from Hyundai SA campaign: 16 qualified conversations at R13.13 each. Zero form drop-off.',
+    },
+    video: {
+      metrics: [
+        { label: 'Video Views',    calc: l => Math.round(l / 0.10),  bench: 'R0.10 CPV estimate',     color: '#FF4444', bg: 'rgba(255,68,68,0.06)',   border: 'rgba(255,68,68,0.18)' },
+        { label: 'People Reached', calc: l => Math.round(l/40*1000), bench: 'R40 CPM · Meta/TikTok',  color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',   border: 'rgba(8,102,255,0.18)' },
+      ],
+      note: 'CPV estimates based on Meta and TikTok video campaign averages in SA. TikTok typically delivers lower CPVs.',
+    },
   };
-  const GOAL_NAMES = { engagement: 'Engagement', leads: 'Lead Generation', sales: 'Sales', other: 'Other' };
+
   const ADDONS = {
-    pm:       { name: 'Project Management (ClickUp)',        price: 650  },
-    crm:      { name: 'CRM (HubSpot / Pipedrive)',           price: 1250 },
-    lp:       { name: 'Landing Pages (Carrd / Unbounce)',    price: 1950 },
-    web:      { name: 'Website (Wix / Webflow)',             price: 2100 },
-    email:    { name: 'Email Marketing (Mailchimp / Brevo)', price: 1250 },
-    wa:       { name: 'WhatsApp Automation (Chatfuel)',      price: 1500 },
-    analytics:{ name: 'Analytics Dashboard (Looker Studio)', price: 600  },
-    creative: { name: 'Ad Creative (Canva Pro + Copy)',       price: 1450 },
+    pm:       { name: 'Project Management',  tool: 'ClickUp',            price: 650,  icon: 'PM',  color: '#7B68EE', bg: 'rgba(123,104,238,0.12)', goals: ['leads','sales','traffic','awareness','video'] },
+    crm:      { name: 'CRM',                 tool: 'HubSpot / Pipedrive', price: 1250, icon: 'CRM', color: '#FF7A59', bg: 'rgba(255,122,89,0.12)',   goals: ['leads','sales','whatsapp'] },
+    lp:       { name: 'Landing Pages',       tool: 'Carrd / Unbounce',    price: 1950, icon: 'LP',  color: '#0866FF', bg: 'rgba(8,102,255,0.12)',    goals: ['leads','sales','traffic'] },
+    web:      { name: 'Website',             tool: 'Wix / Webflow',       price: 2100, icon: 'WEB', color: '#34A853', bg: 'rgba(52,168,83,0.12)',    goals: ['sales','traffic'] },
+    email:    { name: 'Email Marketing',     tool: 'Mailchimp / Brevo',   price: 1250, icon: '@',   color: '#FF9B00', bg: 'rgba(255,155,0,0.12)',    goals: ['leads','sales'] },
+    wa:       { name: 'WhatsApp Automation', tool: 'Chatfuel / WhatChimp',price: 1500, icon: 'WA',  color: '#25D366', bg: 'rgba(37,211,102,0.12)',  goals: ['leads','whatsapp'] },
+    analytics:{ name: 'Analytics Dashboard', tool: 'Looker Studio',       price: 600,  icon: 'DA',  color: '#4285F4', bg: 'rgba(66,133,244,0.12)',   goals: ['engagement','leads','sales','traffic','awareness','whatsapp','video'] },
+    creative: { name: 'Ad Creative',         tool: 'Canva Pro + Copy',    price: 1450, icon: 'AD',  color: '#A259FF', bg: 'rgba(162,89,255,0.12)',   goals: ['engagement','sales','awareness','video'] },
   };
+
 
   // ── State ─────────────────────────────────────────────
   let wizGoal = 'engagement';
   let wizPlatforms = new Set(['meta']);
-  let wizBudget = 8000;
+  let wizBudget = 4000;
   let wizAddons = new Set();
   let manualGoal = 'engagement';
   let manualPlatforms = new Set(['meta']);
@@ -1329,10 +1269,20 @@
     return { mgmt, totalAd, testing, live };
   }
 
-  // ── WIZARD ────────────────────────────────────────────
+  // ── WIZARD ────────────────────────────────────────────────────
+  const PLAT_META = {
+    meta:     { label: 'Meta Ads',      sub: 'Facebook + Instagram',    icon: 'f',    color: '#0866FF' },
+    boosting: { label: 'Post Boosting', sub: 'FB/IG rotational engage', icon: '↑',    color: '#5B9FFF' },
+    google:   { label: 'Google Ads',    sub: 'Search, Display + YouTube',icon: 'G',   color: '#4285F4' },
+    linkedin: { label: 'LinkedIn Ads',  sub: 'B2B + professional',      icon: 'in',   color: '#0A66C2' },
+    tiktok:   { label: 'TikTok Ads',    sub: 'Short video, younger',    icon: 'TT',   color: '#69C9D0' },
+  };
+
   function startWizard() {
     document.getElementById('wizard-entry').style.display = 'none';
     document.getElementById('wizard-flow').style.display = 'block';
+    renderWizPlatforms();
+    renderWizAddons();
     showWizStep(1);
   }
 
@@ -1342,10 +1292,9 @@
       if (el) el.style.display = 'none';
     });
     document.getElementById('wstep-' + n).style.display = 'block';
-    // Progress
-    const pct = n === 'results' ? 100 : (n / 4) * 100;
+    const pct = n === 'results' ? 100 : (parseInt(n) / 4) * 100;
     document.getElementById('wiz-progress-fill').style.width = pct + '%';
-    ['1','2','3','4'].forEach((d, i) => {
+    ['1','2','3','4'].forEach(d => {
       const dot = document.getElementById('dot-' + d);
       const stepNum = parseInt(d);
       const current = n === 'results' ? 5 : parseInt(n);
@@ -1355,10 +1304,55 @@
     });
   }
 
+  function renderWizPlatforms() {
+    const allowed = PLATFORM_BY_GOAL[wizGoal] || ['meta'];
+    wizPlatforms = new Set([allowed[0]]);
+    const container = document.getElementById('wiz-plat-container');
+    if (!container) return;
+    container.innerHTML = allowed.map((pid, i) => {
+      const p = PLAT_META[pid];
+      const active = i === 0 ? ' active' : '';
+      return '<div class="wiz-plat-card' + active + '" data-pid="' + pid + '" onclick="wTogglePlat('' + pid + '',this)" style="--pc:' + p.color + ';">' +
+        '<div class="wiz-plat-left">' +
+          '<div class="wiz-plat-icon" style="background:' + p.color + '18;color:' + p.color + ';">' + p.icon + '</div>' +
+          '<div><div class="wiz-plat-name">' + p.label + '</div><div class="wiz-plat-sub">' + p.sub + '</div></div>' +
+        '</div>' +
+        '<div class="wiz-plat-right">' +
+          '<div class="wiz-plat-cost">+' + fmt(PLATFORMS[pid].mgmt) + ' mgmt · ' + fmt(PLATFORMS[pid].minSpend) + ' min</div>' +
+          '<div class="wiz-plat-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  function renderWizAddons() {
+    const container = document.getElementById('wiz-addon-container');
+    if (!container) return;
+    const relevant = Object.entries(ADDONS).filter(([, a]) => a.goals.includes(wizGoal));
+    if (relevant.length === 0) {
+      container.innerHTML = '<p style="color:#555;font-size:0.85rem;padding:1rem 0;">No specific add-ons for this goal. Proceed to results.</p>';
+      return;
+    }
+    container.innerHTML = relevant.map(([aid, a]) => {
+      const active = wizAddons.has(aid) ? ' active' : '';
+      return '<div class="wiz-addon-card' + active + '" data-aid="' + aid + '" onclick="wToggleAddon('' + aid + '',this)">' +
+        '<div class="wiz-addon-top">' +
+          '<div class="wiz-addon-icon" style="background:' + a.bg + ';color:' + a.color + ';">' + a.icon + '</div>' +
+          '<div class="wiz-addon-info"><div class="wiz-addon-name">' + a.name + '</div><div class="wiz-addon-tool">' + a.tool + '</div></div>' +
+          '<div class="wiz-addon-price">' + fmt(a.price) + '/mo</div>' +
+          '<div class="wiz-addon-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
   function wSelectGoal(goal, el) {
     wizGoal = goal;
     document.querySelectorAll('#wstep-1 .wiz-goal-card').forEach(c => c.classList.remove('active'));
     el.classList.add('active');
+    wizAddons = new Set();
+    renderWizPlatforms();
+    renderWizAddons();
   }
 
   function wTogglePlat(pid, el) {
@@ -1379,22 +1373,22 @@
 
   function wNext(fromStep) {
     if (fromStep === 2 && wizPlatforms.size === 0) {
-      document.getElementById('wiz-plat-err').style.display = 'block'; return;
+      const e = document.getElementById('wiz-plat-err');
+      if (e) e.style.display = 'block';
+      return;
     }
-    document.getElementById('wiz-plat-err') && (document.getElementById('wiz-plat-err').style.display = 'none');
-
-    if (fromStep === 2) { wInitBudgetStep(); }
+    const errEl = document.getElementById('wiz-plat-err');
+    if (errEl) errEl.style.display = 'none';
+    if (fromStep === 2) { wInitBudgetStep(); return; }
     if (fromStep === 4) { wShowResults(); return; }
-
-    const next = fromStep === 'results' ? 'results' : fromStep + 1;
-    showWizStep(next);
+    showWizStep(fromStep + 1);
   }
 
   function wBack(fromStep) {
-    if (fromStep === 2) { showWizStep(1); }
-    else if (fromStep === 3) { showWizStep(2); }
-    else if (fromStep === 4) { showWizStep(3); }
-    else if (fromStep === 'results') { showWizStep(4); }
+    if (fromStep === 2) showWizStep(1);
+    else if (fromStep === 3) showWizStep(2);
+    else if (fromStep === 4) showWizStep(3);
+    else if (fromStep === 'results') showWizStep(4);
   }
 
   function wInitBudgetStep() {
@@ -1406,7 +1400,7 @@
     document.getElementById('wiz-min-label').textContent = fmt(roundedMin);
     const platNames = [...wizPlatforms].map(p => PLATFORMS[p].name).join(' + ');
     document.getElementById('wiz-budget-note').textContent =
-      `Minimum for ${platNames} with ${GOAL_NAMES[wizGoal]} goal: ${fmt(roundedMin)}/mo (${fmt(mgmt)} management + ${fmt(minSpend)} ad spend)`;
+      'Minimum for ' + platNames + ' with ' + GOAL_NAMES[wizGoal] + ' goal: ' + fmt(roundedMin) + '/mo (' + fmt(mgmt) + ' management + ' + fmt(minSpend) + ' ad spend)';
     wUpdateBudget();
     showWizStep(3);
   }
@@ -1416,12 +1410,10 @@
     wizBudget = parseInt(slider.value);
     document.getElementById('wiz-budget-display').textContent = fmt(wizBudget);
     const { mgmt, testing, live } = splitBudget(wizBudget, wizPlatforms, wizGoal);
-    const html = `
-      <div class="wiz-mini-card"><div class="wiz-mini-label">Management</div><div class="wiz-mini-val" style="color:#6ea8ff;">${fmt(mgmt)}</div></div>
-      <div class="wiz-mini-card"><div class="wiz-mini-label">Testing</div><div class="wiz-mini-val" style="color:#F59F00;">${fmt(testing)}</div></div>
-      <div class="wiz-mini-card"><div class="wiz-mini-label">Live spend</div><div class="wiz-mini-val" style="color:#34A853;">${fmt(live)}</div></div>
-    `;
-    document.getElementById('wiz-mini-breakdown').innerHTML = html;
+    document.getElementById('wiz-mini-breakdown').innerHTML =
+      '<div class="wiz-mini-card"><div class="wiz-mini-label">Management</div><div class="wiz-mini-val" style="color:#6ea8ff;">' + fmt(mgmt) + '</div></div>' +
+      '<div class="wiz-mini-card"><div class="wiz-mini-label">Testing</div><div class="wiz-mini-val" style="color:#F59F00;">' + fmt(testing) + '</div></div>' +
+      '<div class="wiz-mini-card"><div class="wiz-mini-label">Live spend</div><div class="wiz-mini-val" style="color:#34A853;">' + fmt(live) + '</div></div>';
   }
 
   function wShowResults() {
@@ -1430,64 +1422,50 @@
     let addonsTotal = 0;
     wizAddons.forEach(aid => { addonsTotal += ADDONS[aid].price; });
     const grand = wizBudget + addonsTotal;
-
-    // Summary rows
     const platNames = [...wizPlatforms].map(p => PLATFORMS[p].name).join(', ');
-    let rows = `
-      <div class="wiz-res-row"><span class="wiz-res-label">Goal</span><span class="wiz-res-val">${GOAL_NAMES[wizGoal]}</span></div>
-      <div class="wiz-res-row"><span class="wiz-res-label">Platforms</span><span class="wiz-res-val">${platNames}</span></div>
-      <div class="wiz-res-row"><span class="wiz-res-label">Management fee</span><span class="wiz-res-val">${fmt(mgmt)}/mo</span></div>
-      <div class="wiz-res-row"><span class="wiz-res-label">Testing budget (wks 1-2)</span><span class="wiz-res-val">${fmt(testing)}/mo</span></div>
-      <div class="wiz-res-row"><span class="wiz-res-label">Live ad spend</span><span class="wiz-res-val">${fmt(live)}/mo</span></div>
-    `;
+
+    let rows = '<div class="wiz-res-row"><span class="wiz-res-label">Goal</span><span class="wiz-res-val">' + GOAL_NAMES[wizGoal] + '</span></div>' +
+      '<div class="wiz-res-row"><span class="wiz-res-label">Platforms</span><span class="wiz-res-val">' + platNames + '</span></div>' +
+      '<div class="wiz-res-row"><span class="wiz-res-label">Management fee</span><span class="wiz-res-val">' + fmt(mgmt) + '/mo</span></div>' +
+      '<div class="wiz-res-row"><span class="wiz-res-label">Testing (wks 1–2)</span><span class="wiz-res-val">' + fmt(testing) + '/mo</span></div>' +
+      '<div class="wiz-res-row"><span class="wiz-res-label">Live ad spend</span><span class="wiz-res-val">' + fmt(live) + '/mo</span></div>';
     if (wizAddons.size > 0) {
       wizAddons.forEach(aid => {
-        rows += `<div class="wiz-res-row"><span class="wiz-res-label">${ADDONS[aid].name}</span><span class="wiz-res-val">${fmt(ADDONS[aid].price)}/mo</span></div>`;
+        rows += '<div class="wiz-res-row"><span class="wiz-res-label">' + ADDONS[aid].name + '</span><span class="wiz-res-val">' + fmt(ADDONS[aid].price) + '/mo</span></div>';
       });
     }
-    rows += `<div class="wiz-res-row total"><span class="wiz-res-label">${addonsTotal > 0 ? 'Grand total' : 'Total'}</span><span class="wiz-res-val">${fmt(grand)}/mo</span></div>`;
+    rows += '<div class="wiz-res-row total"><span class="wiz-res-label">' + (addonsTotal > 0 ? 'Grand total' : 'Total') + '</span><span class="wiz-res-val">' + fmt(grand) + '/mo</span></div>';
     document.getElementById('wiz-res-summary').innerHTML = rows;
 
-    // Projections
-    const cpe = BENCH[wizGoal].cpe;
-    const cpl = BENCH[wizGoal].cpl;
-    const projHtml = `
-      <div class="wiz-proj-card" style="background:rgba(8,102,255,0.08);border:1px solid rgba(8,102,255,0.15);">
-        <div class="wiz-proj-val" style="color:#6ea8ff;">${live > 0 ? Math.round(live/cpe).toLocaleString('en-ZA') : '0'}</div>
-        <div class="wiz-proj-name" style="color:#6ea8ff;">Engagements</div>
-        <div class="wiz-proj-bench" style="color:#6ea8ff;">R${cpe} per engagement</div>
-      </div>
-      <div class="wiz-proj-card" style="background:rgba(52,168,83,0.08);border:1px solid rgba(52,168,83,0.15);">
-        <div class="wiz-proj-val" style="color:#34A853;">${live > 0 ? Math.round(live/cpl).toLocaleString('en-ZA') : '0'}</div>
-        <div class="wiz-proj-name" style="color:#34A853;">Leads</div>
-        <div class="wiz-proj-bench" style="color:#34A853;">R${cpl} per lead</div>
-      </div>
-      <div class="wiz-proj-card" style="background:rgba(37,211,102,0.08);border:1px solid rgba(37,211,102,0.15);">
-        <div class="wiz-proj-val" style="color:#25D366;">${live > 0 ? Math.round(live/13.13).toLocaleString('en-ZA') : '0'}</div>
-        <div class="wiz-proj-name" style="color:#25D366;">WhatsApp Convos</div>
-        <div class="wiz-proj-bench" style="color:#25D366;">R13.13 per convo</div>
-      </div>
-    `;
+    const bench = BENCH[wizGoal];
+    const projHtml = bench.metrics.map(m =>
+      '<div class="wiz-proj-card" style="background:' + m.bg + ';border:1px solid ' + m.border + ';">' +
+        '<div class="wiz-proj-val" style="color:' + m.color + ';">' + (live > 0 ? m.calc(live).toLocaleString('en-ZA') : '0') + '</div>' +
+        '<div class="wiz-proj-name" style="color:' + m.color + ';">' + m.label + '</div>' +
+        '<div class="wiz-proj-bench" style="color:' + m.color + ';">' + m.bench + '</div>' +
+      '</div>'
+    ).join('');
     document.getElementById('wiz-res-projections').innerHTML = projHtml;
-    // Disclosure note referencing real campaigns
-    const disclosureEl = document.querySelector('.wiz-disclosure');
-    if (disclosureEl) {
-      disclosureEl.innerHTML = `<strong>How these estimates work:</strong> ${BENCH[wizGoal].label}. Actual results depend on your industry, creative quality, audience size and competition. These are benchmarks from real campaigns, not guarantees.`;
-    }
-    document.getElementById('wiz-res-projections').innerHTML = projHtml;
-    const goalTitle = { engagement: 'Here\'s your engagement campaign.', leads: 'Here\'s your lead gen setup.', sales: 'Here\'s your sales campaign.', other: 'Here\'s your campaign.' };
-    document.getElementById('res-title').textContent = goalTitle[wizGoal];
+
+    const disc = document.querySelector('.wiz-disclosure');
+    if (disc) disc.innerHTML = '<strong>How these estimates work:</strong> ' + bench.note + ' Actual results depend on your industry, creative quality, audience and competition. These are benchmarks, not guarantees.';
+
+    const titles = { engagement: "Here's your engagement campaign.", leads: "Here's your lead gen setup.",
+      sales: "Here's your sales campaign.", traffic: "Here's your traffic campaign.",
+      awareness: "Here's your awareness campaign.", whatsapp: "Here's your WhatsApp campaign.",
+      video: "Here's your video campaign." };
+    document.getElementById('res-title').textContent = titles[wizGoal] || "Here's what you get.";
   }
 
   function restartWizard() {
-    wizGoal = 'engagement'; wizPlatforms = new Set(['meta']); wizBudget = 8000; wizAddons = new Set();
+    wizGoal = 'engagement'; wizBudget = 4000; wizAddons = new Set();
     document.querySelectorAll('#wstep-1 .wiz-goal-card').forEach((c,i) => c.classList.toggle('active', i===0));
-    document.querySelectorAll('#wstep-2 .wiz-plat-card').forEach(c => c.classList.toggle('active', c.dataset.pid === 'meta'));
-    document.querySelectorAll('#wstep-4 .wiz-addon-card').forEach(c => c.classList.remove('active'));
-    document.getElementById('wiz-slider').value = 8000;
+    renderWizPlatforms();
+    renderWizAddons();
+    const s = document.getElementById('wiz-slider');
+    if (s) s.value = 4000;
     showWizStep(1);
   }
-
   function showManual() {
     document.getElementById('wizard-entry').style.display = 'none';
     document.getElementById('wizard-flow').style.display = 'none';
@@ -1883,14 +1861,4 @@
     let summary = 'Goal: ' + GOAL_NAMES[manualGoal] + '\nPlatforms: ' + [...manualPlatforms].map(p => PLATFORMS[p].name).join(', ');
     summary += '\nManagement: ' + fmt(mgmt) + '/mo\nTesting: ' + fmt(testing) + '/mo\nLive spend: ' + fmt(live) + '/mo\nTotal: ' + fmt(budget) + '/mo';
     document.getElementById('inv-summary').innerText = summary;
-    document.getElementById('invoice-modal').style.display = 'block';
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeInvoiceModal() {
-    document.getElementById('invoice-modal').style.display = 'none';
-    document.body.style.overflow = '';
-  }
-</script>
-</body>
-</html>
+    document.getElementById('invoice-modal').styl
