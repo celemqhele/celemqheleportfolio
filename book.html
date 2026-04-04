@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Call — Mqhele Cele</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #0a0a0a; --white: #fafafa; --off: #f2f0eb; --muted: #888;
+    --border: #e0ddd8; --meta: #0866FF; --google: #4285F4; --linkedin: #0A66C2;
+    --wa: #25D366; --amber: #F59F00; --green: #34A853;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--off); color: var(--black); overflow-x: hidden; padding-top: 62px; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 2rem; background: rgba(250,248,243,0.94); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; letter-spacing: -0.02em; text-decoration: none; color: var(--black); }
+  .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+  .nav-links a { font-size: 0.78rem; color: var(--muted); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--black); font-weight: 500; }
+  .nav-right { display: flex; align-items: center; gap: 0.75rem; }
+  .nav-wa { width: 32px; height: 32px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; text-decoration: none; flex-shrink: 0; }
+  .nav-book { font-size: 0.78rem; font-weight: 500; background: var(--meta); color: var(--white) !important; padding: 0.5rem 1.1rem; border-radius: 2rem; text-decoration: none; transition: opacity 0.2s; white-space: nowrap; }
+  .nav-book:hover { opacity: 0.85; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  section { padding: 5rem 0; }
+  .section-eyebrow { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem; }
+  .section-title { font-family: 'Syne', sans-serif; font-size: clamp(2rem,4vw,3rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 1rem; }
+  .section-sub { font-size: 0.95rem; color: var(--muted); max-width: 560px; line-height: 1.7; margin-bottom: 3rem; }
+  footer { background: #0a0a0a; border-top: 1px solid #1a1a1a; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  footer .logo { font-family: 'Syne', sans-serif; font-weight: 800; color: var(--white); font-size: 0.9rem; }
+  footer .contact { font-size: 0.75rem; color: #555; }
+  footer .contact a { color: #666; text-decoration: none; }
+  footer .contact a:hover { color: var(--white); }
+  .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .fade-in.visible { opacity: 1; transform: none; }
+  .btn-primary { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; padding: 0.85rem 2rem; border-radius: 2rem; background: var(--white); color: var(--black); text-decoration: none; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .btn-secondary { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; padding: 0.85rem 2rem; border-radius: 2rem; background: transparent; color: var(--white); text-decoration: none; border: 1px solid rgba(255,255,255,0.2); transition: border-color 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.5); }
+  .cta-section { background: var(--black); text-align: center; padding: 6rem 0; }
+  .cta-section .section-eyebrow { color: var(--meta); }
+  .cta-section .section-title { color: var(--white); }
+  .cta-section .section-sub { color: #888; margin: 0 auto 2.5rem; }
+  .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  @media (max-width: 768px) { .nav-links { display: none; } footer { flex-direction: column; text-align: center; } }
+</style>
+<style>
+  .book-hero { background: var(--black); padding: 8rem 0 4.5rem; }
+  .book-hero .section-eyebrow { color: var(--meta); }
+  .book-hero .section-title { color: var(--white); }
+  .book-hero .section-sub { color: #888; margin-bottom: 0; }
+  .book-layout { display: grid; grid-template-columns: 340px 1fr; gap: 3rem; align-items: start; padding: 4rem 0; }
+  .book-sidebar h3 { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 1.25rem; }
+  .book-point { display: flex; gap: 0.75rem; margin-bottom: 1rem; }
+  .book-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--meta); flex-shrink: 0; margin-top: 6px; }
+  .book-point p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+  .book-divider { border-top: 1px solid var(--border); margin: 2rem 0 1.5rem; }
+  .book-alt h4 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 1rem; }
+  .book-alt a { display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; font-weight: 500; color: var(--meta); text-decoration: none; margin-bottom: 0.65rem; transition: opacity 0.2s; }
+  .book-alt a:hover { opacity: 0.75; }
+  .cal-wrap { background: #fff; border: 1px solid var(--border); border-radius: 1.25rem; overflow: hidden; }
+  @media (max-width: 900px) { .book-layout { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="/">Mqhele Cele</a>
+  <ul class="nav-links">
+    <li><a href="/">Portfolio</a></li>
+    <li><a href="/services.html">Services</a></li>
+    <li><a href="/calculator.html">Calculator</a></li>
+    <li><a href="/book.html" class="active">Book a call</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://wa.me/27732509506" class="nav-wa" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></a>
+    <a href="/book.html" class="nav-book">Book a call</a>
+  </div>
+</nav>
+
+<section class="book-hero">
+  <div class="container">
+    <p class="section-eyebrow fade-in">Free 30-minute call</p>
+    <h1 class="section-title fade-in">Let's talk about<br>your campaigns.</h1>
+    <p class="section-sub fade-in">No pressure, no pitch. A straight conversation about your goals, your budget and whether paid media makes sense for you right now.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="book-layout">
+      <div class="book-sidebar fade-in">
+        <h3>What we'll cover</h3>
+        <div class="book-point"><div class="book-dot"></div><p>Your current marketing — what's working and what isn't.</p></div>
+        <div class="book-point"><div class="book-dot"></div><p>Your goal — leads, sales, engagement — and what a realistic result looks like for your budget.</p></div>
+        <div class="book-point"><div class="book-dot"></div><p>Exactly how your budget splits between management and ad spend.</p></div>
+        <div class="book-point"><div class="book-dot"></div><p>Which platforms make sense for your business and your audience in SA.</p></div>
+        <div class="book-point"><div class="book-dot"></div><p>Next steps — no obligation, no lock-in, no pressure.</p></div>
+        <div class="book-divider"></div>
+        <div class="book-alt">
+          <h4>Prefer to explore first?</h4>
+          <a href="/calculator.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="12" y1="8" x2="12" y2="16"/></svg>
+            Run the campaign calculator
+          </a>
+          <a href="/services.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            View services &amp; pricing
+          </a>
+          <a href="https://wa.me/27732509506" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            WhatsApp me instead
+          </a>
+          <a href="mailto:mqhele03@gmail.com">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            Email mqhele03@gmail.com
+          </a>
+        </div>
+      </div>
+      <div class="cal-wrap fade-in">
+        <iframe
+          src="https://calendly.com/mqhele03/30-min-paid-media-chat"
+          width="100%"
+          height="720"
+          frameborder="0"
+          style="display:block;"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">Mqhele Cele</div>
+  <div class="contact">
+    <a href="mailto:mqhele03@gmail.com">mqhele03@gmail.com</a>
+    &nbsp;&middot;&nbsp;
+    <a href="tel:+27732509506">+27 73 250 9506</a>
+    &nbsp;&middot;&nbsp;
+    Johannesburg, South Africa
+  </div>
+</footer>
+<script>
+  const observer = new IntersectionObserver((e) => {
+    e.forEach(x => { if (x.isIntersecting) x.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

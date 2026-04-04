@@ -3,10 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mqhele Cele — Paid Media Specialist</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<title>Campaign Calculator — Mqhele Cele</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -52,9 +50,6 @@
   .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a { font-size: 0.8rem; color: var(--muted); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
   .nav-links a:hover { color: var(--black); }
-  .nav-right { display: flex; align-items: center; gap: 0.75rem; }
-  .nav-wa { width: 32px; height: 32px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; text-decoration: none; }
-  .nav-book { font-size: 0.78rem; font-weight: 500; background: var(--meta); color: var(--white) !important; padding: 0.5rem 1.1rem; border-radius: 2rem; text-decoration: none; }
   .nav-cta { font-size: 0.8rem; font-weight: 500; background: var(--black); color: var(--white); padding: 0.5rem 1.25rem; border-radius: 2rem; text-decoration: none; transition: opacity 0.2s; }
   .nav-cta:hover { opacity: 0.8; }
 
@@ -738,16 +733,24 @@
     footer { flex-direction: column; gap: 0.5rem; text-align: center; }
   }
 </style>
+<style>
+  body { padding-top: 62px; }
+  .calc-hero { background: var(--black); padding: 4rem 0 2.5rem; text-align: center; }
+  .calc-hero .section-eyebrow { color: var(--meta); }
+  .calc-hero .section-title { color: var(--white); font-size: clamp(1.8rem,4vw,2.6rem); margin-bottom: 0.6rem; }
+  .calc-hero p { font-size: 0.92rem; color: #888; max-width: 500px; margin: 0 auto; line-height: 1.6; }
+  .nav-links a { color: var(--muted); }
+  .nav-links a.active { color: var(--black); font-weight: 500; }
+  nav { background: rgba(250,248,243,0.94) !important; }
+</style>
 </head>
 <body>
-
-<!-- NAV -->
 <nav>
   <a class="nav-logo" href="/">Mqhele Cele</a>
   <ul class="nav-links">
-    <li><a href="/" class="active">Portfolio</a></li>
+    <li><a href="/">Portfolio</a></li>
     <li><a href="/services.html">Services</a></li>
-    <li><a href="/calculator.html">Calculator</a></li>
+    <li><a href="/calculator.html" class="active">Calculator</a></li>
     <li><a href="/book.html">Book a call</a></li>
   </ul>
   <div class="nav-right">
@@ -756,135 +759,13 @@
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-left">
-    <div>
-      <div class="hero-tag">Paid Media Specialist</div>
-      <h1 class="hero-name">Mqhele<br><span>Cele</span></h1>
-      <p class="hero-desc">I run paid media campaigns that generate leads, sales and revenue. Not brand awareness decks. Not vanity metrics. Actual results — backed by real campaign data.</p>
-      <div class="hero-platforms">
-        <span class="plat-badge meta">Meta Ads</span>
-        <span class="plat-badge google">Google Ads</span>
-        <span class="plat-badge linkedin">LinkedIn Ads</span>
-        <span class="plat-badge tiktok">TikTok Ads</span>
-      </div>
-    </div>
-    <div style="margin-top:3rem;">
-      <p style="font-size:0.72rem;color:#555;margin-bottom:0.75rem;letter-spacing:0.08em;text-transform:uppercase;">Proven results</p>
-      <p style="font-size:0.85rem;color:#666;line-height:1.7;">80 lettings leads at &pound;1.87 each. 1,933 active engagements. 16 automotive WhatsApp leads at R13 per conversation. All from live campaigns.</p>
-    </div>
-  </div>
-  <div class="hero-right">
-    <div>
-      <p class="hero-tagline">Real campaigns.<br><em>Real results.</em><br>No guesswork.</p>
-    </div>
-    <div class="hero-stats">
-      <div class="stat-card" style="--accent:#0866FF">
-        <div class="stat-label">Lettings leads</div>
-        <div class="stat-val">80</div>
-        <div class="stat-sub">&pound;1.87 cost per lead</div>
-      </div>
-      <div class="stat-card" style="--accent:#34A853">
-        <div class="stat-label">Engagements (active)</div>
-        <div class="stat-val">1,933</div>
-        <div class="stat-sub">R0.51 per engagement</div>
-      </div>
-      <div class="stat-card" style="--accent:#25D366">
-        <div class="stat-label">Auto leads via WhatsApp</div>
-        <div class="stat-val">16</div>
-        <div class="stat-sub">R13.13 per conversation</div>
-      </div>
-      <div class="stat-card" style="--accent:#FF0000">
-        <div class="stat-label">YouTube views</div>
-        <div class="stat-val">12M+</div>
-        <div class="stat-sub">Zero ad spend</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CASE STUDIES -->
-<section class="cases" id="work">
+<div class="calc-hero">
   <div class="container">
-    <p class="section-eyebrow fade-in">Case studies</p>
-    <h2 class="section-title fade-in">Campaigns I ran.<br>Numbers I can prove.</h2>
-    <p class="section-sub fade-in">Every result below is pulled directly from live Ads Manager data.</p>
-    <div class="case-grid fade-in">
-
-      <!-- Benjamin Stevens -->
-      <div class="case-card">
-        <div class="case-header" style="background:#f0f5ff;">
-          <div class="case-icon" style="background:#0866FF;color:white;">f</div>
-          <div>
-            <div class="case-client">Meta Ads · UK Property</div>
-            <div class="case-name">Benjamin Stevens</div>
-          </div>
-        </div>
-        <div class="case-stats">
-          <div class="case-stat">
-            <div class="case-stat-val" style="color:#0866FF;">80</div>
-            <div class="case-stat-label">Lettings leads</div>
-          </div>
-          <div class="case-stat">
-            <div class="case-stat-val" style="color:#0866FF;">&pound;1.87</div>
-            <div class="case-stat-label">Cost per lead</div>
-          </div>
-          <div class="case-stat">
-            <div class="case-stat-val" style="color:#0866FF;">1,711</div>
-            <div class="case-stat-label">Engagements</div>
-          </div>
-        </div>
-        <div class="case-body">
-          <p class="case-desc">Managed the full Meta Ads account for a London estate agency. Built lettings and sales lead gen campaigns from scratch, and ran an engagement amplification strategy using rotational post boosting with the Use Existing Post method — keeping social proof intact on each post.</p>
-          <div class="case-tags">
-            <span class="ctag">Meta Ads</span>
-            <span class="ctag">Lead Generation</span>
-            <span class="ctag">Post Rotation</span>
-            <span class="ctag">Property</span>
-            <span class="ctag">UK</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Hyundai -->
-      <div class="case-card">
-        <div class="case-header" style="background:#e8f8ee;">
-          <div class="case-icon" style="background:#25D366;color:white;font-size:0.85rem;font-weight:800;">W</div>
-          <div>
-            <div class="case-client">Meta Ads · WhatsApp · South Africa</div>
-            <div class="case-name">Hyundai Dealership</div>
-          </div>
-        </div>
-        <div class="case-stats">
-          <div class="case-stat">
-            <div class="case-stat-val" style="color:#25D366;">16</div>
-            <div class="case-stat-label">WA conversations</div>
-          </div>
-          <div class="case-stat">
-            <div class="case-stat-val" style="color:#25D366;">R13.13</div>
-            <div class="case-stat-label">Cost per convo</div>
-          </div>
-          <div class="case-stat">
-            <div class="case-stat-val" style="color:#25D366;">5,214</div>
-            <div class="case-stat-label">People reached</div>
-          </div>
-        </div>
-        <div class="case-body">
-          <p class="case-desc">Messaging campaign driving prospective car buyers directly into WhatsApp conversations with the dealership. No landing page drop-off, no form abandonment. At R13 per conversation in a market where one sale is worth R300K+, this is exceptional ROI.</p>
-          <div class="case-tags">
-            <span class="ctag">Meta Ads</span>
-            <span class="ctag">WhatsApp</span>
-            <span class="ctag">Messaging Campaigns</span>
-            <span class="ctag">Automotive</span>
-            <span class="ctag">South Africa</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
+    <p class="section-eyebrow">Campaign builder</p>
+    <h1 class="section-title">Build your campaign.<br>See the exact cost.</h1>
+    <p>Answer 4 quick questions. Get a full breakdown — management fee, ad spend, testing budget and projected results based on real campaigns.</p>
   </div>
-</section>
+</div>
 
 <!-- CALCULATOR -->
 <section class="calc-section" id="calculator">
@@ -1356,6 +1237,7 @@
   </div>
 </section>
 
+
 <!-- INVOICE MODAL -->
 <div id="invoice-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;overflow-y:auto;padding:2rem;">
   <div style="max-width:480px;margin:auto;background:#1a1a1a;border:1px solid #333;border-radius:1.25rem;padding:2rem;">
@@ -1375,114 +1257,18 @@
   </div>
 </div>
 
-<!-- ORGANIC / ABOUT -->
-<section class="organic" id="about">
-  <div class="container">
-    <p class="section-eyebrow fade-in">Credibility</p>
-    <h2 class="section-title fade-in">The thinking behind<br>the paid strategy.</h2>
-    <p class="section-sub fade-in">Before running paid campaigns, I built audiences from scratch with zero budget. That forced a deep understanding of what makes people stop, engage and convert — the same logic that drives every paid campaign I run today.</p>
-    <div class="organic-grid fade-in">
-      <div class="org-card">
-        <div class="org-header">
-          <div class="org-platform" style="color:#FF0000;">YouTube</div>
-          <div class="org-title">12M+ Views. Zero Spend.</div>
-        </div>
-        <div class="org-stats">
-          <div class="org-stat">
-            <div class="org-stat-val" style="color:#FF0000;">12M+</div>
-            <div class="org-stat-label">Views / 30 days</div>
-          </div>
-          <div class="org-stat">
-            <div class="org-stat-val" style="color:#FF0000;">742K%</div>
-            <div class="org-stat-label">Growth spike</div>
-          </div>
-          <div class="org-stat">
-            <div class="org-stat-val" style="color:#FF0000;">R17K+</div>
-            <div class="org-stat-label">Monthly revenue</div>
-          </div>
-        </div>
-        <div class="org-note">Scaled from 1K to 12M views in 30 days through thumbnail A/B testing and CTA optimisation. Same creative testing framework applied to ad creatives.</div>
-      </div>
 
-      <div class="org-card">
-        <div class="org-header">
-          <div class="org-platform" style="color:#0866FF;">Facebook Organic</div>
-          <div class="org-title">1.9M Reach. No Ad Spend.</div>
-        </div>
-        <div class="org-stats">
-          <div class="org-stat">
-            <div class="org-stat-val" style="color:#0866FF;">34K</div>
-            <div class="org-stat-label">Group members</div>
-          </div>
-          <div class="org-stat">
-            <div class="org-stat-val" style="color:#0866FF;">1.9M</div>
-            <div class="org-stat-label">Page reach</div>
-          </div>
-          <div class="org-stat">
-            <div class="org-stat-val" style="color:#0866FF;">2.5K</div>
-            <div class="org-stat-label">Followers</div>
-          </div>
-        </div>
-        <div class="org-note">Built and scaled a 34K-member Facebook group in one month. Grew a page to 1.9M reach in 12 months organically. Understands what content Facebook audiences share before spending on promotion.</div>
-      </div>
-
-      <div class="org-card">
-        <div class="org-header">
-          <div class="org-platform" style="color:#6C3FC7;">Pearl Lemon Agency</div>
-          <div class="org-title">17 Clients. One Manager.</div>
-        </div>
-        <div class="org-stats">
-          <div class="org-stat">
-            <div class="org-stat-val" style="color:#6C3FC7;">17</div>
-            <div class="org-stat-label">Clients managed</div>
-          </div>
-          <div class="org-stat">
-            <div class="org-stat-val" style="color:#6C3FC7;">20h+</div>
-            <div class="org-stat-label">Saved per week</div>
-          </div>
-          <div class="org-stat">
-            <div class="org-stat-val" style="color:#6C3FC7;">London</div>
-            <div class="org-stat-label">Agency</div>
-          </div>
-        </div>
-        <div class="org-note">Managed 17 client accounts simultaneously at a London digital agency. Built CRM automations that saved 20+ hours per week. Multi-client management at pace.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="cta-section">
-  <div class="container">
-    <p class="section-eyebrow">Let's work together</p>
-    <h2 class="section-title">Ready to get results<br>from your ad spend?</h2>
-    <p class="section-sub">No lock-in contracts. Month to month. Use the calculator above to see what your budget can do, then reach out.</p>
-    <div class="cta-buttons">
-      <a href="/book.html" class="btn-primary">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-        Book a free call
-      </a>
-      <a href="https://wa.me/27732509506" class="btn-secondary" target="_blank">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-        WhatsApp me
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="logo">Mqhele Cele</div>
-  <div class="contact">
-    <a href="mailto:mqhele03@gmail.com">mqhele03@gmail.com</a>
+<footer style="background:#0a0a0a;border-top:1px solid #1a1a1a;padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+  <div style="font-family:'Syne',sans-serif;font-weight:800;color:#fafafa;font-size:0.9rem;">Mqhele Cele</div>
+  <div style="font-size:0.75rem;color:#555;">
+    <a href="mailto:mqhele03@gmail.com" style="color:#666;text-decoration:none;">mqhele03@gmail.com</a>
     &nbsp;&middot;&nbsp;
-    <a href="tel:+27732509506">+27 73 250 9506</a>
-    &nbsp;&middot;&nbsp;
-    Johannesburg, South Africa
+    <a href="tel:+27732509506" style="color:#666;text-decoration:none;">+27 73 250 9506</a>
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
   // ── Data ──────────────────────────────────────────────
   const PLATFORMS = {
     meta:     { mgmt: 800,  minSpend: 2000, name: 'Meta Ads' },
@@ -1803,8 +1589,6 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
   function generateToken() {
     const now = new Date();

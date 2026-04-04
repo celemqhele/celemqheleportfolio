@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services & Pricing — Mqhele Cele</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #0a0a0a; --white: #fafafa; --off: #f2f0eb; --muted: #888;
+    --border: #e0ddd8; --meta: #0866FF; --google: #4285F4; --linkedin: #0A66C2;
+    --wa: #25D366; --amber: #F59F00; --green: #34A853;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--off); color: var(--black); overflow-x: hidden; padding-top: 62px; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 2rem; background: rgba(250,248,243,0.94); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; letter-spacing: -0.02em; text-decoration: none; color: var(--black); }
+  .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+  .nav-links a { font-size: 0.78rem; color: var(--muted); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--black); font-weight: 500; }
+  .nav-right { display: flex; align-items: center; gap: 0.75rem; }
+  .nav-wa { width: 32px; height: 32px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; text-decoration: none; flex-shrink: 0; }
+  .nav-book { font-size: 0.78rem; font-weight: 500; background: var(--meta); color: var(--white) !important; padding: 0.5rem 1.1rem; border-radius: 2rem; text-decoration: none; transition: opacity 0.2s; white-space: nowrap; }
+  .nav-book:hover { opacity: 0.85; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  section { padding: 5rem 0; }
+  .section-eyebrow { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem; }
+  .section-title { font-family: 'Syne', sans-serif; font-size: clamp(2rem,4vw,3rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 1rem; }
+  .section-sub { font-size: 0.95rem; color: var(--muted); max-width: 560px; line-height: 1.7; margin-bottom: 3rem; }
+  footer { background: #0a0a0a; border-top: 1px solid #1a1a1a; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  footer .logo { font-family: 'Syne', sans-serif; font-weight: 800; color: var(--white); font-size: 0.9rem; }
+  footer .contact { font-size: 0.75rem; color: #555; }
+  footer .contact a { color: #666; text-decoration: none; }
+  footer .contact a:hover { color: var(--white); }
+  .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .fade-in.visible { opacity: 1; transform: none; }
+  .btn-primary { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; padding: 0.85rem 2rem; border-radius: 2rem; background: var(--white); color: var(--black); text-decoration: none; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .btn-secondary { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; padding: 0.85rem 2rem; border-radius: 2rem; background: transparent; color: var(--white); text-decoration: none; border: 1px solid rgba(255,255,255,0.2); transition: border-color 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.5); }
+  .cta-section { background: var(--black); text-align: center; padding: 6rem 0; }
+  .cta-section .section-eyebrow { color: var(--meta); }
+  .cta-section .section-title { color: var(--white); }
+  .cta-section .section-sub { color: #888; margin: 0 auto 2.5rem; }
+  .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  @media (max-width: 768px) { .nav-links { display: none; } footer { flex-direction: column; text-align: center; } }
+</style>
+<style>
+  .page-hero { background: var(--black); padding: 8rem 0 4.5rem; }
+  .page-hero .section-eyebrow { color: var(--meta); }
+  .page-hero .section-title { color: var(--white); }
+  .page-hero .section-sub { color: #888; margin-bottom: 0; }
+  .how-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; margin-bottom: 4rem; }
+  .how-card { background: #fff; border: 1px solid var(--border); border-radius: 1.25rem; padding: 1.75rem; }
+  .how-num { font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--meta); opacity: 0.2; line-height: 1; margin-bottom: 1rem; }
+  .how-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .how-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+  .plat-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; margin-bottom: 4rem; }
+  .plat-card { background: #fff; border: 1px solid var(--border); border-radius: 1rem; padding: 1.25rem 1.4rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .plat-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 800; flex-shrink: 0; }
+  .plat-name { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.2rem; }
+  .plat-fee { font-size: 0.75rem; color: var(--meta); font-weight: 500; margin-bottom: 0.35rem; }
+  .plat-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.55; }
+  .pricing-box { background: #f7f5f0; border: 1px solid var(--border); border-radius: 1.25rem; padding: 2rem 2.25rem; margin-bottom: 4rem; }
+  .pricing-box h3 { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .pricing-box p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; margin-bottom: 0.6rem; }
+  .split-table { background: #fff; border: 1px solid var(--border); border-radius: 0.875rem; overflow: hidden; margin-top: 1.25rem; }
+  .split-row { display: flex; justify-content: space-between; padding: 0.7rem 1.25rem; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
+  .split-row:last-child { border-bottom: none; font-weight: 600; }
+  .split-row span:first-child { color: var(--muted); }
+  .addons-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.9rem; }
+  .addon-card { background: #fff; border: 1px solid var(--border); border-radius: 1rem; padding: 1.1rem; }
+  .addon-icon { width: 32px; height: 32px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .addon-name { font-size: 0.85rem; font-weight: 500; margin-bottom: 0.15rem; }
+  .addon-tool { font-size: 0.68rem; color: var(--muted); margin-bottom: 0.5rem; }
+  .addon-price { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--meta); }
+  @media (max-width: 768px) { .how-grid, .plat-grid, .addons-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="/">Mqhele Cele</a>
+  <ul class="nav-links">
+    <li><a href="/">Portfolio</a></li>
+    <li><a href="/services.html" class="active">Services</a></li>
+    <li><a href="/calculator.html">Calculator</a></li>
+    <li><a href="/book.html">Book a call</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://wa.me/27732509506" class="nav-wa" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></a>
+    <a href="/book.html" class="nav-book">Book a call</a>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="section-eyebrow fade-in">Services &amp; pricing</p>
+    <h1 class="section-title fade-in">What I do.<br>What it costs.</h1>
+    <p class="section-sub fade-in">No agency markup. No lock-in contracts. Month to month. You bring the budget — I tell you exactly where every rand goes.</p>
+  </div>
+</section>
+
+<section style="background:#fff;">
+  <div class="container">
+    <p class="section-eyebrow fade-in">How it works</p>
+    <h2 class="section-title fade-in">Simple process.<br>Real results.</h2>
+    <div class="how-grid fade-in">
+      <div class="how-card">
+        <div class="how-num">01</div>
+        <div class="how-title">You pick the goal</div>
+        <div class="how-desc">Engagement, leads, sales or awareness. The goal shapes the campaign structure, platform choice and how we measure success.</div>
+      </div>
+      <div class="how-card">
+        <div class="how-num">02</div>
+        <div class="how-title">We split the budget</div>
+        <div class="how-desc">Management fee covers my work. The rest goes directly to your ad account — never through me. You always control the spend.</div>
+      </div>
+      <div class="how-card">
+        <div class="how-num">03</div>
+        <div class="how-title">Test, then scale</div>
+        <div class="how-desc">Weeks 1–2: test creatives and audiences on a small budget. Weeks 3–4+: full spend goes behind the winner. No wasted money on guesswork.</div>
+      </div>
+    </div>
+
+    <p class="section-eyebrow fade-in">Platforms</p>
+    <h2 class="section-title fade-in">Where your ads run.</h2>
+    <div class="plat-grid fade-in">
+      <div class="plat-card">
+        <div class="plat-icon" style="background:rgba(8,102,255,0.1);color:#0866FF;">f</div>
+        <div><div class="plat-name">Meta Ads</div><div class="plat-fee">From R800/mo mgmt · R2,000 min spend</div><div class="plat-desc">Facebook + Instagram. Best for local businesses, e-commerce and lead gen. SA CPC is 3–5x cheaper than global averages — small budgets go far here.</div></div>
+      </div>
+      <div class="plat-card">
+        <div class="plat-icon" style="background:rgba(8,102,255,0.08);color:#5B9FFF;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+        <div><div class="plat-name">Post Boosting</div><div class="plat-fee">From R600/mo mgmt · R1,500 min spend</div><div class="plat-desc">Rotational boosting of existing posts using Meta's engagement objective. Likes and comments stay on the post — builds social proof over time.</div></div>
+      </div>
+      <div class="plat-card">
+        <div class="plat-icon" style="background:rgba(66,133,244,0.1);color:#4285F4;">G</div>
+        <div><div class="plat-name">Google Ads</div><div class="plat-fee">From R800/mo mgmt · R3,000 min spend</div><div class="plat-desc">Search, Display and YouTube. Captures people actively looking for what you sell. Best paired with Meta for full-funnel coverage.</div></div>
+      </div>
+      <div class="plat-card">
+        <div class="plat-icon" style="background:rgba(10,102,194,0.1);color:#0A66C2;">in</div>
+        <div><div class="plat-name">LinkedIn Ads</div><div class="plat-fee">From R1,000/mo mgmt · R5,000 min spend</div><div class="plat-desc">B2B targeting by job title, company and seniority. Higher CPCs but unmatched precision for professional services and B2B lead gen.</div></div>
+      </div>
+      <div class="plat-card">
+        <div class="plat-icon" style="background:rgba(105,201,208,0.1);color:#69C9D0;font-size:0.55rem;font-weight:800;">TKTK</div>
+        <div><div class="plat-name">TikTok Ads</div><div class="plat-fee">From R600/mo mgmt · R2,000 min spend</div><div class="plat-desc">Short video, younger audiences, high engagement. Low CPMs make it efficient for brands with video content or willing to invest in creative.</div></div>
+      </div>
+      <div class="plat-card">
+        <div class="plat-icon" style="background:rgba(37,211,102,0.1);color:#25D366;font-size:0.85rem;font-weight:800;">W</div>
+        <div><div class="plat-name">WhatsApp Campaigns</div><div class="plat-fee">Included with Meta Ads</div><div class="plat-desc">Click-to-WhatsApp ads that take prospects straight into conversation. From a live Hyundai campaign: 16 qualified conversations at R13.13 each. Zero form drop-off.</div></div>
+      </div>
+    </div>
+
+    <p class="section-eyebrow fade-in">Pricing model</p>
+    <h2 class="section-title fade-in">No packages.<br>Just transparency.</h2>
+    <div class="pricing-box fade-in">
+      <h3>How your budget splits</h3>
+      <p>You set the total monthly amount. It splits into a management fee and ad spend. Ad spend goes directly to your ad account — I never hold your money. I only charge for strategy and campaign management.</p>
+      <p>Example: R5,000/month total on Meta Ads:</p>
+      <div class="split-table">
+        <div class="split-row"><span>Management fee (Meta + base overhead)</span><span>R1,000</span></div>
+        <div class="split-row"><span>Testing budget (weeks 1–2)</span><span>R800</span></div>
+        <div class="split-row"><span>Live ad spend (weeks 3–4+)</span><span>R3,200</span></div>
+        <div class="split-row"><span>Total</span><span>R5,000/mo</span></div>
+      </div>
+      <p style="margin-top:1rem;font-size:0.82rem;">No lock-in. Month to month. Cancel anytime. Use the <a href="/calculator.html" style="color:var(--meta);">campaign calculator</a> to build your own estimate.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <p class="section-eyebrow fade-in">Add-ons</p>
+    <h2 class="section-title fade-in">More than just ads.</h2>
+    <p class="section-sub fade-in">Optional extras you can bolt onto any campaign. Pay only for what you need.</p>
+    <div class="addons-grid fade-in">
+      <div class="addon-card"><div class="addon-icon" style="background:rgba(123,104,238,0.12);color:#7B68EE;">PM</div><div class="addon-name">Project Management</div><div class="addon-tool">ClickUp</div><div class="addon-price">R650/mo</div></div>
+      <div class="addon-card"><div class="addon-icon" style="background:rgba(255,122,89,0.12);color:#FF7A59;">CRM</div><div class="addon-name">CRM</div><div class="addon-tool">HubSpot / Pipedrive</div><div class="addon-price">R1,250/mo</div></div>
+      <div class="addon-card"><div class="addon-icon" style="background:rgba(8,102,255,0.12);color:#0866FF;">LP</div><div class="addon-name">Landing Pages</div><div class="addon-tool">Carrd / Unbounce</div><div class="addon-price">R1,950/mo</div></div>
+      <div class="addon-card"><div class="addon-icon" style="background:rgba(52,168,83,0.12);color:#34A853;">WEB</div><div class="addon-name">Website</div><div class="addon-tool">Wix / Webflow</div><div class="addon-price">R2,100/mo</div></div>
+      <div class="addon-card"><div class="addon-icon" style="background:rgba(255,155,0,0.12);color:#FF9B00;">@</div><div class="addon-name">Email Marketing</div><div class="addon-tool">Mailchimp / Brevo</div><div class="addon-price">R1,250/mo</div></div>
+      <div class="addon-card"><div class="addon-icon" style="background:rgba(37,211,102,0.12);color:#25D366;">WA</div><div class="addon-name">WhatsApp Automation</div><div class="addon-tool">Chatfuel / WhatChimp</div><div class="addon-price">R1,500/mo</div></div>
+      <div class="addon-card"><div class="addon-icon" style="background:rgba(66,133,244,0.12);color:#4285F4;">DA</div><div class="addon-name">Analytics Dashboard</div><div class="addon-tool">Looker Studio</div><div class="addon-price">R600/mo</div></div>
+      <div class="addon-card"><div class="addon-icon" style="background:rgba(162,89,255,0.12);color:#A259FF;">AD</div><div class="addon-name">Ad Creative</div><div class="addon-tool">Canva Pro + Copy</div><div class="addon-price">R1,450/mo</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <p class="section-eyebrow">Ready?</p>
+    <h2 class="section-title">Run the numbers.<br>Then let's talk.</h2>
+    <p class="section-sub">Build your own campaign estimate, then book a free 30-minute call.</p>
+    <div class="cta-buttons">
+      <a href="/calculator.html" class="btn-primary">Open calculator</a>
+      <a href="/book.html" class="btn-secondary">Book a free call</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">Mqhele Cele</div>
+  <div class="contact">
+    <a href="mailto:mqhele03@gmail.com">mqhele03@gmail.com</a>
+    &nbsp;&middot;&nbsp;
+    <a href="tel:+27732509506">+27 73 250 9506</a>
+    &nbsp;&middot;&nbsp;
+    Johannesburg, South Africa
+  </div>
+</footer>
+<script>
+  const observer = new IntersectionObserver((e) => {
+    e.forEach(x => { if (x.isIntersecting) x.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
