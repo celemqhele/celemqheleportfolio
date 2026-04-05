@@ -1306,16 +1306,17 @@
     container.innerHTML = allowed.map((pid, i) => {
       const p = PLAT_META[pid];
       const active = i === 0 ? ' active' : '';
-      return '<div class="wiz-plat-card' + active + '" data-pid="' + pid + '" onclick="wTogglePlat('' + pid + '',this)" style="--pc:' + p.color + ';">' +
-        '<div class="wiz-plat-left">' +
-          '<div class="wiz-plat-icon" style="background:' + p.color + '18;color:' + p.color + ';">' + p.icon + '</div>' +
-          '<div><div class="wiz-plat-name">' + p.label + '</div><div class="wiz-plat-sub">' + p.sub + '</div></div>' +
-        '</div>' +
-        '<div class="wiz-plat-right">' +
-          '<div class="wiz-plat-cost">+' + fmt(PLATFORMS[pid].mgmt) + ' mgmt · ' + fmt(PLATFORMS[pid].minSpend) + ' min</div>' +
-          '<div class="wiz-plat-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>' +
-        '</div>' +
-      '</div>';
+      const pl = PLATFORMS[pid];
+      return `<div class="wiz-plat-card${active}" data-pid="${pid}" onclick="wTogglePlat('${pid}',this)" style="--pc:${p.color};">
+        <div class="wiz-plat-left">
+          <div class="wiz-plat-icon" style="background:${p.color}18;color:${p.color};">${p.icon}</div>
+          <div><div class="wiz-plat-name">${p.label}</div><div class="wiz-plat-sub">${p.sub}</div></div>
+        </div>
+        <div class="wiz-plat-right">
+          <div class="wiz-plat-cost">+${fmt(pl.mgmt)} mgmt &middot; ${fmt(pl.minSpend)} min</div>
+          <div class="wiz-plat-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+      </div>`;
     }).join('');
   }
 
@@ -1329,14 +1330,14 @@
     }
     container.innerHTML = relevant.map(([aid, a]) => {
       const active = wizAddons.has(aid) ? ' active' : '';
-      return '<div class="wiz-addon-card' + active + '" data-aid="' + aid + '" onclick="wToggleAddon('' + aid + '',this)">' +
-        '<div class="wiz-addon-top">' +
-          '<div class="wiz-addon-icon" style="background:' + a.bg + ';color:' + a.color + ';">' + a.icon + '</div>' +
-          '<div class="wiz-addon-info"><div class="wiz-addon-name">' + a.name + '</div><div class="wiz-addon-tool">' + a.tool + '</div></div>' +
-          '<div class="wiz-addon-price">' + fmt(a.price) + '/mo</div>' +
-          '<div class="wiz-addon-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>' +
-        '</div>' +
-      '</div>';
+      return `<div class="wiz-addon-card${active}" data-aid="${aid}" onclick="wToggleAddon('${aid}',this)">
+        <div class="wiz-addon-top">
+          <div class="wiz-addon-icon" style="background:${a.bg};color:${a.color};">${a.icon}</div>
+          <div class="wiz-addon-info"><div class="wiz-addon-name">${a.name}</div><div class="wiz-addon-tool">${a.tool}</div></div>
+          <div class="wiz-addon-price">${fmt(a.price)}/mo</div>
+          <div class="wiz-addon-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+      </div>`;
     }).join('');
   }
 
