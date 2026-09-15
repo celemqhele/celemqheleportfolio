@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Payment Confirmation - Mqhele Cele</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#05070c; color:#fff; font-family:'Manrope',sans-serif; min-height:100vh; display:flex; align-items:center; justify-content:center; }
+  .card { width:100%; max-width:520px; margin:24px; background:#0d1219; border:1px solid #1e2733; border-radius:1.25rem; padding:2.5rem; text-align:center; }
+  .badge { width:64px; height:64px; border-radius:50%; margin:0 auto 1.2rem; display:flex; align-items:center; justify-content:center; font-size:1.6rem; }
+  .badge.ok { background:rgba(16,185,129,.15); color:#10b981; border:1px solid rgba(16,185,129,.35); }
+  .badge.wait { background:rgba(56,189,248,.15); color:#38bdf8; border:1px solid rgba(56,189,248,.3); animation:pulse 1.2s infinite; }
+  .badge.err { background:rgba(248,113,113,.15); color:#f87171; border:1px solid rgba(248,113,113,.35); }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  h1 { font-family:'Syne',sans-serif; font-size:1.35rem; margin-bottom:0.5rem; }
+  p.sub { color:#94a3b8; font-size:0.85rem; line-height:1.6; margin-bottom:1.4rem; }
+  .row { display:flex; justify-content:space-between; padding:0.6rem 0; border-bottom:1px solid #1a2330; font-size:0.85rem; }
+  .row span { color:#94a3b8; } .row b { font-weight:700; }
+  .row.total { border-bottom:none; border-top:1px solid #2a3648; margin-top:0.3rem; padding-top:1rem; font-size:1rem; }
+  .row.total b { font-size:1.25rem; color:#4ade80; }
+  .btn { margin-top:1.5rem; width:100%; padding:0.9rem; border-radius:2rem; background:#0866FF; color:#fff; border:none; font-family:'Manrope',sans-serif; font-weight:700; font-size:0.9rem; cursor:pointer; }
+  .btn.ghost { background:#0d1219; border:1px solid #2a3648; color:#e5e7eb; }
+  #err-box { display:none; background:rgba(248,113,113,.08); border:1px solid rgba(248,113,113,.3); color:#fca5a5; padding:0.8rem 1rem; border-radius:0.6rem; font-size:0.82rem; line-height:1.5; margin-top:1rem; }
+  #err-box.show { display:block; }
+  #download-hint { margin-top:1rem; font-size:0.75rem; color:#64748b; line-height:1.5; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div id="badge" class="badge wait">&#x231B;</div>
+    <h1 id="title">Checking your payment</h1>
+    <p id="sub" class="sub">Verifying your transaction with Paystack&hellip;</p>
+    <div id="details" style="display:none;text-align:left;">
+      <div class="row"><span>Amount paid</span><b id="v-amount"></b></div>
+      <div class="row"><span>Payment reference</span><b id="v-reference"></b></div>
+      <div class="row"><span>Paystack reference</span><b id="v-trx"></b></div>
+      <div class="row"><span>Payment date</span><b id="v-date"></b></div>
+      <div class="row"><span>Payment method</span><b id="v-method"></b></div>
+      <div class="row total"><span>Status</span><b id="v-status" style="color:#4ade80;">PAID</b></div>
+    </div>
+    <button id="btn-redownload" class="btn" style="display:none;" onclick="buildReceiptPdf()">Download Receipt PDF</button>
+    <button id="btn-home" class="btn ghost" style="display:none;" onclick="window.location.href='/'">Back to Home</button>
+    <div id="err-box" class="show">Unable to verify this payment. You can still download your receipt if the payment was completed.</div>
+    <div id="download-hint" style="display:none;">Your receipt has been downloaded automatically. If it didn't, use the button above.</div>
+  </div>
+
+<script>
+  var receiptSnapshot = null;
+
+  function money(n) { return 'R ' + Math.round(Number(n)).toLocaleString('en-ZA'); }
+
+  function getParam(name) {
+    return new URLSearchParams(window.location.search).get(name) || '';
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '-';
+    try { return new Date(iso).toLocaleDateString('en-ZA', { day:'2-digit', month:'long', year:'numeric' }); }
+    catch (e) { return iso; }
+  }
+
+  function channelName(ch) {
+    var map = { card:'Debit / Credit Card', bank_transfer:'Direct Bank Transfer', pay_with_bank:'Pay By Bank', qr:'QR Code', bank:'Bank / EFT', ussd:'USSD', mobile_money:'Mobile Money', mtn:'MTN Mobile Money', vodafone:'Vodafone Money', ngn_bank:'Local Bank' };
+    return map[ch] || (ch ? ch.replace(/_/g,' ') : 'Paystack');
+  }
+
+  function esc(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  function toPdf(el, filename, onDone) {
+    html2canvas(el, { scale: 3, backgroundColor: '#ffffff', logging: false }).then(function(canvas){
+      var { jsPDF } = window.jspdf;
+      var doc = new jsPDF({ unit:'mm', format:'a4' });
+      var pageW = 210, pageH = 297;
+      var mmPerPx = pageW / canvas.width;
+      var h = canvas.height * mmPerPx;
+      var imgW = h > pageH ? pageW * (pageH / h) : pageW;
+      var imgH = h > pageH ? pageH : h;
+      doc.addImage(canvas.toDataURL('image/jpeg', 0.93), 'JPEG', 0, 0, imgW, imgH);
+      try { doc.save(filename); } catch (e) { console.error(e); }
+      if (el && el.parentNode) el.parentNode.removeChild(el);
+      if (onDone) onDone();
+    }).catch(function(err){
+      console.error(err);
+      if (el && el.parentNode) el.parentNode.removeChild(el);
+      if (onDone) onDone();
+    });
+  }
+
+  function receiptEl(snap, verify) {
+    var items = (snap && snap.items) || [];
+    var paid = verify.amount;
+    if (!items.length) items = [{ d:'Marketing services (first month)', s:'Monthly retainer', a:paid }];
+
+    var rows = items.map(function(it){
+      return '<tr>' +
+        '<td style="padding:10px 14px;border-bottom:1px solid #e6eaef;">' +
+          '<div style="font-size:13px;font-weight:700;color:#0b0f17;">' + esc(it.d) + '</div>' +
+          (it.s ? '<div style="font-size:11px;color:#667085;margin-top:2px;">' + esc(it.s) + '</div>' : '') +
+        '</td>' +
+        '<td style="padding:10px 14px;border-bottom:1px solid #e6eaef;text-align:right;font-size:13px;font-weight:700;color:#0b0f17;white-space:nowrap;">' + money(it.a) + '</td>' +
+      '</tr>';
+    }).join('');
+
+    var wrap = document.createElement('div');
+    wrap.style.cssText = 'position:fixed;left:-2000px;top:0;';
+    wrap.innerHTML =
+      '<div style="width:794px;background:#ffffff;color:#0b0f17;font-family:Helvetica,Arial,sans-serif;">' +
+        '<div style="background:#0b0f17;padding:26px 42px;">' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+            '<div>' +
+              '<div style="font-size:10px;letter-spacing:3px;color:#8aa0c0;font-weight:700;">MQHELE CELE</div>' +
+              '<div style="font-size:28px;font-weight:800;color:#ffffff;margin-top:4px;letter-spacing:1px;">PAYMENT RECEIPT</div>' +
+            '</div>' +
+            '<div style="text-align:right;">' +
+              '<div style="display:inline-block;background:#10b981;color:#fff;font-size:11px;font-weight:800;padding:5px 14px;border-radius:20px;letter-spacing:1px;">PAID</div>' +
+              '<div style="font-size:10px;color:#8aa0c0;margin-top:8px;letter-spacing:1px;">RECEIPT VERIFIED</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="padding:26px 42px 10px;">' +
+          '<div style="display:flex;justify-content:space-between;font-size:12px;color:#667085;line-height:1.7;">' +
+            '<div style="width:46%;">' +
+              '<div style="font-weight:800;color:#0b0f17;font-size:11px;letter-spacing:1px;margin-bottom:6px;">BILLED TO</div>' +
+              '<div style="font-weight:700;color:#0b0f17;font-size:14px;">' + esc((snap && snap.name) || 'Valued Client') + '</div>' +
+              '<div>' + esc((snap && snap.company) || '') + '</div>' +
+              '<div>' + esc((snap && snap.email) || '') + '</div>' +
+            '</div>' +
+            '<div style="text-align:right;">' +
+              '<div style="font-weight:800;color:#0b0f17;font-size:11px;letter-spacing:1px;margin-bottom:6px;">RECEIPT</div>' +
+              '<div>Reference: <b style="color:#0b0f17;">' + esc(snap && snap.token ? snap.token : verify.reference) + '</b></div>' +
+              '<div>Transaction: <b style="color:#0b0f17;">' + esc(verify.transaction_id) + '</b></div>' +
+              '<div>Paid: <b style="color:#0b0f17;">' + esc(formatDate(verify.paid_at)) + '</b></div>' +
+              '<div>Method: <b style="color:#0b0f17;">' + esc(channelName(verify.channel)) + '</b></div>' +
+            '</div>' +
+          '</div>' +
+          '<table style="width:100%;border-collapse:collapse;margin-top:22px;">' +
+            '<tr>' +
+              '<td style="padding:9px 14px;background:#f1f4f9;font-size:10px;font-weight:800;letter-spacing:1px;color:#556;border-radius:6px 0 0 6px;">DESCRIPTION</td>' +
+              '<td style="padding:9px 14px;background:#f1f4f9;font-size:10px;font-weight:800;letter-spacing:1px;color:#556;text-align:right;border-radius:0 6px 6px 0;">AMOUNT</td>' +
+            '</tr>' + rows +
+          '</table>' +
+          '<div style="margin-top:16px;background:#0b0f17;border-radius:10px;color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;">' +
+            '<div style="font-size:12px;font-weight:800;letter-spacing:1px;">TOTAL PAID</div>' +
+            '<div style="font-size:22px;font-weight:800;color:#4ade80;">' + money(paid) + '</div>' +
+          '</div>' +
+          '<div style="margin-top:22px;background:#f0fdf6;border:1px solid #a7ecd0;border-radius:12px;padding:16px 20px;font-size:12px;color:#067a4a;line-height:1.7;">' +
+            '<b>Thank you.</b> Your payment for ' + esc((snap && snap.token) ? ('invoice ' + snap.token) : 'your invoice') + ' has been received and verified via Paystack. This is your electronic receipt.' +
+          '</div>' +
+          '<div style="margin-top:24px;border-top:1px solid #e6eaef;padding:14px 0 6px;display:flex;justify-content:space-between;font-size:10px;color:#98a2b3;">' +
+            '<span>Mqhele Kingdom Cele</span>' +
+            '<span>mqhele03@gmail.com &middot; +27 73 250 9506 &middot; Johannesburg, South Africa</span>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    return wrap;
+  }
+
+  function buildReceiptPdf() {
+    var verify = window._verify || null;
+    if (!verify) return;
+    var snap = receiptSnapshot;
+    var el = receiptEl(snap, verify);
+    document.body.appendChild(el);
+    var fname = 'Receipt-' + esc((snap && snap.token) || verify.reference) + '.pdf';
+    toPdf(el, fname, function(){});
+  }
+  window.buildReceiptPdf = buildReceiptPdf;
+
+  (function init(){
+    var reference = getParam('reference') || getParam('trxref');
+    var errBox = document.getElementById('err-box');
+    errBox.classList.remove('show');
+    if (!reference) {
+      document.getElementById('badge').className = 'badge err';
+      document.getElementById('title').textContent = 'No payment reference';
+      document.getElementById('sub').textContent = 'This page verifies a payment. No reference was provided.';
+      errBox.classList.add('show');
+      return;
+    }
+    try { receiptSnapshot = JSON.parse(localStorage.getItem('mc-receipt-' + reference) || 'null'); } catch(e) {}
+    fetch('/api/paystack?reference=' + encodeURIComponent(reference))
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        window._verify = res.ok && res.status ? res : null;
+        if (res.ok && res.status === 'success') {
+          document.getElementById('badge').className = 'badge ok';
+          document.getElementById('title').textContent = 'Payment confirmed';
+          document.getElementById('sub').textContent = 'Your receipt is ready.';
+          document.getElementById('details').style.display = 'block';
+          document.getElementById('v-amount').textContent = money(res.amount) + ' ' + res.currency;
+          document.getElementById('v-reference').textContent = reference;
+          document.getElementById('v-trx').textContent = res.transaction_id;
+          document.getElementById('v-date').textContent = formatDate(res.paid_at);
+          document.getElementById('v-method').textContent = channelName(res.channel);
+          document.getElementById('btn-redownload').style.display = 'block';
+          document.getElementById('btn-home').style.display = 'block';
+          document.getElementById('download-hint').style.display = 'block';
+          setTimeout(function(){ buildReceiptPdf(); }, 250);
+        } else {
+          var st = res && res.status ? res.status : 'unverified';
+          document.getElementById('badge').className = 'badge wait';
+          document.getElementById('title').textContent = 'Payment not confirmed';
+          document.getElementById('sub').textContent = (st === 'abandoned' || st === 'failed') ?
+            'The payment was not completed on Paystack\'s side (' + st + ').' :
+            'We could not verify the transaction right now, but your receipt is still available if the payment went through.';
+          document.getElementById('btn-redownload').style.display = 'block';
+          document.getElementById('btn-home').style.display = 'block';
+          errBox.classList.add('show');
+        }
+      })
+      .catch(function(){
+        document.getElementById('badge').className = 'badge err';
+        document.getElementById('title').textContent = 'Something went wrong';
+        document.getElementById('sub').textContent = 'There was a problem reaching the payment service. Please try again shortly.';
+        errBox.classList.add('show');
+      });
+  })();
+</script>
+</body>
+</html>

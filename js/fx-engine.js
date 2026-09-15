@@ -1,42 +1,46 @@
 // fx-engine.js — Mqhele Cele portfolio 3D background engine
-// Liquid domain-warped fbm backdrop + floating 3D platform brand marks.
+// Liquid domain-warped fbm backdrop + real platform logos as flat billboard sprites.
 // Consumes `fx:set` CustomEvents ({goals:[], platforms:[]}) from the calculator.
 // Loaded as an ES module. Depends on the three.js import map declared in HTML.
 //
 // No em dashes in output. No build step.
 
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const MOBILE = window.matchMedia && window.matchMedia('(max-width: 900px)');
-const PREFER_DARK = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
 const REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
 
-// ---- theme registry ----------------------------------------------------
-// goal -> [deep, mid, bright] palette colors + motion speed factor.
-const GOAL_THEMES = {
-  engagement: { colors: ['#041428', '#0857E5', '#3B82F6'], speed: 1.0 },
-  leads:      { colors: ['#031A12', '#059669', '#34D399'], speed: 1.2 },
-  sales:      { colors: ['#1A0F02', '#D97706', '#FBBF24'], speed: 1.5 },
-  traffic:    { colors: ['#12042A', '#7C3AED', '#A78BFA'], speed: 1.0 },
-  awareness:  { colors: ['#021A1E', '#0891B2', '#22D3EE'], speed: 0.8 },
-  whatsapp:   { colors: ['#03150F', '#16A34A', '#4ADE80'], speed: 1.1 },
-  video:      { colors: ['#1C0404', '#DC2626', '#F87171'], speed: 1.4 },
-  other:      { colors: ['#0B0D10', '#52525B', '#A1A1AA'], speed: 1.0 },
+// ---- brand registry ----------------------------------------------------
+// platform -> logo asset + liquid palette (deep/mid/bright). Full-color
+// transparent logos are rasterized to canvas billboards by the engine.
+const PLAT_BRANDS = {
+  meta:     { file: 'assets/logos/meta.svg',     deep: '#05204C', mid: '#0866FF', accent: '#6DB4FF' },
+  boosting: { file: 'assets/logos/boosting.svg', deep: '#062A4A', mid: '#0096FF', accent: '#7DC4FF' },
+  google:   { file: 'assets/logos/google.svg',   deep: '#0B2336', mid: '#4285F4', accent: '#FBBC05' },
+  linkedin: { file: 'assets/logos/linkedin.svg', deep: '#041E33', mid: '#0A66C2', accent: '#5AA1E6' },
+  tiktok:   { file: 'assets/logos/tiktok.svg',   deep: '#3D0A23', mid: '#FE2C55', accent: '#25F4EE' },
 };
 
-// platform -> brand GLB + accent tint for emission.
-const PLAT_BRANDS = {
-  meta:     { file: 'assets/3d/meta.glb',      tint: 0x0866FF },
-  boosting: { file: 'assets/3d/boosting.glb',  tint: 0x5B9FFF },
-  google:   { file: 'assets/3d/google.glb',    tint: 0x4285F4 },
-  linkedin: { file: 'assets/3d/linkedin.glb',  tint: 0x0A66C2 },
-  tiktok:   { file: 'assets/3d/tiktok.glb',    tint: 0x25F4EE },
+// goal -> motion speed factor (the palette is driven by platforms now).
+const GOAL_SPEED = {
+  engagement: 1.15,
+  leads:      1.3,
+  sales:      1.5,
+  traffic:    1.0,
+  awareness:  0.9,
+  whatsapp:   1.05,
+  video:      1.25,
+  other:      1.0,
 };
 
 function hexToV3(hex) {
   const c = new THREE.Color(hex);
   return [c.r, c.g, c.b];
+}
+
+function smoothstep(a, b, x) {
+  const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+  return t * t * (3 - 2 * t);
 }
 
 const SIMPLEX_SRC = `
@@ -89,31 +93,31 @@ float snoise(vec3 v){
 
 float fbm(vec3 p){
   float v = 0.0;
-  float a = 0.55;
-  for (int i = 0; i < 4; i++){
+  float a = 0.6;
+  for (int i = 0; i < 3; i++){
     v += a * snoise(p);
-    p = p * 2.02 + vec3(7.31, 13.7, 3.6);
+    p = p * 2.0 + vec3(7.31, 13.7, 3.6);
     a *= 0.55;
   }
   return v;
 }
 `;
 
-// Fullscreen liquid backdrop. Rendered first, behind brands.
+// Fullscreen liquid backdrop. Rendered first, behind the logo sprites.
 class LiquidLayer {
   constructor(renderer, reduced) {
     const u = {
       uTime:   { value: 0 },
       uScroll: { value: 0 },
-      uA:      { value: new THREE.Vector3(...hexToV3('#041428')) },
-      uB:      { value: new THREE.Vector3(...hexToV3('#0857E5')) },
-      uC:      { value: new THREE.Vector3(...hexToV3('#3B82F6')) },
+      uA:      { value: new THREE.Vector3(...hexToV3('#05204C')) },
+      uB:      { value: new THREE.Vector3(...hexToV3('#0866FF')) },
+      uC:      { value: new THREE.Vector3(...hexToV3('#6DB4FF')) },
       uFalloff: { value: 0.0 },
     };
     this.target = {
-      uA: hexToV3('#041428'),
-      uB: hexToV3('#0857E5'),
-      uC: hexToV3('#3B82F6'),
+      uA: hexToV3('#05204C'),
+      uB: hexToV3('#0866FF'),
+      uC: hexToV3('#6DB4FF'),
       speed: 1.0,
       falloff: 0.0,
     };
@@ -152,18 +156,17 @@ class LiquidLayer {
           float f2 = fbm(q2 + uScroll * 0.05);
           float n = f2 * 0.65 + f1 * 0.35;
 
-          // Radial desk-fade so edges stay dark and calm.
+          // Radial desk-fade so edges stay calm.
           n += uFalloff * 0.6;
           float r = length(p * 0.9);
           float edge = smoothstep(0.05, 0.85, n * 0.5 + 0.5);
 
-          vec3 col = mix(uA, uB, clamp(edge * 1.35, 0.0, 1.0));
-          col = mix(col, uC, clamp((n + 1.0) * 0.62, 0.0, 1.0));
-          col *= 0.55 + 0.45 * clamp(n * 0.7 + 0.6, 0.0, 1.0);
-
-          // Vignette.
+          vec3 col = mix(uA, uB, clamp(edge * 1.3, 0.0, 1.0));
+          col = mix(col, uC, clamp((n + 1.0) * 0.55, 0.0, 1.0));
+          // Brighter body + softer vignette so brand colors actually show.
+          col *= 0.72 + 0.28 * clamp(n * 0.6 + 0.6, 0.0, 1.0);
           float vig = smoothstep(1.25, 0.25, r);
-          col *= 0.55 + 0.45 * vig;
+          col *= 0.7 + 0.3 * vig;
 
           gl_FragColor = vec4(col, 1.0);
         }`,
@@ -181,23 +184,60 @@ class LiquidLayer {
     if (reduced) this.mesh.visible = true;
   }
 
-  setGoals(goals) {
-    const active = goals.length ? goals.map((g) => GOAL_THEMES[g] || GOAL_THEMES.other) : [GOAL_THEMES.engagement];
-    const avg = active.reduce((acc, t) => acc + t.speed, 0) / active.length;
-    const mean = (idx) => {
+  // Palette is driven by the selected platforms' brand colors.
+  setPalette(platforms) {
+    const list = (platforms || []).filter((p) => PLAT_BRANDS[p]);
+    const active = list.length ? list : ['meta'];
+    const mean = (key) => {
       let r = 0, g = 0, b = 0;
-      for (const t of active) {
-        const c = hexToV3(t.colors[idx]);
+      for (const p of active) {
+        const c = hexToV3(PLAT_BRANDS[p][key]);
         r += c[0]; g += c[1]; b += c[2];
       }
       const n = active.length;
       return [r / n, g / n, b / n];
     };
-    this.target.uA = mean(0);
-    this.target.uB = mean(1);
-    this.target.uC = mean(2);
-    this.target.speed = avg;
-    this.target.falloff = active.length > 1 ? 0.12 : 0.0;
+    this.target.uA = mean('deep');
+    this.target.uB = mean('mid');
+    this.target.uC = mean('accent');
+    this.target.falloff = 0.0;
+  }
+
+  // Goals drive motion speed only.
+  setSpeed(goals) {
+    const active = (goals || []).length ? goals : ['engagement'];
+    let sum = 0;
+    for (const g of active) sum += GOAL_SPEED[g] || GOAL_SPEED.other;
+    this.target.speed = sum / active.length;
+  }
+
+  // Back-compat alias: goals alone set speed, palette stays platform-driven.
+  setGoals(goals) {
+    this.setSpeed(goals);
+  }
+
+  // Palette follows the logos actually on screen, weighted by their opacity.
+  // Multiple visible brands blend into a hybrid palette automatically.
+  setWeighted(weights) {
+    const active = (weights || []).filter((x) => PLAT_BRANDS[x.brand]);
+    if (!active.length) return;
+    let sumW = 0;
+    const acc = { deep: [0, 0, 0], mid: [0, 0, 0], accent: [0, 0, 0] };
+    for (const { brand, w } of active) {
+      const p = PLAT_BRANDS[brand];
+      sumW += w;
+      for (const key of ['deep', 'mid', 'accent']) {
+        const c = hexToV3(p[key]);
+        acc[key][0] += c[0] * w;
+        acc[key][1] += c[1] * w;
+        acc[key][2] += c[2] * w;
+      }
+    }
+    if (sumW <= 0) return;
+    this.target.uA = [acc.deep[0] / sumW, acc.deep[1] / sumW, acc.deep[2] / sumW];
+    this.target.uB = [acc.mid[0] / sumW, acc.mid[1] / sumW, acc.mid[2] / sumW];
+    this.target.uC = [acc.accent[0] / sumW, acc.accent[1] / sumW, acc.accent[2] / sumW];
+    this.target.falloff = active.length > 1 ? 0.06 : 0.0;
   }
 
   update(dt, time) {
@@ -223,26 +263,65 @@ class LiquidLayer {
 }
 
 // ---- brand flood --------------------------------------------------------
-// Floats cloned GLB brand marks around the stage, fading in and out.
+// Rasterizes the platform logos and drifts them past the frame as flat,
+// camera-facing billboards. Each brand enters from outside one frame edge,
+// fades in as it crosses the edge, glides across, and fades out past the
+// opposite edge. Deselected brands drift out naturally and are removed.
 class BrandPool {
-  constructor(loader) {
-    this.loader = loader;
-    this.cache = new Map();
+  constructor(engine) {
+    this.engine = engine;
+    this.cache = new Map();        // brand -> Promise<CanvasTexture>
+    this.mats = new Map();         // brand -> base SpriteMaterial (cloned per sprite)
     this.instances = [];
-    this.roots = new Map(); // brand -> loaded Object3D (template)
-    this.maxInstances = MOBILE.matches ? 4 : 9;
-    this.round = 0;
+    this.active = new Set();
+    this.maxInstances = MOBILE.matches ? 9 : 18;
+    this.spawnAcc = MOBILE.matches ? 1.8 : 3.2;
+    this.crossLen = 1.9;
+    this.palKey = '';
+  }
+
+  rasterize(file) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        const size = 512;
+        const w = img.naturalWidth || img.width;
+        const h = img.naturalHeight || img.height;
+        const scale = size / Math.max(w, h);
+        const dw = Math.max(1, Math.round(w * scale));
+        const dh = Math.max(1, Math.round(h * scale));
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const g = canvas.getContext('2d');
+        g.clearRect(0, 0, size, size);
+        g.drawImage(img, (size - dw) / 2, (size - dh) / 2, dw, dh);
+        const tex = new THREE.CanvasTexture(canvas);
+        tex.colorSpace = THREE.SRGBColorSpace;
+        tex.minFilter = THREE.LinearFilter;
+        tex.magFilter = THREE.LinearFilter;
+        tex.generateMipmaps = false;
+        resolve(tex);
+      };
+      img.onerror = () => reject(new Error('logo load failed: ' + file));
+      img.src = file;
+    });
   }
 
   load(brand) {
     if (this.cache.has(brand)) return this.cache.get(brand);
     const cfg = PLAT_BRANDS[brand];
     if (!cfg) return Promise.resolve(null);
-    const p = this.loader
-      .loadAsync(cfg.file)
-      .then((gltf) => {
-        this.roots.set(brand, gltf.scene);
-        return gltf.scene;
+    const p = this.rasterize(cfg.file)
+      .then((tex) => {
+        const mat = new THREE.SpriteMaterial({
+          map: tex,
+          transparent: true,
+          depthWrite: false,
+          opacity: 0,
+        });
+        this.mats.set(brand, mat);
+        return tex;
       })
       .catch((e) => {
         console.warn('brand load failed:', brand, e);
@@ -253,111 +332,157 @@ class BrandPool {
   }
 
   setActive(brands) {
-    this.active = new Set(brands.filter((b) => PLAT_BRANDS[b]));
+    this.active = new Set((brands || []).filter((b) => PLAT_BRANDS[b]));
     for (const b of this.active) this.load(b);
+  }
+
+  // Feed the liquid the weights of the brands actually visible this frame.
+  // Uses a quantized key so the palette only re-targets when the mix shifts.
+  applyPalette(liquid) {
+    const w = {};
+    for (const inst of this.instances) {
+      if (inst.alpha > 0.02) w[inst.brand] = (w[inst.brand] || 0) + inst.alpha;
+    }
+    const keys = Object.keys(w);
+    if (!keys.length) return;
+    const key = keys.sort().map((b) => b + Math.round(w[b] * 4)).join('|');
+    if (key !== this.palKey) {
+      this.palKey = key;
+      liquid.setWeighted(keys.map((brand) => ({ brand, w: w[brand] })));
+    }
   }
 
   update(dt, time) {
     if (!this.active) return;
-    const targets = new Set(this.active);
-    // Despawn instances of deselected brands.
-    this.instances = this.instances.filter((inst) => {
-      if (targets.has(inst.brand)) return true;
-      inst.life -= dt * 1.6;
-      if (inst.life <= 0) {
-        this.scene.remove(inst.object);
-        inst.object.traverse((o) => { if (o.material) o.material.dispose(); });
-        return false;
-      }
-      return true;
-    });
 
-    // Spawn new instances up to per-brand + global caps.
-    const count = this.instances.length;
-    const cap = this.lite ? 6 : (MOBILE.matches ? 14 : 20);
-    if (count < cap) {
-      this.round = (this.round + 1) % (5 * targets.size || 1);
-      if (this.round % 5 === 0) {
-        const brand = [...targets][Math.floor(this.round / 5) % targets.size || 0];
-        if (brand) this.spawn(brand);
-      }
-    }
-
+    // Grow/shrink toward the wanted instance count by letting sprites
+    // finish their cross-fade; deselected brands are marked dying so they
+    // fade out fast instead of finishing the whole crossing.
     for (const inst of this.instances) {
-      inst.age += dt;
-      inst.life -= dt;
-      if (inst.life <= 0) {
-        inst.alpha = Math.max(0, inst.alpha - dt * 0.9);
-      }
-      const fadeIn = Math.min(1, inst.age * 1.6);
-      const fadeOut = inst.life < 0 ? 0 : 1;
-      inst.alpha = Math.min(fadeIn, inst.life < 0 ? Math.max(0, inst.life * 1.6) : 1);
-      inst.object.position.x += inst.vx * dt;
-      inst.object.position.y += inst.vy * dt;
-      inst.object.position.z += inst.vz * dt;
-      const sway = Math.sin(time * inst.swayFreq + inst.swayPhase) * inst.swayAmp;
-      inst.object.position.x += sway * dt;
-      inst.vx = inst.vx * (1 - dt * 0.1);
-      inst.vy = inst.vy * (1 - dt * 0.1);
-      inst.object.rotation.x += inst.rx * dt;
-      inst.object.rotation.y += inst.ry * dt;
-      const scale = inst.baseScale * (0.9 + 0.25 * Math.sin(time * 0.4 + inst.seed));
-      inst.object.scale.setScalar(scale);
-
-      // Fade instance materials.
-      inst.object.traverse((o) => {
-        if (o.isMesh && o.material) {
-          o.material.opacity = inst.alpha;
-          o.material.transparent = true;
-          o.material.depthWrite = false;
-        }
-      });
-
-      // Respawn out-of-bounds.
-      if (Math.abs(inst.object.position.x) > 6 || Math.abs(inst.object.position.y) > 5) {
-        inst.life = Math.min(inst.life, 5);
-      }
+      if (!this.active.has(inst.brand)) inst.dying = true;
     }
+
+    // Spawn up to the cap from the ready brands.
+    this.spawnAcc += dt * (this.maxInstances / 14);
+    const ready = [...this.active].filter((b) => this.mats.has(b));
+    while (this.spawnAcc >= 1 && this.instances.length < this.maxInstances && ready.length) {
+      this.spawnAcc -= 1;
+      this.spawn(ready[Math.floor(Math.random() * ready.length)]);
+    }
+
+    const cam = this.engine.camera;
+    const fovHalf = Math.tan((cam.fov * Math.PI) / 360);
+    const camZ = cam.position.z;
+
+    const next = [];
+    for (const inst of this.instances) {
+      const dist = camZ - inst.z;
+      const halfW = fovHalf * cam.aspect * dist;
+      const halfH = fovHalf * dist;
+
+      const speed = inst.dying ? inst.cruise * 2.4 : inst.cruise;
+      inst.x += (inst.side * speed) * dt;
+      inst.y0 += inst.vy * dt;
+      inst.age += dt;
+
+      if (inst.dying) {
+        inst.alpha = Math.max(0, 1 - (inst.age - inst.dieT) * 2.2);
+        if (inst.alpha <= 0.01) {
+          this._remove(inst);
+          continue;
+        }
+      } else {
+        // Fade in just past the entering edge, fade out well before the far
+        // edge, then vanish past it. The logo is fully opaque mid-frame.
+        const enter = inst.side === 1
+          ? smoothstep(-halfW, -halfW + this.crossLen, inst.x)
+          : 1 - smoothstep(halfW - this.crossLen, halfW, inst.x);
+        const exit = inst.side === 1
+          ? 1 - smoothstep(halfW - this.crossLen, halfW + 0.15, inst.x)
+          : smoothstep(-halfW, -halfW + this.crossLen + 0, inst.x);
+        inst.alpha = Math.min(1, enter) * Math.min(1, exit);
+        if (inst.alpha <= 0.01 && (inst.x > halfW + 2.4 || inst.x < -halfW - 2.4)) {
+          this._remove(inst);
+          continue;
+        }
+      }
+
+      const sway = Math.sin(time * inst.swayFreq + inst.swayPhase) * inst.swayAmp;
+      const pulse = 0.94 + 0.12 * Math.sin(time * 0.5 + inst.seed);
+      const s = inst.baseScale * pulse;
+      inst.sprite.position.set(inst.x, inst.y0 + sway, inst.z);
+      inst.sprite.scale.set(s, s, 1);
+      inst.sprite.material.rotation = Math.sin(time * 0.3 + inst.seed) * 0.07;
+      inst.sprite.material.opacity = inst.alpha;
+
+      // Keep inside the vertical desk band.
+      if (inst.y0 > halfH * 1.4) inst.vy -= dt * 0.2;
+      if (inst.y0 < -halfH * 1.4) inst.vy += dt * 0.2;
+
+      next.push(inst);
+    }
+    this.instances = next;
   }
 
   spawn(brand) {
-    const tmpl = this.roots.get(brand);
-    if (!tmpl) return;
-    const cfg = PLAT_BRANDS[brand];
-    const obj = tmpl.clone(true);
-    obj.traverse((o) => {
-      if (o.isMesh) {
-        o.material = o.material ? o.material.clone() : o.material;
-        if (o.material.color) o.material.color.set(cfg.tint).multiplyScalar(1.6);
-        if (o.material.emissive) o.material.emissive.set(cfg.tint);
-        o.material.depthWrite = false;
-      }
-    });
-    const side = Math.random() < 0.5 ? -1 : 1;
-    obj.position.set(side * (2.4 + Math.random() * 2.2), (Math.random() - 0.5) * 3.2, -2 - Math.random() * 2.5);
-    obj.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
-    this.scene.add(obj);
+    const mat = this.mats.get(brand);
+    if (!mat) return;
+    const sprite = new THREE.Sprite(mat.clone());
+    sprite.material.opacity = 0;
+    sprite.renderOrder = 1;
+    sprite.visible = true;
+    this.scene.add(sprite);
+
+    const side = Math.random() < 0.5 ? 1 : -1; // 1 enters from the left
+    const z = -1.4 - Math.random() * 1.8;
+    const cam = this.engine.camera;
+    const halfW = Math.tan((cam.fov * Math.PI) / 360) * cam.aspect * (cam.position.z - z);
+    const x0 = -side * (halfW + 1.2 + Math.random() * 1.4);
+    const y0 = (Math.random() - 0.5) * 4.4;
+
     this.instances.push({
       brand,
-      object: obj,
+      sprite,
+      side,
+      z,
+      x: x0,
+      y0,
       age: 0,
-      life: 8 + Math.random() * 8,
+      dieT: 1 + Math.random() * 0.5,
+      dying: false,
       alpha: 0,
       seed: Math.random() * 100,
-      baseScale: 0.55 + Math.random() * 0.75,
-      vx: (Math.random() - 0.5) * 0.18,
+      cruise: 0.5 + Math.random() * 0.34,
       vy: (Math.random() - 0.5) * 0.14,
-      vz: (Math.random() - 0.5) * 0.05,
-      rx: (Math.random() - 0.5) * 0.3,
-      ry: (Math.random() - 0.5) * 0.3,
-      swayFreq: 0.6 + Math.random() * 1.2,
+      baseScale: 0.3 + Math.random() * 0.34,  // small billboards, ~5-10% of screen height
+      swayFreq: 0.5 + Math.random() * 1.1,
       swayPhase: Math.random() * Math.PI * 2,
-      swayAmp: 0.15 + Math.random() * 0.35,
+      swayAmp: 0.12 + Math.random() * 0.3,
     });
+  }
+
+  _remove(inst) {
+    this.scene.remove(inst.sprite);
+    if (inst.sprite.material) {
+      inst.sprite.material.map = null;
+      inst.sprite.material.dispose();
+    }
   }
 
   setScene(scene) {
     this.scene = scene;
+  }
+
+  dispose() {
+    for (const inst of this.instances) this._remove(inst);
+    this.instances = [];
+    for (const mat of this.mats.values()) {
+      if (mat.map) mat.map.dispose();
+      mat.map = null;
+      mat.dispose();
+    }
+    this.mats.clear();
+    this.cache.clear();
   }
 }
 
@@ -387,27 +512,23 @@ class FxEngine {
     this.camera = new THREE.PerspectiveCamera(55, w / h, 0.1, 40);
     this.camera.position.z = 3.4;
 
-    const dpr = this.mobile ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, this.lite ? 1.5 : 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, this.mobile || this.lite ? 1.5 : 1.75);
     this.renderer.setPixelRatio(dpr);
     this.renderer.setSize(w, h);
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.05;
 
-    const hemi = new THREE.HemisphereLight(0xffffff, 0x111122, 1.1);
-    const dir = new THREE.DirectionalLight(0xffffff, 0.7);
-    dir.position.set(2, 3, 2);
-    this.scene.add(hemi, dir);
-
     this.liquid = new LiquidLayer(this.renderer, this.reduced);
     this.scene.add(this.liquid.mesh);
 
-    this.brands = new BrandPool(new GLTFLoader());
+    this.brands = new BrandPool(this);
     this.brands.setScene(this.scene);
 
     const initial = opts.initial || {};
     const goals = initial.goals || ['engagement'];
     const platforms = initial.platforms || ['meta'];
-    this.liquid.setGoals(goals);
+    this.liquid.setPalette(platforms);
+    this.liquid.setSpeed(goals);
     this.brands.setActive(platforms);
 
     this.time = 0;
@@ -420,13 +541,30 @@ class FxEngine {
       if (!this.paused) { this.last = performance.now(); this.loop(); }
     });
 
+    if (this.reduced) {
+      const apply = () => {
+        this.brands.setActive(this.brands.active);
+        this.brands.update(0.6, 0); // place a few static sprites mid-frame
+        this.renderer.render(this.scene, this.camera);
+      };
+      const p = [...platforms];
+      Promise.all(p.map((b) => this.brands.load(b))).then(apply).catch(apply);
+      return;
+    }
+
     this.loop();
-    if (this.reduced) this.renderer.render(this.scene, this.camera);
   }
 
   setTheme({ goals, platforms }) {
-    if (goals) this.liquid.setGoals(goals);
-    if (platforms) this.brands.setActive(platforms);
+    if (goals) this.liquid.setSpeed(goals);
+    if (platforms) {
+      this.liquid.setPalette(platforms);
+      this.brands.setActive(platforms);
+      if (this.reduced) {
+        this.brands.update(0.6, 0);
+        this.renderer.render(this.scene, this.camera);
+      }
+    }
     if (!REDUCED.matches) this.liquid.mesh.visible = true;
   }
 
@@ -435,7 +573,7 @@ class FxEngine {
     this.w = w; this.h = h;
     this.camera.aspect = w / h;
     this.camera.updateProjectionMatrix();
-    const dpr = this.mobile ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, this.mobile || this.lite ? 1.5 : 1.75);
     this.renderer.setPixelRatio(dpr);
     this.renderer.setSize(w, h);
   }
@@ -450,6 +588,7 @@ class FxEngine {
     if (!this.reduced) {
       this.liquid.update(dt, this.time);
       this.brands.update(dt, this.time);
+      this.brands.applyPalette(this.liquid);
       this.renderer.render(this.scene, this.camera);
     }
     requestAnimationFrame(() => this.loop());
@@ -459,6 +598,7 @@ class FxEngine {
     window.removeEventListener('fx:set', this.onFxSet);
     window.removeEventListener('scroll', this._onScroll);
     this.liquid.dispose();
+    this.brands.dispose();
     this.renderer.dispose();
   }
 }

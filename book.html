@@ -8,7 +8,7 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --black: #0a0a0a; --white: #fafafa; --off: #f2f0eb; --muted: #888;
+    --black: #0a0a0a; --white: #fafafa; --off: #f2f0eb; --muted: #fff;
     --border: #e0ddd8; --meta: #0866FF; --google: #4285F4; --linkedin: #0A66C2;
     --wa: #25D366; --amber: #F59F00; --green: #34A853;
   }
@@ -30,8 +30,8 @@
   .section-sub { font-size: 0.95rem; color: var(--muted); max-width: 560px; line-height: 1.7; margin-bottom: 3rem; }
   footer { background: #0a0a0a; border-top: 1px solid #1a1a1a; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
   footer .logo { font-family: 'Syne', sans-serif; font-weight: 800; color: var(--white); font-size: 0.9rem; }
-  footer .contact { font-size: 0.75rem; color: #555; }
-  footer .contact a { color: #666; text-decoration: none; }
+  footer .contact { font-size: 0.75rem; color: #fff; }
+  footer .contact a { color: #fff; text-decoration: none; }
   footer .contact a:hover { color: var(--white); }
   .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .fade-in.visible { opacity: 1; transform: none; }
@@ -41,7 +41,7 @@
   .cta-section { background: var(--black); text-align: center; padding: 6rem 0; }
   .cta-section .section-eyebrow { color: var(--meta); }
   .cta-section .section-title { color: var(--white); }
-  .cta-section .section-sub { color: #888; margin: 0 auto 2.5rem; }
+  .cta-section .section-sub { color: #fff; margin: 0 auto 2.5rem; }
   .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
   @media (max-width: 768px) { .nav-links { display: none; } footer { flex-direction: column; text-align: center; } }
 </style>
@@ -49,7 +49,7 @@
   .book-hero { background: var(--black); padding: 8rem 0 4.5rem; }
   .book-hero .section-eyebrow { color: var(--meta); }
   .book-hero .section-title { color: var(--white); }
-  .book-hero .section-sub { color: #888; margin-bottom: 0; }
+  .book-hero .section-sub { color: #fff; margin-bottom: 0; }
   .book-layout { display: grid; grid-template-columns: 340px 1fr; gap: 3rem; align-items: start; padding: 4rem 0; }
   .book-sidebar h3 { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 1.25rem; }
   .book-point { display: flex; gap: 0.75rem; margin-bottom: 1rem; }
