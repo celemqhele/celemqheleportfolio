@@ -923,7 +923,7 @@
         <div class="wiz-step-header">
           <div class="wiz-eyebrow">Step 1 of 4</div>
           <h3 class="wiz-title">What's the goal?</h3>
-          <p class="wiz-sub">This determines platforms, what we optimise for, and the minimum budget.</p>
+          <p class="wiz-sub">Pick one or more. Bundled goals share the budget floor at a small discount.</p>
         </div>
         <div class="wiz-goal-grid">
           <div class="wiz-goal-card active" data-goal="engagement" onclick="wSelectGoal('engagement',this)">
@@ -994,7 +994,7 @@
         <div class="wiz-step-header">
           <div class="wiz-eyebrow">Step 2 of 4</div>
           <h3 class="wiz-title">Which platforms?</h3>
-          <p class="wiz-sub">Showing platforms relevant to your goal. Each adds to your management fee and minimum ad spend.</p>
+          <p class="wiz-sub">Platforms suggested by your goals. Each has a minimum ad spend.</p>
         </div>
         <div class="wiz-plat-grid" id="wiz-plat-container"></div>
         <div id="wiz-plat-err" style="display:none;font-size:0.8rem;color:#ff6b6b;margin-top:0.5rem;">Pick at least one platform to continue.</div>
@@ -1015,12 +1015,12 @@
         <div class="wiz-slider-wrap">
           <div class="wiz-slider-top">
             <span class="wiz-slider-label">Monthly budget</span>
-            <span class="wiz-slider-val" id="wiz-budget-display">R8,000</span>
+            <span class="wiz-slider-val" id="wiz-budget-display">R40,000</span>
           </div>
-          <input type="range" id="wiz-slider" min="2000" max="80000" step="500" value="8000" oninput="wUpdateBudget()">
+          <input type="range" id="wiz-slider" min="27000" max="100000" step="500" value="40000" oninput="wUpdateBudget()">
           <div style="display:flex;justify-content:space-between;margin-top:0.4rem;">
-            <span style="font-size:0.7rem;color:#444;" id="wiz-min-label">R2,000</span>
-            <span style="font-size:0.7rem;color:#444;">R80,000</span>
+            <span style="font-size:0.7rem;color:#444;" id="wiz-min-label">R27,000</span>
+            <span style="font-size:0.7rem;color:#444;" id="wiz-max-label">R100,000</span>
           </div>
         </div>
         <div class="wiz-mini-breakdown" id="wiz-mini-breakdown"></div>
@@ -1057,7 +1057,7 @@
             Estimates are based on live campaign benchmarks from real accounts managed by Mqhele Cele. Actual results vary depending on industry, creative quality, audience size, competition and seasonality. These projections are indicative only and do not constitute a guarantee of performance.
           </div>
           <div class="wiz-results-actions">
-            <button class="wiz-btn-next" style="background:#0866FF;color:#fff;border-color:#0866FF;" onclick="openInvoiceModalFromWiz()">
+            <button class="wiz-btn-next" style="background:#0866FF;color:#fff;border-color:#0866FF;" onclick="openInvoiceModal()">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
               Generate Invoice
             </button>
@@ -1115,31 +1115,31 @@
               <div class="mc-plat-row active" data-pid="meta" onclick="togglePlat('meta',this)" style="--pc:#0866FF;">
                 <div class="mc-plat-dot" style="background:#0866FF;"></div>
                 <div class="mc-plat-name">Meta Ads <span>Facebook + Instagram</span></div>
-                <div class="mc-plat-fee">+R2,000</div>
+                <div class="mc-plat-fee">R2,000 min spend</div>
                 <div class="mc-plat-toggle"><div class="mc-toggle-knob"></div></div>
               </div>
               <div class="mc-plat-row" data-pid="boosting" onclick="togglePlat('boosting',this)" style="--pc:#0866FF;">
                 <div class="mc-plat-dot" style="background:#5B9FFF;"></div>
                 <div class="mc-plat-name">Post Boosting <span>FB/IG engagement</span></div>
-                <div class="mc-plat-fee">+R2,500</div>
+                <div class="mc-plat-fee">R1,500 min spend</div>
                 <div class="mc-plat-toggle"><div class="mc-toggle-knob"></div></div>
               </div>
               <div class="mc-plat-row" data-pid="google" onclick="togglePlat('google',this)" style="--pc:#4285F4;">
                 <div class="mc-plat-dot" style="background:#4285F4;"></div>
                 <div class="mc-plat-name">Google Ads <span>Search + Display</span></div>
-                <div class="mc-plat-fee">+R3,000</div>
+                <div class="mc-plat-fee">R3,000 min spend</div>
                 <div class="mc-plat-toggle"><div class="mc-toggle-knob"></div></div>
               </div>
               <div class="mc-plat-row" data-pid="linkedin" onclick="togglePlat('linkedin',this)" style="--pc:#0A66C2;">
                 <div class="mc-plat-dot" style="background:#0A66C2;"></div>
                 <div class="mc-plat-name">LinkedIn Ads <span>B2B targeting</span></div>
-                <div class="mc-plat-fee">+R4,000</div>
+                <div class="mc-plat-fee">R5,000 min spend</div>
                 <div class="mc-plat-toggle"><div class="mc-toggle-knob"></div></div>
               </div>
               <div class="mc-plat-row" data-pid="tiktok" onclick="togglePlat('tiktok',this)" style="--pc:#69C9D0;">
                 <div class="mc-plat-dot" style="background:#69C9D0;"></div>
                 <div class="mc-plat-name">TikTok Ads <span>Short video</span></div>
-                <div class="mc-plat-fee">+R2,500</div>
+                <div class="mc-plat-fee">R2,000 min spend</div>
                 <div class="mc-plat-toggle"><div class="mc-toggle-knob"></div></div>
               </div>
             </div>
@@ -1151,12 +1151,12 @@
             <div id="mc-min-note" style="font-size:0.75rem;color:var(--amber);margin-bottom:0.75rem;line-height:1.5;"></div>
             <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.75rem;">
               <span style="font-size:0.75rem;color:#555;">Total</span>
-              <span style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:#fff;" id="budget-display">R8,000</span>
+              <span style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:#fff;" id="budget-display">R40,000</span>
             </div>
-            <input type="range" id="budget-slider" min="2000" max="80000" step="500" value="8000" style="width:100%;" oninput="calc()">
+            <input type="range" id="budget-slider" min="27000" max="100000" step="500" value="40000" style="width:100%;" oninput="calc()">
             <div style="display:flex;justify-content:space-between;margin-top:0.4rem;">
-              <span style="font-size:0.68rem;color:#444;" id="slider-min-label">R2,000</span>
-              <span style="font-size:0.68rem;color:#444;">R80,000</span>
+              <span style="font-size:0.68rem;color:#444;" id="slider-min-label">R27,000</span>
+              <span style="font-size:0.68rem;color:#444;" id="slider-max-label">R100,000</span>
             </div>
           </div>
 
@@ -1201,23 +1201,7 @@
           <!-- Projections -->
           <div class="mc-results-card">
             <div class="mc-rc-label">Estimated monthly results</div>
-            <div class="mc-proj-grid">
-              <div class="mc-proj" style="background:rgba(8,102,255,0.07);border:1px solid rgba(8,102,255,0.15);">
-                <div class="mc-proj-val" style="color:#6ea8ff;" id="res-eng">0</div>
-                <div class="mc-proj-name" style="color:#6ea8ff;">Engagements</div>
-                <div class="mc-proj-bench">R0.14 CPE (live campaign)</div>
-              </div>
-              <div class="mc-proj" style="background:rgba(52,168,83,0.07);border:1px solid rgba(52,168,83,0.15);">
-                <div class="mc-proj-val" style="color:#34A853;" id="res-leads">0</div>
-                <div class="mc-proj-name" style="color:#34A853;">Leads</div>
-                <div class="mc-proj-bench">R35 CPL (Benjamin Stevens)</div>
-              </div>
-              <div class="mc-proj" style="background:rgba(37,211,102,0.07);border:1px solid rgba(37,211,102,0.15);">
-                <div class="mc-proj-val" style="color:#25D366;" id="res-wa">0</div>
-                <div class="mc-proj-name" style="color:#25D366;">WA Convos</div>
-                <div class="mc-proj-bench">R13.13 avg</div>
-              </div>
-            </div>
+            <div class="mc-proj-grid" id="mc-proj-container"></div>
             <p style="font-size:0.65rem;color:#333;margin-top:0.75rem;line-height:1.5;">Benchmarks from live campaigns. Results vary by industry, creative and audience.</p>
           </div>
 
@@ -1370,7 +1354,6 @@
     linkedin: { mgmt: 1000, minSpend: 5000, name: 'LinkedIn Ads' },
     tiktok:   { mgmt: 600,  minSpend: 2000, name: 'TikTok Ads' },
   };
-  const BASE_MGMT = 200;
 
   const PLATFORM_BY_GOAL = {
     engagement: ['meta', 'boosting', 'tiktok'],
@@ -1384,7 +1367,7 @@
 
   const GOAL_MULT = {
     engagement: 0.8, leads: 1.2, sales: 1.5,
-    traffic: 1.0, awareness: 0.8, whatsapp: 1.0, video: 0.8,
+    traffic: 1.0, awareness: 0.8, whatsapp: 1.0, video: 0.8, other: 1.0,
   };
 
   const GOAL_NAMES = {
@@ -1458,25 +1441,34 @@
 
 
   // ── State ─────────────────────────────────────────────
-  let wizGoal = 'engagement';
+  let wizGoals = new Set(['engagement']);
   let wizPlatforms = new Set(['meta']);
-  let wizBudget = 4000;
+  let wizBudget = 40000;
   let wizAddons = new Set();
-  let manualGoal = 'engagement';
+  let manualGoals = new Set(['engagement']);
   let manualPlatforms = new Set(['meta']);
+  let activeFlow = 'wizard';
+
+  const BASE_FLOOR = 27000;
+  const MGMT_PCT = 0.20;
+  const STACK_DISCOUNT = 0.85;
+  const SLIDER_MAX = 100000;
 
   function fmt(n) { return 'R' + Math.round(n).toLocaleString('en-ZA'); }
 
-  function getMinBudgetFor(goal, platforms) {
-    let mgmt = BASE_MGMT;
-    let minSpend = 0;
-    platforms.forEach(pid => { mgmt += PLATFORMS[pid].mgmt; minSpend += PLATFORMS[pid].minSpend; });
-    minSpend = Math.round(minSpend * GOAL_MULT[goal]);
-    return { mgmt, minSpend, minBudget: mgmt + minSpend };
+  function goalMult(goals) {
+    return [...goals].reduce((sum, g, i) => sum + (GOAL_MULT[g] || 1.0) * (i === 0 ? 1 : STACK_DISCOUNT), 0);
   }
 
-  function splitBudget(budget, platforms, goal) {
-    const { mgmt } = getMinBudgetFor(goal, platforms);
+  function getMinBudgetFor(goals, platforms) {
+    const mult = goalMult(goals);
+    const minBudget = Math.max(BASE_FLOOR, Math.ceil(BASE_FLOOR * mult / 500) * 500);
+    const mgmt = Math.round(minBudget * MGMT_PCT);
+    return { mgmt, minSpend: minBudget - mgmt, minBudget, mult };
+  }
+
+  function splitBudget(budget, goals, platforms) {
+    const mgmt = Math.round(budget * MGMT_PCT);
     const totalAd = Math.max(0, budget - mgmt);
     const testing = Math.round(totalAd * 0.20);
     const live = totalAd - testing;
@@ -1493,6 +1485,7 @@
   };
 
   function startWizard() {
+    activeFlow = 'wizard';
     document.getElementById('wizard-entry').style.display = 'none';
     document.getElementById('wizard-flow').style.display = 'block';
     renderWizPlatforms();
@@ -1519,13 +1512,16 @@
   }
 
   function renderWizPlatforms() {
-    const allowed = PLATFORM_BY_GOAL[wizGoal] || ['meta'];
-    wizPlatforms = new Set([allowed[0]]);
+    const allowed = [...new Set([...wizGoals].flatMap(g => PLATFORM_BY_GOAL[g] || ['meta']))];
+    if (allowed.length === 0) allowed.push('meta');
+    const prev = new Set(wizPlatforms);
+    const keep = allowed.filter(p => prev.has(p));
+    wizPlatforms = new Set(keep.length > 0 ? keep : [allowed[0]]);
     const container = document.getElementById('wiz-plat-container');
     if (!container) return;
-    container.innerHTML = allowed.map((pid, i) => {
+    container.innerHTML = allowed.map((pid) => {
       const p = PLAT_META[pid];
-      const active = i === 0 ? ' active' : '';
+      const active = wizPlatforms.has(pid) ? ' active' : '';
       const pl = PLATFORMS[pid];
       return `<div class="wiz-plat-card${active}" data-pid="${pid}" onclick="wTogglePlat('${pid}',this)" style="--pc:${p.color};">
         <div class="wiz-plat-left">
@@ -1533,7 +1529,7 @@
           <div><div class="wiz-plat-name">${p.label}</div><div class="wiz-plat-sub">${p.sub}</div></div>
         </div>
         <div class="wiz-plat-right">
-          <div class="wiz-plat-cost">+${fmt(pl.mgmt)} mgmt &middot; ${fmt(pl.minSpend)} min</div>
+          <div class="wiz-plat-cost">${fmt(pl.minSpend)} min ad spend</div>
           <div class="wiz-plat-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
         </div>
       </div>`;
@@ -1543,7 +1539,7 @@
   function renderWizAddons() {
     const container = document.getElementById('wiz-addon-container');
     if (!container) return;
-    const relevant = Object.entries(ADDONS).filter(([, a]) => a.goals.includes(wizGoal));
+    const relevant = Object.entries(ADDONS).filter(([, a]) => a.goals.some(g => wizGoals.has(g)));
     if (relevant.length === 0) {
       container.innerHTML = '<p style="color:#555;font-size:0.85rem;padding:1rem 0;">No specific add-ons for this goal. Proceed to results.</p>';
       return;
@@ -1562,9 +1558,13 @@
   }
 
   function wSelectGoal(goal, el) {
-    wizGoal = goal;
-    document.querySelectorAll('#wstep-1 .wiz-goal-card').forEach(c => c.classList.remove('active'));
-    el.classList.add('active');
+    if (wizGoals.has(goal)) {
+      if (wizGoals.size === 1) return;
+      wizGoals.delete(goal);
+    } else {
+      wizGoals.add(goal);
+    }
+    document.querySelectorAll('#wstep-1 .wiz-goal-card').forEach(c => c.classList.toggle('active', wizGoals.has(c.dataset.goal)));
     wizAddons = new Set();
     renderWizPlatforms();
     renderWizAddons();
@@ -1607,15 +1607,17 @@
   }
 
   function wInitBudgetStep() {
-    const { mgmt, minSpend, minBudget } = getMinBudgetFor(wizGoal, wizPlatforms);
-    const roundedMin = Math.ceil(minBudget / 500) * 500;
+    const { mgmt, minSpend, minBudget } = getMinBudgetFor(wizGoals, wizPlatforms);
     const slider = document.getElementById('wiz-slider');
-    slider.min = roundedMin;
-    if (parseInt(slider.value) < roundedMin) { slider.value = roundedMin; wizBudget = roundedMin; }
-    document.getElementById('wiz-min-label').textContent = fmt(roundedMin);
+    slider.min = minBudget;
+    slider.max = Math.max(SLIDER_MAX, minBudget);
+    if (parseInt(slider.value) < minBudget) { slider.value = minBudget; wizBudget = minBudget; }
+    document.getElementById('wiz-min-label').textContent = fmt(minBudget);
+    document.getElementById('wiz-max-label').textContent = fmt(slider.max);
+    const goalNames = [...wizGoals].map(g => GOAL_NAMES[g]).join(' + ');
     const platNames = [...wizPlatforms].map(p => PLATFORMS[p].name).join(' + ');
     document.getElementById('wiz-budget-note').textContent =
-      'Minimum for ' + platNames + ' with ' + GOAL_NAMES[wizGoal] + ' goal: ' + fmt(roundedMin) + '/mo (' + fmt(mgmt) + ' management + ' + fmt(minSpend) + ' ad spend)';
+      'Minimum for ' + goalNames + ' on ' + platNames + ': ' + fmt(minBudget) + '/mo (' + fmt(mgmt) + ' management + ' + fmt(minSpend) + ' ad spend)';
     wUpdateBudget();
     showWizStep(3);
   }
@@ -1624,7 +1626,7 @@
     const slider = document.getElementById('wiz-slider');
     wizBudget = parseInt(slider.value);
     document.getElementById('wiz-budget-display').textContent = fmt(wizBudget);
-    const { mgmt, testing, live } = splitBudget(wizBudget, wizPlatforms, wizGoal);
+    const { mgmt, testing, live } = splitBudget(wizBudget, wizGoals, wizPlatforms);
     document.getElementById('wiz-mini-breakdown').innerHTML =
       '<div class="wiz-mini-card"><div class="wiz-mini-label">Management</div><div class="wiz-mini-val" style="color:#6ea8ff;">' + fmt(mgmt) + '</div></div>' +
       '<div class="wiz-mini-card"><div class="wiz-mini-label">Testing</div><div class="wiz-mini-val" style="color:#F59F00;">' + fmt(testing) + '</div></div>' +
@@ -1633,13 +1635,14 @@
 
   function wShowResults() {
     showWizStep('results');
-    const { mgmt, testing, live } = splitBudget(wizBudget, wizPlatforms, wizGoal);
+    const { mgmt, testing, live } = splitBudget(wizBudget, wizGoals, wizPlatforms);
     let addonsTotal = 0;
     wizAddons.forEach(aid => { addonsTotal += ADDONS[aid].price; });
     const grand = wizBudget + addonsTotal;
+    const goalNames = [...wizGoals].map(g => GOAL_NAMES[g]).join(', ');
     const platNames = [...wizPlatforms].map(p => PLATFORMS[p].name).join(', ');
 
-    let rows = '<div class="wiz-res-row"><span class="wiz-res-label">Goal</span><span class="wiz-res-val">' + GOAL_NAMES[wizGoal] + '</span></div>' +
+    let rows = '<div class="wiz-res-row"><span class="wiz-res-label">Goals</span><span class="wiz-res-val">' + goalNames + '</span></div>' +
       '<div class="wiz-res-row"><span class="wiz-res-label">Platforms</span><span class="wiz-res-val">' + platNames + '</span></div>' +
       '<div class="wiz-res-row"><span class="wiz-res-label">Management fee</span><span class="wiz-res-val">' + fmt(mgmt) + '/mo</span></div>' +
       '<div class="wiz-res-row"><span class="wiz-res-label">Testing (wks 1–2)</span><span class="wiz-res-val">' + fmt(testing) + '/mo</span></div>' +
@@ -1652,36 +1655,40 @@
     rows += '<div class="wiz-res-row total"><span class="wiz-res-label">' + (addonsTotal > 0 ? 'Grand total' : 'Total') + '</span><span class="wiz-res-val">' + fmt(grand) + '/mo</span></div>';
     document.getElementById('wiz-res-summary').innerHTML = rows;
 
-    const bench = BENCH[wizGoal];
-    const projHtml = bench.metrics.map(m =>
-      '<div class="wiz-proj-card" style="background:' + m.bg + ';border:1px solid ' + m.border + ';">' +
-        '<div class="wiz-proj-val" style="color:' + m.color + ';">' + (live > 0 ? m.calc(live).toLocaleString('en-ZA') : '0') + '</div>' +
-        '<div class="wiz-proj-name" style="color:' + m.color + ';">' + m.label + '</div>' +
-        '<div class="wiz-proj-bench" style="color:' + m.color + ';">' + m.bench + '</div>' +
-      '</div>'
-    ).join('');
+    let projHtml = '';
+    [...wizGoals].forEach(g => {
+      const bench = BENCH[g];
+      if (!bench) return;
+      projHtml += bench.metrics.map(m =>
+        '<div class="wiz-proj-card" style="background:' + m.bg + ';border:1px solid ' + m.border + ';">' +
+          '<div class="wiz-proj-val" style="color:' + m.color + ';">' + (live > 0 ? m.calc(live).toLocaleString('en-ZA') : '0') + '</div>' +
+          '<div class="wiz-proj-name" style="color:' + m.color + ';">' + m.label + '</div>' +
+          '<div class="wiz-proj-bench" style="color:' + m.color + ';">' + m.bench + '</div>' +
+        '</div>'
+      ).join('');
+    });
     document.getElementById('wiz-res-projections').innerHTML = projHtml;
 
     const disc = document.querySelector('.wiz-disclosure');
-    if (disc) disc.innerHTML = '<strong>How these estimates work:</strong> ' + bench.note + ' Actual results depend on your industry, creative quality, audience and competition. These are benchmarks, not guarantees.';
+    if (disc) disc.innerHTML = '<strong>How these estimates work:</strong> ' +
+      [...wizGoals].map(g => BENCH[g].note).filter(Boolean).join(' ') +
+      ' Actual results depend on your industry, creative quality, audience and competition. These are benchmarks, not guarantees.';
 
-    const titles = { engagement: "Here's your engagement campaign.", leads: "Here's your lead gen setup.",
-      sales: "Here's your sales campaign.", traffic: "Here's your traffic campaign.",
-      awareness: "Here's your awareness campaign.", whatsapp: "Here's your WhatsApp campaign.",
-      video: "Here's your video campaign." };
-    document.getElementById('res-title').textContent = titles[wizGoal] || "Here's what you get.";
+    document.getElementById('res-title').textContent =
+      wizGoals.size > 1 ? "Here's your combined campaign." : "Here's your campaign.";
   }
 
   function restartWizard() {
-    wizGoal = 'engagement'; wizBudget = 4000; wizAddons = new Set();
+    wizGoals = new Set(['engagement']); wizBudget = 40000; wizAddons = new Set();
     document.querySelectorAll('#wstep-1 .wiz-goal-card').forEach((c,i) => c.classList.toggle('active', i===0));
     renderWizPlatforms();
     renderWizAddons();
     const s = document.getElementById('wiz-slider');
-    if (s) s.value = 4000;
+    if (s) s.value = 40000;
     showWizStep(1);
   }
   function showManual() {
+    activeFlow = 'manual';
     document.getElementById('wizard-entry').style.display = 'none';
     document.getElementById('wizard-flow').style.display = 'none';
     document.getElementById('manual-calc').style.display = 'block';
@@ -1694,25 +1701,15 @@
     document.getElementById('wizard-entry').style.display = 'block';
   }
 
-  function openInvoiceModalFromWiz() {
-    const { mgmt, testing, live } = splitBudget(wizBudget, wizPlatforms, wizGoal);
-    let addonsTotal = 0;
-    wizAddons.forEach(aid => { addonsTotal += ADDONS[aid].price; });
-    const grand = wizBudget + addonsTotal;
-    const platNames = [...wizPlatforms].map(p => PLATFORMS[p].name).join(', ');
-    let summary = `Goal: ${GOAL_NAMES[wizGoal]}\nPlatforms: ${platNames}\nManagement: ${fmt(mgmt)}/mo\nTesting: ${fmt(testing)}/mo\nLive spend: ${fmt(live)}/mo`;
-    if (wizAddons.size > 0) { wizAddons.forEach(aid => { summary += `\n${ADDONS[aid].name}: ${fmt(ADDONS[aid].price)}/mo`; }); }
-    summary += `\nTotal: ${fmt(grand)}/mo`;
-    document.getElementById('inv-summary').innerText = summary;
-    document.getElementById('invoice-modal').style.display = 'block';
-    document.body.style.overflow = 'hidden';
-  }
-
   // ── MANUAL CALCULATOR ─────────────────────────────────
   function setGoal(goal, el) {
-    manualGoal = goal;
-    document.querySelectorAll('#manual-calc .mc-chip').forEach(c => c.classList.remove('active'));
-    el.classList.add('active');
+    if (manualGoals.has(goal)) {
+      if (manualGoals.size === 1) return;
+      manualGoals.delete(goal);
+    } else {
+      manualGoals.add(goal);
+    }
+    document.querySelectorAll('#manual-calc .mc-chip').forEach(c => c.classList.toggle('active', manualGoals.has(c.dataset.goal)));
     calc();
   }
 
@@ -1731,21 +1728,23 @@
   function calc() {
     const slider = document.getElementById('budget-slider');
     if (!slider) return;
-    const { mgmt, minSpend, minBudget } = getMinBudgetFor(manualGoal, manualPlatforms);
-    const roundedMin = Math.ceil(minBudget / 500) * 500;
-    slider.min = roundedMin;
-    document.getElementById('slider-min-label').textContent = fmt(roundedMin);
-    if (parseInt(slider.value) < roundedMin) slider.value = roundedMin;
+    const { mgmt: minMgmt, minSpend, minBudget } = getMinBudgetFor(manualGoals, manualPlatforms);
+    slider.min = minBudget;
+    slider.max = Math.max(SLIDER_MAX, minBudget);
+    document.getElementById('slider-min-label').textContent = fmt(minBudget);
+    document.getElementById('slider-max-label').textContent = fmt(slider.max);
+    if (parseInt(slider.value) < minBudget) slider.value = minBudget;
     const budget = parseInt(slider.value);
     document.getElementById('budget-display').textContent = fmt(budget);
 
     const noteEl = document.getElementById('mc-min-note');
     if (noteEl) {
+      const goalNames = [...manualGoals].map(g => GOAL_NAMES[g]).join(' + ');
       const platNames = [...manualPlatforms].map(p => PLATFORMS[p].name).join(' + ');
-      noteEl.textContent = `Min for ${platNames}: ${fmt(roundedMin)}/mo  (${fmt(mgmt)} mgmt + ${fmt(minSpend)} ad spend)`;
+      noteEl.textContent = `Min for ${goalNames} on ${platNames}: ${fmt(minBudget)}/mo  (${fmt(minMgmt)} mgmt + ${fmt(minSpend)} ad spend)`;
     }
 
-    const { testing, live } = splitBudget(budget, manualPlatforms, manualGoal);
+    const { mgmt, testing, live } = splitBudget(budget, manualGoals, manualPlatforms);
     const lp = mgmt / budget;
     const tp = testing / budget;
     const sp = Math.max(0, live) / budget;
@@ -1762,11 +1761,22 @@
     document.getElementById('spend-pct').textContent = 'live spend';
     document.getElementById('total-val').textContent = fmt(budget);
 
-    const cpe = BENCH[manualGoal].cpe;
-    const cpl = BENCH[manualGoal].cpl;
-    document.getElementById('res-eng').textContent = live > 0 ? Math.round(live / cpe).toLocaleString('en-ZA') : '0';
-    document.getElementById('res-leads').textContent = live > 0 ? Math.round(live / cpl).toLocaleString('en-ZA') : '0';
-    document.getElementById('res-wa').textContent = live > 0 ? Math.round(live / 13.13).toLocaleString('en-ZA') : '0';
+    const container = document.getElementById('mc-proj-container');
+    if (container) {
+      let html = '';
+      [...manualGoals].forEach(g => {
+        const bench = BENCH[g];
+        if (!bench) return;
+        html += bench.metrics.map(m =>
+          '<div class="mc-proj" style="background:' + m.bg + ';border:1px solid ' + m.border + ';">' +
+            '<div class="mc-proj-val" style="color:' + m.color + ';">' + (live > 0 ? m.calc(live).toLocaleString('en-ZA') : '0') + '</div>' +
+            '<div class="mc-proj-name" style="color:' + m.color + ';">' + m.label + '</div>' +
+            '<div class="mc-proj-bench" style="color:' + m.color + ';">' + m.bench + '</div>' +
+          '</div>'
+        ).join('');
+      });
+      container.innerHTML = html;
+    }
   }
 
   // Attach slider listener directly — works whether visible or hidden
@@ -1797,13 +1807,12 @@
   }
 
   function getInvoiceData() {
-    const budget = wizBudget || parseInt(document.getElementById('budget-slider')?.value || 8000);
-    const platforms = wizPlatforms.size > 0 ? wizPlatforms : manualPlatforms;
-    const goal = wizGoal || manualGoal;
-    const { mgmt: labour } = getMinBudgetFor(goal, platforms);
-    const totalAd = budget - labour;
-    const testing = Math.round(totalAd * 0.20);
-    const liveSpend = totalAd - testing;
+    const active = activeFlow === 'wizard';
+    const budget = active ? (wizBudget || BASE_FLOOR) : (parseInt(document.getElementById('budget-slider')?.value) || BASE_FLOOR);
+    const goals = active ? wizGoals : manualGoals;
+    const platforms = active ? wizPlatforms : manualPlatforms;
+    const { mgmt: labour, testing, live: liveSpend } = splitBudget(budget, goals, platforms);
+    const totalAd = Math.max(0, budget - labour);
 
     const toolsData = [
       { id: 'pm',       name: 'Project Management (ClickUp)',        toolCost: 150,  mgmt: 500  },
@@ -1818,22 +1827,34 @@
 
     let addons = [];
     let toolsTotal = 0;
-    toolsData.forEach(t => {
-      const cb = document.getElementById('toggle-' + t.id);
-      if (cb && cb.checked) {
-        const total = t.toolCost + t.mgmt;
-        toolsTotal += total;
-        addons.push({ name: t.name, toolCost: t.toolCost, mgmt: t.mgmt, total });
-      }
-    });
+    if (active) {
+      wizAddons.forEach(aid => {
+        const a = ADDONS[aid];
+        if (!a) return;
+        toolsTotal += a.price;
+        addons.push({ name: a.name, toolCost: null, mgmt: a.price, total: a.price });
+      });
+    } else {
+      toolsData.forEach(t => {
+        const cb = document.getElementById('toggle-' + t.id);
+        if (cb && cb.checked) {
+          const total = t.toolCost + t.mgmt;
+          toolsTotal += total;
+          addons.push({ name: t.name, toolCost: t.toolCost, mgmt: t.mgmt, total });
+        }
+      });
+    }
 
-    return { budget, labour, totalAd, testing, liveSpend, addons, toolsTotal, grand: budget + toolsTotal };
+    return { budget, goals, platforms, labour, totalAd, testing, liveSpend, addons, toolsTotal, grand: budget + toolsTotal };
   }
 
   function openInvoiceModal() {
     const data = getInvoiceData();
     const f = n => 'R' + Math.round(n).toLocaleString('en-ZA');
-    let summary = `Paid Media Management: ${f(data.labour)}/mo\n`;
+    const goalsText = [...data.goals].map(g => GOAL_NAMES[g]).join(', ');
+    const platsText = [...data.platforms].map(p => PLATFORMS[p].name).join(', ');
+    let summary = `Goals: ${goalsText}\nPlatforms: ${platsText}\n`;
+    summary += `Paid Media Management: ${f(data.labour)}/mo\n`;
     summary += `Ad Spend (to your account): ${f(data.totalAd)}/mo\n`;
     summary += `  incl. Testing Budget: ${f(data.testing)}\n`;
     summary += `  incl. Live Campaign: ${f(data.liveSpend)}\n`;
@@ -1977,7 +1998,7 @@
       { desc: 'Ad Spend (Live Campaign)', sub: 'Main campaign spend — direct to your ad account', amt: data.liveSpend },
     ];
     data.addons.forEach(a => {
-      lineItems.push({ desc: a.name, sub: `Tool: R${a.toolCost.toLocaleString()} + Management: R${a.mgmt.toLocaleString()}`, amt: a.total });
+      lineItems.push({ desc: a.name, sub: a.toolCost === null ? 'Added service for this package' : `Tool: R${a.toolCost.toLocaleString()} + Management: R${a.mgmt.toLocaleString()}`, amt: a.total });
     });
 
     lineItems.forEach((item, idx) => {
@@ -2068,14 +2089,4 @@
     doc.save('Invoice-' + token + '.pdf');
     closeInvoiceModal();
   }
-
-  function openInvoiceModal() {
-    const { mgmt, testing, live } = splitBudget(
-      parseInt(document.getElementById('budget-slider')?.value || 8000),
-      manualPlatforms, manualGoal
-    );
-    const budget = parseInt(document.getElementById('budget-slider')?.value || 8000);
-    let summary = 'Goal: ' + GOAL_NAMES[manualGoal] + '\nPlatforms: ' + [...manualPlatforms].map(p => PLATFORMS[p].name).join(', ');
-    summary += '\nManagement: ' + fmt(mgmt) + '/mo\nTesting: ' + fmt(testing) + '/mo\nLive spend: ' + fmt(live) + '/mo\nTotal: ' + fmt(budget) + '/mo';
-    document.getElementById('inv-summary').innerText = summary;
-    document.getElementById('invoice-modal').style
+</script>
