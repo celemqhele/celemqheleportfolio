@@ -19,6 +19,7 @@ const PLAT_BRANDS = {
   google:   { file: 'assets/logos/google.svg',   deep: '#0B2336', mid: '#4285F4', accent: '#FBBC05' },
   linkedin: { file: 'assets/logos/linkedin.svg', deep: '#041E33', mid: '#0A66C2', accent: '#5AA1E6' },
   tiktok:   { file: 'assets/logos/tiktok.svg',   deep: '#3D0A23', mid: '#FE2C55', accent: '#25F4EE' },
+  tiktokboost: { file: 'assets/logos/tiktok.svg', deep: '#2F0A1F', mid: '#FE2C55', accent: '#7DE2E0' },
 };
 
 // goal -> motion speed factor (the palette is driven by platforms now).

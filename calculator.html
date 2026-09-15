@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Campaign Calculator â€” Mqhele Cele</title>
+<title>Campaign Calculator — Mqhele Cele</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -51,6 +51,7 @@
   .nav-links a { font-size: 0.8rem; color: var(--muted); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
   .nav-links a:hover { color: var(--black); }
   .nav-cta { font-size: 0.8rem; font-weight: 500; background: var(--black); color: var(--white); padding: 0.5rem 1.25rem; border-radius: 2rem; text-decoration: none; transition: opacity 0.2s; }
+  .nav-book { font-size: 0.78rem; font-weight: 500; background: var(--meta); color: var(--white) !important; padding: 0.5rem 1.1rem; border-radius: 2rem; text-decoration: none; transition: opacity 0.2s; white-space: nowrap; }
   .nav-cta:hover { opacity: 0.8; }
 
   /* HERO */
@@ -504,7 +505,7 @@
     transition: opacity 0.5s ease, transform 0.5s ease;
   }
   .fade-in.visible { opacity: 1; transform: none; }
-  /* Fallback â€” if JS observer never fires, show everything after 1s */
+  /* Fallback — if JS observer never fires, show everything after 1s */
   @keyframes fallback-show { to { opacity: 1; transform: none; } }
   .fade-in { animation: fallback-show 0s 1.2s forwards; }
 
@@ -910,9 +911,9 @@
       <!-- STEP 4: ADD-ONS (rendered dynamically by JS) -->
       <div class="wiz-step" id="wstep-4" style="display:none;">
         <div class="wiz-step-header">
-          <div class="wiz-eyebrow">Step 4 of 4 â€” Optional</div>
+          <div class="wiz-eyebrow">Step 4 of 4 — Optional</div>
           <h3 class="wiz-title">Any extra services?</h3>
-          <p class="wiz-sub">Add-ons tailored to your goal. All optional â€” skip straight to results if you just want ads.</p>
+          <p class="wiz-sub">Add-ons tailored to your goal. All optional — skip straight to results if you just want ads.</p>
         </div>
         <div class="wiz-addon-grid" id="wiz-addon-container"></div>
         <div class="wiz-nav">
@@ -992,31 +993,37 @@
               <div class="mc-plat-row active" data-pid="meta" onclick="togglePlat('meta',this)" style="--pc:#0866FF;">
                 <div class="mc-plat-dot" style="background:#0866FF;"></div>
                 <div class="mc-plat-name">Meta Ads <span>Facebook + Instagram</span></div>
-                <div class="mc-plat-fee">R2,000 min spend</div>
+                <div class="mc-plat-fee">R1,500 min spend</div>
                 <div class="mc-plat-toggle"><div class="mc-toggle-knob"></div></div>
               </div>
-              <div class="mc-plat-row" data-pid="boosting" onclick="togglePlat('boosting',this)" style="--pc:#0866FF;">
+              <div class="mc-plat-row" data-pid="boosting" onclick="togglePlat('boosting',this)" style="--pc:#5B9FFF;">
                 <div class="mc-plat-dot" style="background:#5B9FFF;"></div>
                 <div class="mc-plat-name">Post Boosting <span>FB/IG engagement</span></div>
-                <div class="mc-plat-fee">R1,500 min spend</div>
+                <div class="mc-plat-fee">R1,000 min spend</div>
                 <div class="mc-plat-toggle"><div class="mc-toggle-knob"></div></div>
               </div>
               <div class="mc-plat-row" data-pid="google" onclick="togglePlat('google',this)" style="--pc:#4285F4;">
                 <div class="mc-plat-dot" style="background:#4285F4;"></div>
                 <div class="mc-plat-name">Google Ads <span>Search + Display</span></div>
-                <div class="mc-plat-fee">R3,000 min spend</div>
+                <div class="mc-plat-fee">R2,000 min spend</div>
                 <div class="mc-plat-toggle"><div class="mc-toggle-knob"></div></div>
               </div>
               <div class="mc-plat-row" data-pid="linkedin" onclick="togglePlat('linkedin',this)" style="--pc:#0A66C2;">
                 <div class="mc-plat-dot" style="background:#0A66C2;"></div>
                 <div class="mc-plat-name">LinkedIn Ads <span>B2B targeting</span></div>
-                <div class="mc-plat-fee">R5,000 min spend</div>
+                <div class="mc-plat-fee">R5,400 min spend</div>
                 <div class="mc-plat-toggle"><div class="mc-toggle-knob"></div></div>
               </div>
               <div class="mc-plat-row" data-pid="tiktok" onclick="togglePlat('tiktok',this)" style="--pc:#69C9D0;">
                 <div class="mc-plat-dot" style="background:#69C9D0;"></div>
                 <div class="mc-plat-name">TikTok Ads <span>Short video</span></div>
-                <div class="mc-plat-fee">R2,000 min spend</div>
+                <div class="mc-plat-fee">R10,000 min spend</div>
+                <div class="mc-plat-toggle"><div class="mc-toggle-knob"></div></div>
+              </div>
+              <div class="mc-plat-row" data-pid="tiktokboost" onclick="togglePlat('tiktokboost',this)" style="--pc:#FE2C55;">
+                <div class="mc-plat-dot" style="background:#FE2C55;"></div>
+                <div class="mc-plat-name">TikTok Boosting <span>Boost existing short video</span></div>
+                <div class="mc-plat-fee">R1,000 min spend</div>
                 <div class="mc-plat-toggle"><div class="mc-toggle-knob"></div></div>
               </div>
             </div>
@@ -1136,16 +1143,17 @@
     google:   { minSpend: 2000, name: 'Google Ads' },
     linkedin: { minSpend: 5400, name: 'LinkedIn Ads' },
     tiktok:   { minSpend: 10000, name: 'TikTok Ads' },
+    tiktokboost: { minSpend: 1000, name: 'TikTok Boosting' },
   };
 
   const PLATFORM_BY_GOAL = {
-    engagement: ['meta', 'boosting', 'tiktok'],
-    leads:      ['meta', 'google', 'linkedin', 'tiktok'],
-    sales:      ['meta', 'google', 'tiktok'],
-    traffic:    ['meta', 'google', 'tiktok', 'linkedin'],
-    awareness:  ['meta', 'boosting', 'tiktok', 'google'],
+    engagement: ['meta', 'boosting', 'tiktok', 'tiktokboost'],
+    leads:      ['meta', 'google', 'linkedin', 'tiktok', 'tiktokboost'],
+    sales:      ['meta', 'google', 'tiktok', 'tiktokboost'],
+    traffic:    ['meta', 'google', 'tiktok', 'linkedin', 'tiktokboost'],
+    awareness:  ['meta', 'boosting', 'tiktok', 'google', 'tiktokboost'],
     whatsapp:   ['meta'],
-    video:      ['meta', 'boosting', 'tiktok', 'google'],
+    video:      ['meta', 'boosting', 'tiktok', 'google', 'tiktokboost'],
   };
 
   const GOAL_MULT = {
@@ -1162,42 +1170,42 @@
   const BENCH = {
     engagement: {
       metrics: [
-        { label: 'Engagements',   calc: l => Math.round(l / 0.14), bench: 'R0.14 CPE Â· live campaign', color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',   border: 'rgba(8,102,255,0.18)' },
-        { label: 'People Reached',calc: l => Math.round(l/50*1000), bench: 'R50 CPM Â· Meta SA',         color: '#A259FF', bg: 'rgba(162,89,255,0.07)',  border: 'rgba(162,89,255,0.18)' },
+        { label: 'Engagements',   calc: l => Math.round(l / 0.14), bench: 'R0.14 CPE · live campaign', color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',   border: 'rgba(8,102,255,0.18)' },
+        { label: 'People Reached',calc: l => Math.round(l/50*1000), bench: 'R50 CPM · Meta SA',         color: '#A259FF', bg: 'rgba(162,89,255,0.07)',  border: 'rgba(162,89,255,0.18)' },
       ],
       note: 'Based on live engagement campaign: 1,933 interactions at R0.14 each.',
     },
     leads: {
       metrics: [
-        { label: 'Leads',          calc: l => Math.round(l / 35),    bench: 'R35 CPL Â· Benjamin Stevens', color: '#34A853', bg: 'rgba(52,168,83,0.07)',   border: 'rgba(52,168,83,0.18)' },
-        { label: 'WhatsApp Convos',calc: l => Math.round(l / 13.13), bench: 'R13.13 Â· Hyundai campaign',  color: '#25D366', bg: 'rgba(37,211,102,0.07)', border: 'rgba(37,211,102,0.18)' },
+        { label: 'Leads',          calc: l => Math.round(l / 35),    bench: 'R35 CPL · Benjamin Stevens', color: '#34A853', bg: 'rgba(52,168,83,0.07)',   border: 'rgba(52,168,83,0.18)' },
+        { label: 'WhatsApp Convos',calc: l => Math.round(l / 13.13), bench: 'R13.13 · Hyundai campaign',  color: '#25D366', bg: 'rgba(37,211,102,0.07)', border: 'rgba(37,211,102,0.18)' },
       ],
-      note: 'Leads: Benjamin Stevens lettings campaign (Â£1.87 CPL). WhatsApp: Hyundai SA campaign (R13.13 per conversation).',
+      note: 'Leads: Benjamin Stevens lettings campaign (£1.87 CPL). WhatsApp: Hyundai SA campaign (R13.13 per conversation).',
     },
     sales: {
       metrics: [
         { label: 'Est. Purchases', calc: l => Math.round(l / 65),  bench: 'R65 est. cost per purchase',color: '#34A853', bg: 'rgba(52,168,83,0.07)',  border: 'rgba(52,168,83,0.18)' },
-        { label: 'Ad Clicks',      calc: l => Math.round(l / 5),   bench: 'R5 avg CPC Â· Meta SA',      color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',  border: 'rgba(8,102,255,0.18)' },
+        { label: 'Ad Clicks',      calc: l => Math.round(l / 5),   bench: 'R5 avg CPC · Meta SA',      color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',  border: 'rgba(8,102,255,0.18)' },
       ],
-      note: 'Purchase cost varies by product price and industry. Clicks based on SA Meta CPC averages R3â€“R8.',
+      note: 'Purchase cost varies by product price and industry. Clicks based on SA Meta CPC averages R3–R8.',
     },
     traffic: {
       metrics: [
-        { label: 'Website Clicks', calc: l => Math.round(l / 5),    bench: 'R5 avg CPC Â· Meta SA',    color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',  border: 'rgba(8,102,255,0.18)' },
-        { label: 'People Reached', calc: l => Math.round(l/50*1000), bench: 'R50 CPM Â· Meta SA',       color: '#A259FF', bg: 'rgba(162,89,255,0.07)', border: 'rgba(162,89,255,0.18)' },
+        { label: 'Website Clicks', calc: l => Math.round(l / 5),    bench: 'R5 avg CPC · Meta SA',    color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',  border: 'rgba(8,102,255,0.18)' },
+        { label: 'People Reached', calc: l => Math.round(l/50*1000), bench: 'R50 CPM · Meta SA',       color: '#A259FF', bg: 'rgba(162,89,255,0.07)', border: 'rgba(162,89,255,0.18)' },
       ],
-      note: 'SA Meta CPC averages R3â€“R8. Google Search CPCs vary by industry (R5â€“R50).',
+      note: 'SA Meta CPC averages R3–R8. Google Search CPCs vary by industry (R5–R50).',
     },
     awareness: {
       metrics: [
-        { label: 'People Reached', calc: l => Math.round(l/50*1000), bench: 'R50 CPM Â· Meta SA',    color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',  border: 'rgba(8,102,255,0.18)' },
+        { label: 'People Reached', calc: l => Math.round(l/50*1000), bench: 'R50 CPM · Meta SA',    color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',  border: 'rgba(8,102,255,0.18)' },
         { label: 'Impressions',    calc: l => Math.round(l/30*1000), bench: 'R30 CPM estimate',      color: '#A259FF', bg: 'rgba(162,89,255,0.07)', border: 'rgba(162,89,255,0.18)' },
       ],
-      note: 'SA Meta CPM averages R30â€“R70, among the lowest globally. Small budgets reach large audiences here.',
+      note: 'SA Meta CPM averages R30–R70, among the lowest globally. Small budgets reach large audiences here.',
     },
     whatsapp: {
       metrics: [
-        { label: 'Conversations',  calc: l => Math.round(l / 13.13), bench: 'R13.13 Â· Hyundai campaign', color: '#25D366', bg: 'rgba(37,211,102,0.07)', border: 'rgba(37,211,102,0.18)' },
+        { label: 'Conversations',  calc: l => Math.round(l / 13.13), bench: 'R13.13 · Hyundai campaign', color: '#25D366', bg: 'rgba(37,211,102,0.07)', border: 'rgba(37,211,102,0.18)' },
         { label: 'People Reached', calc: l => Math.round(l/50*1000),  bench: 'R50 CPM estimate',         color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',   border: 'rgba(8,102,255,0.18)' },
       ],
       note: 'Direct from Hyundai SA campaign: 16 qualified conversations at R13.13 each. Zero form drop-off.',
@@ -1205,7 +1213,7 @@
     video: {
       metrics: [
         { label: 'Video Views',    calc: l => Math.round(l / 0.10),  bench: 'R0.10 CPV estimate',     color: '#FF4444', bg: 'rgba(255,68,68,0.06)',   border: 'rgba(255,68,68,0.18)' },
-        { label: 'People Reached', calc: l => Math.round(l/40*1000), bench: 'R40 CPM Â· Meta/TikTok',  color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',   border: 'rgba(8,102,255,0.18)' },
+        { label: 'People Reached', calc: l => Math.round(l/40*1000), bench: 'R40 CPM · Meta/TikTok',  color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',   border: 'rgba(8,102,255,0.18)' },
       ],
       note: 'CPV estimates based on Meta and TikTok video campaign averages in SA. TikTok typically delivers lower CPVs.',
     },
@@ -1267,6 +1275,7 @@
     google:   { label: 'Google Ads',    sub: 'Search, Display + YouTube',icon: 'G',   color: '#4285F4' },
     linkedin: { label: 'LinkedIn Ads',  sub: 'B2B + professional',      icon: 'in',   color: '#0A66C2' },
     tiktok:   { label: 'TikTok Ads',    sub: 'Short video, younger',    icon: 'TT',   color: '#69C9D0' },
+    tiktokboost: { label: 'TikTok Boosting', sub: 'Boost existing short video', icon: 'TB', color: '#FE2C55' },
   };
 
   function startWizard() {
@@ -1294,7 +1303,13 @@
       else if (stepNum === current) { dot.classList.add('active'); dot.classList.remove('done'); dot.textContent = d; }
       else { dot.classList.remove('active','done'); dot.textContent = d; }
     });
+    const flow = document.getElementById('wizard-flow');
+    if (flow && flow.style.display !== 'none') {
+      try { flow.scrollIntoView({ behavior: wizScrollSmooth(), block: 'start' }); } catch (e) { flow.scrollIntoView(true); }
+    }
   }
+
+  function wizScrollSmooth() { return !window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'auto'; }
 
   function renderWizPlatforms() {
     const allowed = [...new Set([...wizGoals].flatMap(g => PLATFORM_BY_GOAL[g] || ['meta']))];
@@ -1429,7 +1444,7 @@
     let rows = '<div class="wiz-res-row"><span class="wiz-res-label">Goals</span><span class="wiz-res-val">' + goalNames + '</span></div>' +
       '<div class="wiz-res-row"><span class="wiz-res-label">Platforms</span><span class="wiz-res-val">' + platNames + '</span></div>' +
       '<div class="wiz-res-row"><span class="wiz-res-label">Admin fee (25%)</span><span class="wiz-res-val">' + fmt(mgmt) + '/mo</span></div>' +
-      '<div class="wiz-res-row"><span class="wiz-res-label">Testing (wks 1â€“2)</span><span class="wiz-res-val">' + fmt(testing) + '/mo</span></div>' +
+      '<div class="wiz-res-row"><span class="wiz-res-label">Testing (wks 1–2)</span><span class="wiz-res-val">' + fmt(testing) + '/mo</span></div>' +
       '<div class="wiz-res-row"><span class="wiz-res-label">Live ad spend</span><span class="wiz-res-val">' + fmt(live) + '/mo</span></div>';
     if (wizAddons.size > 0) {
       wizAddons.forEach(aid => {
@@ -1562,7 +1577,7 @@
     }
   }
 
-  // Attach slider listener directly â€” works whether visible or hidden
+  // Attach slider listener directly — works whether visible or hidden
   (function attachSlider() {
     const s = document.getElementById('budget-slider');
     if (s) { s.addEventListener('input', calc); s.addEventListener('change', calc); }
@@ -1948,8 +1963,8 @@
     // Line items
     const lineItems = [
       { desc: 'Paid Media Management', sub: 'Campaign strategy, setup, optimisation & reporting', amt: data.labour },
-      { desc: 'Ad Spend (Campaign Testing)', sub: `Testing budget â€” weeks 1-2 (20% of ad spend)`, amt: data.testing },
-      { desc: 'Ad Spend (Live Campaign)', sub: 'Main campaign spend â€” direct to your ad account', amt: data.liveSpend },
+      { desc: 'Ad Spend (Campaign Testing)', sub: `Testing budget — weeks 1-2 (20% of ad spend)`, amt: data.testing },
+      { desc: 'Ad Spend (Live Campaign)', sub: 'Main campaign spend — direct to your ad account', amt: data.liveSpend },
     ];
     data.addons.forEach(a => {
       lineItems.push({ desc: a.name, sub: a.toolCost === null ? 'Added service for this package' : `Tool: R${a.toolCost.toLocaleString()} + Management: R${a.mgmt.toLocaleString()}`, amt: a.total });
@@ -2062,7 +2077,7 @@ window.FxBridgeSync = function () {
       platforms = Array.from(wizPlatforms);
     }
 } catch (e) {}
-  var accent = { meta: '#0866FF', boosting: '#0096FF', google: '#4285F4', linkedin: '#0A66C2', tiktok: '#FE2C55' }[platforms[0]] || '#0866FF';
+  var accent = { meta: '#0866FF', boosting: '#0096FF', google: '#4285F4', linkedin: '#0A66C2', tiktok: '#FE2C55', tiktokboost: '#FE2C55' }[platforms[0]] || '#0866FF';
   try { document.documentElement.style.setProperty('--fx-accent', accent); } catch (e) {}
   window.dispatchEvent(new CustomEvent('fx:set', { detail: { goals: goals, platforms: platforms } }));
 };
@@ -2097,7 +2112,8 @@ if (typeof window.FxBridgeSync === 'function') window.FxBridgeSync();
   body.fx-fallback #fx-canvas { display: none; }
   body.fx-fallback { background: radial-gradient(ellipse at 20% -10%, #0a1a3c 0%, #05070c 55%) fixed, radial-gradient(ellipse at 90% 110%, #123a2a 0%, #05070c 55%) fixed, #05070c !important; }
   section, footer, .hero, .calc-hero { position: relative; z-index: 1; }
-  nav { background: rgba(9, 12, 18, 0.6) !important; backdrop-filter: blur(14px); border-bottom-color: rgba(255,255,255,0.08); }
+nav { background: rgba(9, 12, 18, 0.6) !important; backdrop-filter: blur(14px); border-bottom-color: rgba(255,255,255,0.08); }
+  nav .nav-logo { color: var(--white); }
   nav .nav-links a { color: var(--muted); }
   nav .nav-links a.active { color: var(--white); }
   nav .nav-cta { background: rgba(255,255,255,0.08); color: var(--white); border: 1px solid rgba(255,255,255,0.14); }
