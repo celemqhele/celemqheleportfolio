@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Book a Call — Mqhele Cele</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<title>Book a Call â€” Mqhele Cele</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -13,7 +13,7 @@
     --wa: #25D366; --amber: #F59F00; --green: #34A853;
   }
   html { scroll-behavior: smooth; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--off); color: var(--black); overflow-x: hidden; padding-top: 62px; }
+  body { font-family: 'Manrope', sans-serif; background: var(--off); color: var(--black); overflow-x: hidden; padding-top: 62px; }
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 2rem; background: rgba(250,248,243,0.94); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
   .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; letter-spacing: -0.02em; text-decoration: none; color: var(--black); }
   .nav-links { display: flex; gap: 1.75rem; list-style: none; }
@@ -35,8 +35,8 @@
   footer .contact a:hover { color: var(--white); }
   .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .fade-in.visible { opacity: 1; transform: none; }
-  .btn-primary { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; padding: 0.85rem 2rem; border-radius: 2rem; background: var(--white); color: var(--black); text-decoration: none; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
-  .btn-secondary { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; padding: 0.85rem 2rem; border-radius: 2rem; background: transparent; color: var(--white); text-decoration: none; border: 1px solid rgba(255,255,255,0.2); transition: border-color 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .btn-primary { font-family: 'Manrope', sans-serif; font-size: 0.9rem; font-weight: 500; padding: 0.85rem 2rem; border-radius: 2rem; background: var(--white); color: var(--black); text-decoration: none; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .btn-secondary { font-family: 'Manrope', sans-serif; font-size: 0.9rem; font-weight: 500; padding: 0.85rem 2rem; border-radius: 2rem; background: transparent; color: var(--white); text-decoration: none; border: 1px solid rgba(255,255,255,0.2); transition: border-color 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
   .btn-secondary:hover { border-color: rgba(255,255,255,0.5); }
   .cta-section { background: var(--black); text-align: center; padding: 6rem 0; }
   .cta-section .section-eyebrow { color: var(--meta); }
@@ -91,11 +91,11 @@
     <div class="book-layout">
       <div class="book-sidebar fade-in">
         <h3>What we'll cover</h3>
-        <div class="book-point"><div class="book-dot"></div><p>Your current marketing — what's working and what isn't.</p></div>
-        <div class="book-point"><div class="book-dot"></div><p>Your goal — leads, sales, engagement — and what a realistic result looks like for your budget.</p></div>
+        <div class="book-point"><div class="book-dot"></div><p>Your current marketing â€” what's working and what isn't.</p></div>
+        <div class="book-point"><div class="book-dot"></div><p>Your goal â€” leads, sales, engagement â€” and what a realistic result looks like for your budget.</p></div>
         <div class="book-point"><div class="book-dot"></div><p>Exactly how your budget splits between management and ad spend.</p></div>
         <div class="book-point"><div class="book-dot"></div><p>Which platforms make sense for your business and your audience in SA.</p></div>
-        <div class="book-point"><div class="book-dot"></div><p>Next steps — no obligation, no lock-in, no pressure.</p></div>
+        <div class="book-point"><div class="book-dot"></div><p>Next steps â€” no obligation, no lock-in, no pressure.</p></div>
         <div class="book-divider"></div>
         <div class="book-alt">
           <h4>Prefer to explore first?</h4>
@@ -147,4 +147,44 @@
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
 </body>
-</html>
+</html><canvas id="fx-canvas" aria-hidden="true"></canvas>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+
+<script type="module">
+import { init } from './js/fx-engine.js';
+window.Fx = { init: init };
+init(document.getElementById('fx-canvas'), { lite: true, initial: { goals: ['engagement'], platforms: ['meta', 'boosting', 'google'] } });
+</script>
+
+<style>
+  body { background: #05070c !important; color: var(--white); }
+  #fx-canvas {
+    position: fixed; inset: 0; width: 100vw; height: 100vh;
+    z-index: 0; pointer-events: none; display: block;
+  }
+  body.fx-fallback #fx-canvas { display: none; }
+  body.fx-fallback { background: radial-gradient(ellipse at 20% -10%, #0a1a3c 0%, #05070c 55%) fixed, radial-gradient(ellipse at 90% 110%, #123a2a 0%, #05070c 55%) fixed, #05070c !important; }
+  section, footer, .page-hero, .book-hero, .cta-section { position: relative; z-index: 1; }
+  nav { background: rgba(9, 12, 18, 0.6) !important; backdrop-filter: blur(14px); border-bottom-color: rgba(255,255,255,0.08); }
+  nav .nav-links a { color: var(--muted); }
+  nav .nav-links a.active { color: var(--white); }
+  .page-hero, .book-hero { background: rgba(8, 11, 16, 0.55); }
+  .how-card, .plat-card, .addon-card { background: rgba(20, 26, 36, 0.55); border-color: rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
+  .how-desc, .plat-desc, .addon-tool { color: rgba(165, 176, 192, 0.8); }
+  .how-title, .plat-name, .addon-name, .plat-fee, .addon-price { color: var(--white); }
+  .pricing-box { background: rgba(20, 26, 36, 0.55); border-color: rgba(255,255,255,0.1); }
+  .pricing-box p { color: rgba(165, 176, 192, 0.8); }
+  .pricing-box h3 { color: var(--white); }
+  .split-table { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.09); }
+  .split-row { border-bottom-color: rgba(255,255,255,0.07); }
+  .split-row span:first-child { color: var(--muted); }
+  .book-point p { color: rgba(165, 176, 192, 0.85); }
+  .book-sidebar h3 { color: var(--white); }
+  .book-alt h4 { color: var(--muted); }
+  .cal-wrap { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+  .btn-primary { background: var(--white); color: var(--black); }
+  .btn-secondary { color: var(--white); border-color: rgba(255,255,255,0.25); }
+</style>
