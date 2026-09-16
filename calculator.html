@@ -762,6 +762,74 @@
   </div>
 </nav>
 
+<div id="mc-region-banner" style="display:none;background:#0a2540;color:#e3ecf5;font-size:0.74rem;text-align:center;padding:0.5rem 1rem;line-height:1.5;position:relative;z-index:99;"></div>
+<script>
+(function () {
+  var readParam = function () { var m = location.search.match(/[?&]market=(USD|ZA)/i); return m ? m[1].toUpperCase() : null; };
+  var tzGuess = function () {
+    try { var t = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; if (/^(America|Pacific|Atlantic|US|Canada)\//.test(t) || t === 'Europe/London') return 'USD'; } catch (e) {}
+    return 'ZA';
+  };
+  var asked = readParam();
+  var cur = null;
+  if (asked) cur = asked;
+  if (!cur) { try { cur = sessionStorage.getItem('mc_market'); } catch (e) {} }
+  if (!cur) cur = tzGuess() === 'USD' ? 'USD' : 'ZA';
+  var set = function (m) {
+    var v = (m === 'USD' || m === 'ZA') ? m : 'ZA';
+    if (v === window.__MC.market) return;
+    window.__MC.market = v;
+    try { sessionStorage.setItem('mc_market', v); } catch (e) {}
+    try { if (window.__mcApply) window.__mcApply(); } catch (e) {}
+  };
+  window.__MC = { market: cur, rate: 18.5, set: set, MINS: { meta:[1500,500], boosting:[1000,250], google:[2000,600], linkedin:[5400,300], tiktok:[10000,1500], tiktokboost:[1000,250] } };
+  if (!asked) {
+    try { fetch('/api/region', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) { if (d && d.region === 'USD') window.__MC.set('USD'); }).catch(function () {}); } catch (e) {}
+  }
+  function mcFmt(n) { var us = window.__MC.market === 'USD'; return (us ? '$' : 'R') + Math.round(n).toLocaleString(us ? 'en-US' : 'en-ZA'); }
+  var apply = function () {
+    var USD = window.__MC.market === 'USD';
+    var b = document.getElementById('mc-region-banner');
+    if (b) {
+      if (USD) {
+        b.style.display = 'block';
+        b.innerHTML = 'Prices shown in US dollars for easier reading. Billing happens in South African Rand - your card will be charged the Rand equivalent at the current rate (reference <strong>$1 = R' + window.__MC.rate + '</strong>). <a href="?market=ZA" style="color:#fff;text-decoration:underline;">Show in Rands</a> | <a href="?market=USD" style="color:#fff;text-decoration:underline;">Show in USD</a>';
+      } else { b.style.display = 'none'; }
+    }
+    document.querySelectorAll('.mc-plat-row').forEach(function (row) {
+      var pid = row.getAttribute('data-pid');
+      var fee = row.querySelector('.mc-plat-fee');
+      if (fee && pid && window.__MC.MINS[pid]) fee.textContent = mcFmt(USD ? window.__MC.MINS[pid][1] : window.__MC.MINS[pid][0]) + ' min spend';
+    });
+    ['wiz-min-label'].forEach(function (id) { });
+    try { if (window.getMinBudgetFor) { var u = getMinBudgetFor(new Set(['engagement']), new Set(['meta'])); var wl = document.getElementById('wiz-min-label'); if (wl) wl.textContent = mcFmt(u.minBudget); var sl = document.getElementById('slider-min-label'); if (sl) sl.textContent = mcFmt(u.minBudget); } } catch (e) {}
+    var wb = document.getElementById('wiz-max-label'); if (wb) wb.textContent = mcFmt(USD ? 15000 : 100000);
+    var sb = document.getElementById('slider-max-label'); if (sb) sb.textContent = mcFmt(USD ? 15000 : 100000);
+    try { if (typeof calc === 'function' && document.getElementById('manual-calc') && document.getElementById('manual-calc').style.display === 'block') calc(); } catch (e) {}
+    try { if (typeof wShowResults === 'function' && document.getElementById('wstep-results') && document.getElementById('wstep-results').style.display === 'block') wShowResults(); } catch (e) {}
+    if (window.__MC_ADDSV) {
+      document.querySelectorAll('[data-pid2]').forEach(function (el) {
+        var pid = el.getAttribute('data-pid2'); var s = window.__MC_ADDSV[pid]; if (!s) return;
+        el.textContent = 'From ' + (USD ? s.us : s.za) + '/mo min ad spend + ' + (USD ? '30' : '25') + '% admin';
+      });
+      document.querySelectorAll('[data-aid2]').forEach(function (el) {
+        var aid = el.getAttribute('data-aid2'); var p = (window.__MC_ADDSV.addons || {})[aid];
+        if (!p) return; el.textContent = (USD ? p.us : p.za) + '/mo';
+      });
+      var zt = document.getElementById('split-za'), ut = document.getElementById('split-us');
+      var ex = document.getElementById('split-ex');
+      if (zt) zt.style.display = USD ? 'none' : '';
+      if (ut) ut.style.display = USD ? '' : 'none';
+      if (ex) ex.textContent = USD ? 'Example: $5,000/month total on Meta Ads (30% admin on the ad spend):' : 'Example: R5,000/month total on Meta Ads:';
+    }
+    var ph = document.getElementById('mc-pdf-hint');
+    if (ph) ph.textContent = USD ? 'Open the PDF and email it to mqhele03@gmail.com to receive the international transfer details.' : 'Open the PDF and click the Paystack button inside to pay online.';
+  };
+  window.__mcApply = apply;
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', apply); else apply();
+})();
+</script>
+
 
 
 <!-- CALCULATOR -->
@@ -1108,7 +1176,7 @@
 <div id="invoice-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;overflow-y:auto;padding:2rem;">
   <div style="max-width:480px;margin:auto;background:#1a1a1a;border:1px solid #333;border-radius:1.25rem;padding:2rem;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
-      <div><div style="font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;color:#fff;">Generate Invoice</div><div style="font-size:0.75rem;color: #fff;margin-top:0.2rem;">We'll generate a PDF with a secure Paystack payment button.</div></div>
+      <div><div style="font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;color:#fff;">Generate Invoice</div><div style="font-size:0.75rem;color: #fff;margin-top:0.2rem;">Generates an invoice PDF. South Africa: Paystack card/EFT. US/UK: invoice with international transfer details.</div></div>
       <button onclick="closeInvoiceModal()" style="background:none;border:none;color: #fff;cursor:pointer;font-size:1.4rem;line-height:1;">x</button>
     </div>
     <div style="display:flex;flex-direction:column;gap:1rem;">
@@ -1119,7 +1187,7 @@
     <div style="margin-top:1.5rem;background:#111;border:1px solid #2a2a2a;border-radius:0.75rem;padding:1rem 1.1rem;"><div style="font-size:0.7rem;color: #fff;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;">Invoice summary</div><div id="inv-summary" style="font-size:0.82rem;color: #fff;line-height:1.8;"></div></div>
     <div id="inv-error" style="display:none;margin-top:0.75rem;font-size:0.8rem;color:#ff6b6b;background:rgba(255,107,107,0.08);padding:0.6rem 0.9rem;border-radius:0.5rem;"></div>
     <button id="inv-generate-btn" onclick="generateInvoice()" style="width:100%;margin-top:1.25rem;font-family:'Manrope',sans-serif;font-size:0.95rem;font-weight:500;padding:0.9rem;border-radius:2rem;background:var(--meta);color:#fff;border:none;cursor:pointer;">Generate Invoice PDF</button>
-    <div style="font-size:0.7rem;color: #fff;text-align:center;margin-top:0.75rem;">Open the PDF and click the Paystack button inside to pay online.</div>
+    <div style="font-size:0.7rem;color: #fff;text-align:center;margin-top:0.75rem;"><span id="mc-pdf-hint">Open the PDF and click the Paystack button inside to pay online.</span></div>
   </div>
 </div>
 
@@ -1138,13 +1206,14 @@
 <script>
   // â”€â”€ Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const PLATFORMS = {
-    meta:     { minSpend: 1500, name: 'Meta Ads' },
-    boosting: { minSpend: 1000, name: 'Post Boosting' },
-    google:   { minSpend: 2000, name: 'Google Ads' },
-    linkedin: { minSpend: 5400, name: 'LinkedIn Ads' },
-    tiktok:   { minSpend: 10000, name: 'TikTok Ads' },
-    tiktokboost: { minSpend: 1000, name: 'TikTok Boosting' },
+    meta:     { minSpend: 1500, usMin: 500,  name: 'Meta Ads' },
+    boosting: { minSpend: 1000, usMin: 250,  name: 'Post Boosting' },
+    google:   { minSpend: 2000, usMin: 600,  name: 'Google Ads' },
+    linkedin: { minSpend: 5400, usMin: 300,  name: 'LinkedIn Ads' },
+    tiktok:   { minSpend: 10000, usMin: 1500, name: 'TikTok Ads' },
+    tiktokboost: { minSpend: 1000, usMin: 250, name: 'TikTok Boosting' },
   };
+  function pMin(p) { var pl = PLATFORMS[p] || {}; return (window.__MC && window.__MC.market === 'USD') ? (pl.usMin || 0) : (pl.minSpend || 0); }
 
   const PLATFORM_BY_GOAL = {
     engagement: ['meta', 'boosting', 'tiktok', 'tiktokboost'],
@@ -1220,21 +1289,76 @@
   };
 
   const ADDONS = {
-    pm:       { name: 'Project Management',  tool: 'ClickUp',            price: 650,  icon: 'PM',  color: '#7B68EE', bg: 'rgba(123,104,238,0.12)', goals: ['leads','sales','traffic','awareness','video'] },
-    crm:      { name: 'CRM',                 tool: 'HubSpot / Pipedrive', price: 1250, icon: 'CRM', color: '#FF7A59', bg: 'rgba(255,122,89,0.12)',   goals: ['leads','sales','whatsapp'] },
-    lp:       { name: 'Landing Pages',       tool: 'Carrd / Unbounce',    price: 1950, icon: 'LP',  color: '#0866FF', bg: 'rgba(8,102,255,0.12)',    goals: ['leads','sales','traffic'] },
-    web:      { name: 'Website',             tool: 'Wix / Webflow',       price: 2100, icon: 'WEB', color: '#34A853', bg: 'rgba(52,168,83,0.12)',    goals: ['sales','traffic'] },
-    email:    { name: 'Email Marketing',     tool: 'Mailchimp / Brevo',   price: 1250, icon: '@',   color: '#FF9B00', bg: 'rgba(255,155,0,0.12)',    goals: ['leads','sales'] },
-    wa:       { name: 'WhatsApp Automation', tool: 'Chatfuel / WhatChimp',price: 1500, icon: 'WA',  color: '#25D366', bg: 'rgba(37,211,102,0.12)',  goals: ['leads','whatsapp'] },
-    analytics:{ name: 'Analytics Dashboard', tool: 'Looker Studio',       price: 600,  icon: 'DA',  color: '#4285F4', bg: 'rgba(66,133,244,0.12)',   goals: ['engagement','leads','sales','traffic','awareness','whatsapp','video'] },
-    creative: { name: 'Ad Creative',         tool: 'Canva Pro + Copy',    price: 1450, icon: 'AD',  color: '#A259FF', bg: 'rgba(162,89,255,0.12)',   goals: ['engagement','sales','awareness','video'] },
+    pm:        { name: 'Project Management',  tool: 'ClickUp',            price: 650,  usPrice: 35,  icon: 'PM',  color: '#7B68EE', bg: 'rgba(123,104,238,0.12)', goals: ['leads','sales','traffic','awareness','video'] },
+    crm:       { name: 'CRM',                 tool: 'HubSpot / Pipedrive', price: 1250, usPrice: 67,  icon: 'CRM', color: '#FF7A59', bg: 'rgba(255,122,89,0.12)',   goals: ['leads','sales','whatsapp'] },
+    lp:        { name: 'Landing Pages',       tool: 'Carrd / Unbounce',    price: 1950, usPrice: 106, icon: 'LP',  color: '#0866FF', bg: 'rgba(8,102,255,0.12)',    goals: ['leads','sales','traffic'] },
+    web:       { name: 'Website',             tool: 'Wix / Webflow',       price: 2100, usPrice: 113, icon: 'WEB', color: '#34A853', bg: 'rgba(52,168,83,0.12)',    goals: ['sales','traffic'] },
+    email:     { name: 'Email Marketing',     tool: 'Mailchimp / Brevo',   price: 1250, usPrice: 68,  icon: '@',   color: '#FF9B00', bg: 'rgba(255,155,0,0.12)',    goals: ['leads','sales'] },
+    wa:        { name: 'WhatsApp Automation', tool: 'Chatfuel / WhatChimp',price: 1500, usPrice: 81,  icon: 'WA',  color: '#25D366', bg: 'rgba(37,211,102,0.12)',  goals: ['leads','whatsapp'] },
+    analytics: { name: 'Analytics Dashboard', tool: 'Looker Studio',       price: 600,  usPrice: 32,  icon: 'DA',  color: '#4285F4', bg: 'rgba(66,133,244,0.12)',   goals: ['engagement','leads','sales','traffic','awareness','whatsapp','video'] },
+    creative:  { name: 'Ad Creative',         tool: 'Canva Pro + Copy',    price: 1450, usPrice: 79,  icon: 'AD',  color: '#A259FF', bg: 'rgba(162,89,255,0.12)',   goals: ['engagement','sales','awareness','video'] },
+  };
+  function aPrice(a) { return (window.__MC && window.__MC.market === 'USD') ? (a.usPrice || a.price) : a.price; }
+  function benchFor(g) { return (window.__MC && window.__MC.market === 'USD') ? (window.__MC_BENCH_US[g] || null) : BENCH[g]; }
+
+
+  window.__MC_BENCH_US = {
+    engagement: {
+      metrics: [
+        { label: 'Engagements',   calc: l => Math.round(l / 0.08), bench: '$0.08 CPE · US estimate',  color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',   border: 'rgba(8,102,255,0.18)' },
+        { label: 'People Reached',calc: l => Math.round(l/13*1000), bench: '$13 CPM · US estimate',   color: '#A259FF', bg: 'rgba(162,89,255,0.07)',  border: 'rgba(162,89,255,0.18)' },
+      ],
+      note: 'US market estimates (not guarantees): engagement roughly $0.08 each, CPM around $13.',
+    },
+    leads: {
+      metrics: [
+        { label: 'Leads',          calc: l => Math.round(l / 30),    bench: '$30 CPL · US estimate',   color: '#34A853', bg: 'rgba(52,168,83,0.07)',   border: 'rgba(52,168,83,0.18)' },
+        { label: 'Ad Clicks',      calc: l => Math.round(l / 1.16),  bench: '$1.16 CPC · US estimate', color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',   border: 'rgba(8,102,255,0.18)' },
+      ],
+      note: 'US market estimates (not guarantees): lead cost around $30, click cost around $1.16.',
+    },
+    sales: {
+      metrics: [
+        { label: 'Est. Purchases', calc: l => Math.round(l / 65),  bench: '$65 est. cost per purchase', color: '#34A853', bg: 'rgba(52,168,83,0.07)',  border: 'rgba(52,168,83,0.18)' },
+        { label: 'Ad Clicks',      calc: l => Math.round(l / 1.16), bench: '$1.16 CPC · US estimate',  color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',   border: 'rgba(8,102,255,0.18)' },
+      ],
+      note: 'US estimates (not guarantees): purchase cost varies by product price; clicks around $1.16.',
+    },
+    traffic: {
+      metrics: [
+        { label: 'Website Clicks', calc: l => Math.round(l / 1.16),   bench: '$1.16 CPC · US estimate',  color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',   border: 'rgba(8,102,255,0.18)' },
+        { label: 'People Reached', calc: l => Math.round(l/13*1000),  bench: '$13 CPM · US estimate',    color: '#A259FF', bg: 'rgba(162,89,255,0.07)',  border: 'rgba(162,89,255,0.18)' },
+      ],
+      note: 'US estimates (not guarantees): clicks around $1.16, CPM around $13. Industry varies.',
+    },
+    awareness: {
+      metrics: [
+        { label: 'People Reached', calc: l => Math.round(l/13*1000), bench: '$13 CPM · US estimate',   color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',   border: 'rgba(8,102,255,0.18)' },
+        { label: 'Impressions',    calc: l => Math.round(l/9*1000),  bench: '$9 CPM · US estimate',     color: '#A259FF', bg: 'rgba(162,89,255,0.07)',  border: 'rgba(162,89,255,0.18)' },
+      ],
+      note: 'US estimates (not guarantees): CPM averages $9-$13 for campaign reach.',
+    },
+    whatsapp: {
+      metrics: [
+        { label: 'Conversations',  calc: l => Math.round(l / 5.5),   bench: '$5.50 conv · US estimate', color: '#25D366', bg: 'rgba(37,211,102,0.07)', border: 'rgba(37,211,102,0.18)' },
+        { label: 'People Reached', calc: l => Math.round(l/13*1000), bench: '$13 CPM · US estimate',   color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',  border: 'rgba(8,102,255,0.18)' },
+      ],
+      note: 'US estimates (not guarantees): WhatsApp conversations around $5.50 each, CPM around $13.',
+    },
+    video: {
+      metrics: [
+        { label: 'Video Views',    calc: l => Math.round(l / 0.03),   bench: '$0.03 CPV · US estimate',   color: '#FF4444', bg: 'rgba(255,68,68,0.06)',  border: 'rgba(255,68,68,0.18)' },
+        { label: 'People Reached', calc: l => Math.round(l/11*1000),  bench: '$11 CPM · US estimate',     color: '#6ea8ff', bg: 'rgba(8,102,255,0.07)',   border: 'rgba(8,102,255,0.18)' },
+      ],
+      note: 'US estimates (not guarantees): cost per view around $0.03, CPM around $11 on Meta/TikTok.',
+    },
   };
 
 
   // â”€â”€ Pricing model (15 Sep 2026) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-  const ADMIN_PCT = 0.25;         // admin fee = 25% of the ad spend (20% of the monthly total)
+  function ADMIN_PCT() { return (window.__MC && window.__MC.market === 'USD') ? 0.30 : 0.25; }         // admin fee = 25% of the ad spend (20% of the monthly total)
   const STACK_DISCOUNT = 0.85;   // each extra goal after the first counts at 85%
-  const SLIDER_MAX = 100000;
+  function SLIDER_MAX() { return (window.__MC && window.__MC.market === 'USD') ? 15000 : 100000; }
 
   // â”€â”€ State â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   let wizGoals = new Set(['engagement']);
@@ -1245,7 +1369,7 @@
   let manualPlatforms = new Set(['meta']);
   let activeFlow = 'wizard';
 
-  function fmt(n) { return 'R' + Math.round(n).toLocaleString('en-ZA'); }
+  function fmt(n) { var us = (window.__MC && window.__MC.market === 'USD'); return (us ? '$' : 'R') + Math.round(n).toLocaleString(us ? 'en-US' : 'en-ZA'); }
 
   function goalMult(goals) {
     return [...goals].reduce((sum, g, i) => sum + (GOAL_MULT[g] || 1.0) * (i === 0 ? 1 : STACK_DISCOUNT), 0);
@@ -1254,14 +1378,14 @@
   function getMinBudgetFor(goals, platforms) {
     let pls = platforms ? [...platforms] : [];
     if (!pls.length) pls = ['meta'];
-    const stack = pls.reduce((s, p) => s + (PLATFORMS[p] ? PLATFORMS[p].minSpend : 0), 0);
-    const mgmt = Math.round(stack * ADMIN_PCT / (1 + ADMIN_PCT));
-    const minSpend = stack - mgmt;
-    return { mgmt, minSpend, minBudget: stack };
+    const minSpend = pls.reduce((s, p) => s + pMin(p), 0);
+    const mgmt = Math.round(minSpend * ADMIN_PCT());
+    const minBudget = minSpend + mgmt;
+    return { mgmt, minSpend, minBudget };
   }
 
   function splitBudget(budget, goals, platforms) {
-    const totalAd = Math.round(budget / (1 + ADMIN_PCT));
+    const totalAd = Math.round(budget / (1 + ADMIN_PCT()));
     const mgmt = Math.max(0, budget - totalAd);
     const testing = Math.round(totalAd * 0.20);
     const live = totalAd - testing;
@@ -1329,7 +1453,7 @@
           <div><div class="wiz-plat-name">${p.label}</div><div class="wiz-plat-sub">${p.sub}</div></div>
         </div>
         <div class="wiz-plat-right">
-          <div class="wiz-plat-cost">${fmt(pl.minSpend)} min ad spend</div>
+          <div class="wiz-plat-cost">${fmt(pMin(pid))} min ad spend</div>
           <div class="wiz-plat-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
         </div>
       </div>`;
@@ -1350,7 +1474,7 @@
         <div class="wiz-addon-top">
           <div class="wiz-addon-icon" style="background:${a.bg};color:${a.color};">${a.icon}</div>
           <div class="wiz-addon-info"><div class="wiz-addon-name">${a.name}</div><div class="wiz-addon-tool">${a.tool}</div></div>
-          <div class="wiz-addon-price">${fmt(a.price)}/mo</div>
+          <div class="wiz-addon-price">${fmt(aPrice(a))}/mo</div>
           <div class="wiz-addon-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
         </div>
       </div>`;
@@ -1410,7 +1534,7 @@
     const { mgmt, minSpend, minBudget } = getMinBudgetFor(wizGoals, wizPlatforms);
     const slider = document.getElementById('wiz-slider');
     slider.min = minBudget;
-    slider.max = Math.max(SLIDER_MAX, minBudget);
+    slider.max = Math.max(SLIDER_MAX(), minBudget);
     if (parseInt(slider.value) < minBudget) { slider.value = minBudget; wizBudget = minBudget; }
     document.getElementById('wiz-min-label').textContent = fmt(minBudget);
     document.getElementById('wiz-max-label').textContent = fmt(slider.max);
@@ -1436,19 +1560,19 @@
     showWizStep('results');
     const { mgmt, testing, live } = splitBudget(wizBudget, wizGoals, wizPlatforms);
     let addonsTotal = 0;
-    wizAddons.forEach(aid => { addonsTotal += ADDONS[aid].price; });
+    wizAddons.forEach(aid => { addonsTotal += aPrice(ADDONS[aid]); });
     const grand = wizBudget + addonsTotal;
     const goalNames = [...wizGoals].map(g => GOAL_NAMES[g]).join(', ');
     const platNames = [...wizPlatforms].map(p => PLATFORMS[p].name).join(', ');
 
     let rows = '<div class="wiz-res-row"><span class="wiz-res-label">Goals</span><span class="wiz-res-val">' + goalNames + '</span></div>' +
       '<div class="wiz-res-row"><span class="wiz-res-label">Platforms</span><span class="wiz-res-val">' + platNames + '</span></div>' +
-      '<div class="wiz-res-row"><span class="wiz-res-label">Admin fee (25%)</span><span class="wiz-res-val">' + fmt(mgmt) + '/mo</span></div>' +
+      '<div class="wiz-res-row"><span class="wiz-res-label">Admin fee (' + Math.round(100 * ADMIN_PCT()) + '%)</span><span class="wiz-res-val">' + fmt(mgmt) + '/mo</span></div>' +
       '<div class="wiz-res-row"><span class="wiz-res-label">Testing (wks 1–2)</span><span class="wiz-res-val">' + fmt(testing) + '/mo</span></div>' +
       '<div class="wiz-res-row"><span class="wiz-res-label">Live ad spend</span><span class="wiz-res-val">' + fmt(live) + '/mo</span></div>';
     if (wizAddons.size > 0) {
       wizAddons.forEach(aid => {
-        rows += '<div class="wiz-res-row"><span class="wiz-res-label">' + ADDONS[aid].name + '</span><span class="wiz-res-val">' + fmt(ADDONS[aid].price) + '/mo</span></div>';
+        rows += '<div class="wiz-res-row"><span class="wiz-res-label">' + ADDONS[aid].name + '</span><span class="wiz-res-val">' + fmt(aPrice(ADDONS[aid])) + '/mo</span></div>';
       });
     }
     rows += '<div class="wiz-res-row total"><span class="wiz-res-label">' + (addonsTotal > 0 ? 'Grand total' : 'Total') + '</span><span class="wiz-res-val">' + fmt(grand) + '/mo</span></div>';
@@ -1456,11 +1580,11 @@
 
     let projHtml = '';
     [...wizGoals].forEach(g => {
-      const bench = BENCH[g];
+      const bench = benchFor(g);
       if (!bench) return;
       projHtml += bench.metrics.map(m =>
         '<div class="wiz-proj-card" style="background:' + m.bg + ';border:1px solid ' + m.border + ';">' +
-          '<div class="wiz-proj-val" style="color:' + m.color + ';">' + (live > 0 ? m.calc(live).toLocaleString('en-ZA') : '0') + '</div>' +
+          '<div class="wiz-proj-val" style="color:' + m.color + ';">' + (live > 0 ? m.calc(live).toLocaleString((window.__MC && window.__MC.market === 'USD') ? 'en-US' : 'en-ZA') : '0') + '</div>' +
           '<div class="wiz-proj-name" style="color:' + m.color + ';">' + m.label + '</div>' +
           '<div class="wiz-proj-bench" style="color:' + m.color + ';">' + m.bench + '</div>' +
         '</div>'
@@ -1470,7 +1594,7 @@
 
     const disc = document.querySelector('.wiz-disclosure');
     if (disc) disc.innerHTML = '<strong>How these estimates work:</strong> ' +
-      [...wizGoals].map(g => BENCH[g].note).filter(Boolean).join(' ') +
+      [...wizGoals].map(g => (benchFor(g) || { note: null }).note).filter(Boolean).join(' ') +
       ' Actual results depend on your industry, creative quality, audience and competition. These are benchmarks, not guarantees.';
 
     document.getElementById('res-title').textContent =
@@ -1529,7 +1653,7 @@
     if (!slider) return;
     const { mgmt: minMgmt, minSpend, minBudget } = getMinBudgetFor(manualGoals, manualPlatforms);
     slider.min = minBudget;
-    slider.max = Math.max(SLIDER_MAX, minBudget);
+    slider.max = Math.max(SLIDER_MAX(), minBudget);
     document.getElementById('slider-min-label').textContent = fmt(minBudget);
     document.getElementById('slider-max-label').textContent = fmt(slider.max);
     if (parseInt(slider.value) < minBudget) slider.value = minBudget;
@@ -1563,11 +1687,11 @@
     if (container) {
       let html = '';
       [...manualGoals].forEach(g => {
-        const bench = BENCH[g];
+        const bench = benchFor(g);
         if (!bench) return;
         html += bench.metrics.map(m =>
           '<div class="mc-proj" style="background:' + m.bg + ';border:1px solid ' + m.border + ';">' +
-            '<div class="mc-proj-val" style="color:' + m.color + ';">' + (live > 0 ? m.calc(live).toLocaleString('en-ZA') : '0') + '</div>' +
+            '<div class="mc-proj-val" style="color:' + m.color + ';">' + (live > 0 ? m.calc(live).toLocaleString((window.__MC && window.__MC.market === 'USD') ? 'en-US' : 'en-ZA') : '0') + '</div>' +
             '<div class="mc-proj-name" style="color:' + m.color + ';">' + m.label + '</div>' +
             '<div class="mc-proj-bench" style="color:' + m.color + ';">' + m.bench + '</div>' +
           '</div>'
@@ -1627,16 +1751,17 @@
       wizAddons.forEach(aid => {
         const a = ADDONS[aid];
         if (!a) return;
-        toolsTotal += a.price;
-        addons.push({ name: a.name, toolCost: null, mgmt: a.price, total: a.price });
+        const ap = aPrice(a);
+        toolsTotal += ap;
+        addons.push({ name: a.name, toolCost: null, mgmt: ap, total: ap });
       });
     } else {
       toolsData.forEach(t => {
         const cb = document.getElementById('toggle-' + t.id);
         if (cb && cb.checked) {
-          const total = t.toolCost + t.mgmt;
-          toolsTotal += total;
-          addons.push({ name: t.name, toolCost: t.toolCost, mgmt: t.mgmt, total });
+          const tot = (window.__MC && window.__MC.market === 'USD') ? Math.round((t.toolCost + t.mgmt) / window.__MC.rate) : (t.toolCost + t.mgmt);
+          toolsTotal += tot;
+          addons.push({ name: t.name, toolCost: null, mgmt: tot, total: tot });
         }
       });
     }
@@ -1646,7 +1771,7 @@
 
   function openInvoiceModal() {
     const data = getInvoiceData();
-    const f = n => 'R' + Math.round(n).toLocaleString('en-ZA');
+    const f = n => fmt(n);
     const goalsText = [...data.goals].map(g => GOAL_NAMES[g]).join(', ');
     const platsText = [...data.platforms].map(p => PLATFORMS[p].name).join(', ');
     let summary = `Goals: ${goalsText}\nPlatforms: ${platsText}\n`;
@@ -1672,7 +1797,7 @@
 
   // ===== Invoice: HTML+CSS template rendered to PDF (jsPDF html2canvas) =====
   function invEsc(s){ return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-  function invMoney(n){ return 'R ' + Math.round(Number(n)).toLocaleString('en-ZA'); }
+  function invMoney(n){ var us=(window.__MC && window.__MC.market==='USD'); return (us ? '$ ' : 'R ') + Math.round(Number(n)).toLocaleString(us ? 'en-US' : 'en-ZA'); }
 
   function invoiceLineItems(data) {
     const items = [
@@ -1746,10 +1871,13 @@
         '</div>' +
         '<div style="padding:22px 40px 0;">' +
           '<div style="border:1px solid #dfe5ee;border-radius:12px;padding:18px 20px;text-align:center;">' +
-            '<div style="font-size:10px;font-weight:700;letter-spacing:1px;color:#79839b;">READY TO START?</div>' +
-            '<div id="pay-btn" style="display:inline-block;background:#0866FF;color:#fff;font-size:18px;font-weight:800;padding:16px 56px;border-radius:40px;margin:12px 0;">Place Order Now <span style="font-size:16px;">&#8594;</span></div>' +
-            '<div style="font-size:10px;color:#79839b;">Pay securely online via Paystack - card, bank transfer or mobile money.</div>' +
-            '<div style="font-size:9px;color:#a6b0c4;margin-top:6px;">3-D Secure checkout &middot; No data stored on this site</div>' +
+            (window.__MC && window.__MC.market === 'USD'
+              ? '<div style="font-size:10px;font-weight:700;letter-spacing:1px;color:#79839b;">TO PROCEED</div>' +
+                '<div style="font-size:11px;color:#79839b;margin:12px 0;line-height:1.5;">Payment is arranged by invoice. Email this PDF to mqhele03@gmail.com and you will receive the international transfer details.</div>'
+              : '<div style="font-size:10px;font-weight:700;letter-spacing:1px;color:#79839b;">READY TO START?</div>' +
+                '<div id="pay-btn" style="display:inline-block;background:#0866FF;color:#fff;font-size:18px;font-weight:800;padding:16px 56px;border-radius:40px;margin:12px 0;">Place Order Now <span style="font-size:16px;">&#8594;</span></div>' +
+                '<div style="font-size:10px;color:#79839b;">Pay securely online via Paystack - card, bank transfer or mobile money.</div>' +
+                '<div style="font-size:9px;color:#a6b0c4;margin-top:6px;">3-D Secure checkout &middot; No data stored on this site</div>') +
           '</div>' +
         '</div>' +
         '<div style="padding:24px 40px 20px;font-size:10px;color:#98a2b3;display:flex;justify-content:space-between;">' +
@@ -1813,6 +1941,8 @@
 
     let payUrl = null;
     try {
+      if (window.__MC && window.__MC.market === 'USD') { payUrl = null; }
+      else {
       const resp = await fetch('/api/paystack', {
         method:'POST',
         headers:{'Content-Type':'application/json'},
@@ -1827,6 +1957,7 @@
           items: invoiceLineItems(data).map(i => ({ d:i.d, s:i.s, a:i.a }))
         }));
       } catch(le){}
+      }
     } catch (err) {
       errEl.textContent = 'Could not start secure payment: ' + (err.message || 'try again');
       errEl.style.display = 'block';
@@ -1863,7 +1994,7 @@
 
     const data = getInvoiceData();
     const token = generateToken();
-    const f = n => 'R ' + Math.round(n).toLocaleString('en-ZA');
+    const f = n => (window.__MC && window.__MC.market === 'USD' ? '$ ' : 'R ') + Math.round(n).toLocaleString((window.__MC && window.__MC.market === 'USD') ? 'en-US' : 'en-ZA');
     const now = new Date();
     const dateStr = now.toLocaleDateString('en-ZA', { day:'2-digit', month:'long', year:'numeric' });
     const dueDate = new Date(now); dueDate.setDate(dueDate.getDate() + 7);
@@ -1967,7 +2098,7 @@
       { desc: 'Ad Spend (Live Campaign)', sub: 'Main campaign spend — direct to your ad account', amt: data.liveSpend },
     ];
     data.addons.forEach(a => {
-      lineItems.push({ desc: a.name, sub: a.toolCost === null ? 'Added service for this package' : `Tool: R${a.toolCost.toLocaleString()} + Management: R${a.mgmt.toLocaleString()}`, amt: a.total });
+      lineItems.push({ desc: a.name, sub: a.toolCost === null ? 'Added service for this package' : `Tool: ${fmt(a.toolCost)} + Management: ${fmt(a.mgmt)}`, amt: a.total });
     });
 
     lineItems.forEach((item, idx) => {
