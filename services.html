@@ -92,11 +92,87 @@
   </div>
 </nav>
 
+<div id="mc-region-banner" style="display:none;background:#0a2540;color:#e3ecf5;font-size:0.74rem;text-align:center;padding:0.5rem 1rem;line-height:1.5;position:relative;z-index:99;"></div>
+<script>
+window.__MC_ADDSV = {
+  meta:       { za: 'R1,500',  us: '$500' },
+  boosting:   { za: 'R1,000',  us: '$250' },
+  google:     { za: 'R2,000',  us: '$600' },
+  linkedin:   { za: 'R5,400',  us: '$300' },
+  tiktok:     { za: 'R10,000', us: '$1,500' },
+  tiktokboost:{ za: 'R1,000',  us: '$250' },
+  addons: {
+    pm: { za: 'R650',  us: '$35' },
+    crm: { za: 'R1,250', us: '$67' },
+    lp: { za: 'R1,950',  us: '$106' },
+    web: { za: 'R2,100', us: '$113' },
+    email: { za: 'R1,250', us: '$68' },
+    wa: { za: 'R1,500', us: '$81' },
+    analytics: { za: 'R600',  us: '$32' },
+    creative: { za: 'R1,450', us: '$79' }
+  }
+};
+(function () {
+  var readParam = function () { var m = location.search.match(/[?&]market=(USD|ZA)/i); return m ? m[1].toUpperCase() : null; };
+  var tzGuess = function () {
+    try { var t = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; if (/^(America|Pacific|Atlantic|US|Canada)\//.test(t) || t === 'Europe/London') return 'USD'; } catch (e) {}
+    return 'ZA';
+  };
+  var asked = readParam();
+  var cur = null;
+  if (asked) cur = asked;
+  if (!cur) { try { cur = sessionStorage.getItem('mc_market'); } catch (e) {} }
+  if (!cur) cur = tzGuess() === 'USD' ? 'USD' : 'ZA';
+  var set = function (m) {
+    var v = (m === 'USD' || m === 'ZA') ? m : 'ZA';
+    if (v === window.__MC.market) return;
+    window.__MC.market = v;
+    try { sessionStorage.setItem('mc_market', v); } catch (e) {}
+    try { if (window.__mcApply) window.__mcApply(); } catch (e) {}
+  };
+  window.__MC = { market: cur, rate: 18.5, set: set, MINS: { meta:[1500,500], boosting:[1000,250], google:[2000,600], linkedin:[5400,300], tiktok:[10000,1500], tiktokboost:[1000,250] } };
+  if (!asked) {
+    try { fetch('/api/region', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) { if (d && d.region === 'USD') window.__MC.set('USD'); }).catch(function () {}); } catch (e) {}
+  }
+  var apply = function () {
+    var USD = window.__MC.market === 'USD';
+    var b = document.getElementById('mc-region-banner');
+    if (b) {
+      if (USD) {
+        b.style.display = 'block';
+        b.innerHTML = 'Prices shown in US dollars for easier reading. Billing happens in South African Rand - your card will be charged the Rand equivalent at the current rate (reference <strong>$1 = R' + window.__MC.rate + '</strong>). <a href="?market=ZA" style="color:#fff;text-decoration:underline;">Show in Rands</a> | <a href="?market=USD" style="color:#fff;text-decoration:underline;">Show in USD</a>';
+      } else { b.style.display = 'none'; }
+    }
+    if (window.__MC_ADDSV) {
+      document.querySelectorAll('[data-pid2]').forEach(function (el) {
+        var pid = el.getAttribute('data-pid2'); var s = window.__MC_ADDSV[pid]; if (!s) return;
+        el.textContent = 'From ' + (USD ? s.us : s.za) + '/mo min ad spend + ' + (USD ? '30' : '25') + '% admin';
+      });
+      document.querySelectorAll('[data-aid2]').forEach(function (el) {
+        var aid = el.getAttribute('data-aid2'); var p = (window.__MC_ADDSV.addons || {})[aid];
+        if (!p) return; el.textContent = (USD ? p.us : p.za) + '/mo';
+      });
+      var zt = document.getElementById('split-za'), ut = document.getElementById('split-us');
+      var ex = document.getElementById('split-ex');
+      if (zt) zt.style.display = USD ? 'none' : '';
+      if (ut) ut.style.display = USD ? '' : 'none';
+      if (ex) ex.textContent = USD ? 'Example: $5,000/month total on Meta Ads (30% admin on the ad spend):' : 'Example: R5,000/month total on Meta Ads:';
+    }
+    var hr = document.getElementById('mc-heroline');
+    if (hr) hr.textContent = USD ? 'No agency markup. No lock-in contracts. Month to month. You bring the budget - I tell you exactly where every dollar goes.' : 'No agency markup. No lock-in contracts. Month to month. You bring the budget - I tell you exactly where every rand goes.';
+    var pm = document.getElementById('mc-modelline');
+    if (pm) pm.textContent = USD ? 'You set the total monthly amount. It splits into an admin fee and the ad spend. Ad spend goes directly to your ad account, never through me. I charge a flat 30% admin fee on the ad spend (25% for South Africa).' : 'You set the total monthly amount. It splits into an admin fee and the ad spend. Ad spend goes directly to your ad account, never through me. I charge a flat 25% admin fee on the ad spend.';
+  };
+  window.__mcApply = apply;
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', apply); else apply();
+})();
+</script>
+
 <section class="page-hero">
   <div class="container">
     <p class="section-eyebrow fade-in">Services &amp; pricing</p>
     <h1 class="section-title fade-in">What I do.<br>What it costs.</h1>
-    <p class="section-sub fade-in">No agency markup. No lock-in contracts. Month to month. You bring the budget — I tell you exactly where every rand goes.</p>
+    <p class="section-sub fade-in" id="mc-heroline">No agency markup. No lock-in contracts. Month to month. You bring the budget — I tell you exactly where every rand goes.</p>
   </div>
 </section>
 
@@ -127,27 +203,27 @@
     <div class="plat-grid fade-in">
       <div class="plat-card">
         <div class="plat-icon" style="background:rgba(8,102,255,0.1);color:#0866FF;">f</div>
-        <div><div class="plat-name">Meta Ads</div><div class="plat-fee">From R1,500/mo min ad spend + 25% admin</div><div class="plat-desc">Facebook + Instagram. Best for local businesses, e-commerce and lead gen. SA CPC is 3–5x cheaper than global averages — small budgets go far here.</div></div>
+        <div><div class="plat-name">Meta Ads</div><div class="plat-fee" data-pid2="meta">From R1,500/mo min ad spend + 25% admin</div><div class="plat-desc">Facebook + Instagram. Best for local businesses, e-commerce and lead gen. SA CPC is 3–5x cheaper than global averages — small budgets go far here.</div></div>
       </div>
       <div class="plat-card">
         <div class="plat-icon" style="background:rgba(8,102,255,0.08);color:#5B9FFF;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
-        <div><div class="plat-name">Post Boosting</div><div class="plat-fee">From R1,000/mo min ad spend + 25% admin</div><div class="plat-desc">Rotational boosting of existing posts using Meta's engagement objective. Likes and comments stay on the post — builds social proof over time.</div></div>
+        <div><div class="plat-name">Post Boosting</div><div class="plat-fee" data-pid2="boosting">From R1,000/mo min ad spend + 25% admin</div><div class="plat-desc">Rotational boosting of existing posts using Meta's engagement objective. Likes and comments stay on the post — builds social proof over time.</div></div>
       </div>
       <div class="plat-card">
         <div class="plat-icon" style="background:rgba(66,133,244,0.1);color:#4285F4;">G</div>
-        <div><div class="plat-name">Google Ads</div><div class="plat-fee">From R2,000/mo min ad spend + 25% admin</div><div class="plat-desc">Search, Display and YouTube. Captures people actively looking for what you sell. Best paired with Meta for full-funnel coverage.</div></div>
+        <div><div class="plat-name">Google Ads</div><div class="plat-fee" data-pid2="google">From R2,000/mo min ad spend + 25% admin</div><div class="plat-desc">Search, Display and YouTube. Captures people actively looking for what you sell. Best paired with Meta for full-funnel coverage.</div></div>
       </div>
       <div class="plat-card">
         <div class="plat-icon" style="background:rgba(10,102,194,0.1);color:#0A66C2;">in</div>
-        <div><div class="plat-name">LinkedIn Ads</div><div class="plat-fee">From R5,400/mo min ad spend + 25% admin</div><div class="plat-desc">B2B targeting by job title, company and seniority. Higher CPCs but unmatched precision for professional services and B2B lead gen.</div></div>
+        <div><div class="plat-name">LinkedIn Ads</div><div class="plat-fee" data-pid2="linkedin">From R5,400/mo min ad spend + 25% admin</div><div class="plat-desc">B2B targeting by job title, company and seniority. Higher CPCs but unmatched precision for professional services and B2B lead gen.</div></div>
       </div>
       <div class="plat-card">
         <div class="plat-icon" style="background:rgba(105,201,208,0.1);color:#69C9D0;font-size:0.55rem;font-weight:800;">TKTK</div>
-        <div><div class="plat-name">TikTok Ads</div><div class="plat-fee">From R10,000/mo min ad spend + 25% admin</div><div class="plat-desc">Short video, younger audiences, high engagement. Low CPMs make it efficient for brands with video content or willing to invest in creative.</div></div>
+        <div><div class="plat-name">TikTok Ads</div><div class="plat-fee" data-pid2="tiktok">From R10,000/mo min ad spend + 25% admin</div><div class="plat-desc">Short video, younger audiences, high engagement. Low CPMs make it efficient for brands with video content or willing to invest in creative.</div></div>
       </div>
       <div class="plat-card">
         <div class="plat-icon" style="background:rgba(254,44,85,0.1);color:#FE2C55;font-size:0.55rem;font-weight:800;">TKTK</div>
-        <div><div class="plat-name">TikTok Boosting</div><div class="plat-fee">From R1,000/mo min ad spend + 25% admin</div><div class="plat-desc">Boost an existing TikTok post straight from the app. Cheaper entry than full TikTok Ads, built for views and engagement on short video you already have.</div></div>
+        <div><div class="plat-name">TikTok Boosting</div><div class="plat-fee" data-pid2="tiktokboost">From R1,000/mo min ad spend + 25% admin</div><div class="plat-desc">Boost an existing TikTok post straight from the app. Cheaper entry than full TikTok Ads, built for views and engagement on short video you already have.</div></div>
       </div>
       <div class="plat-card">
         <div class="plat-icon" style="background:rgba(37,211,102,0.1);color:#25D366;font-size:0.85rem;font-weight:800;">W</div>
@@ -159,14 +235,21 @@
     <h2 class="section-title fade-in">No packages.<br>Just transparency.</h2>
     <div class="pricing-box fade-in">
       <h3>How your budget splits</h3>
-      <p>You set the total monthly amount. It splits into an admin fee and the ad spend. Ad spend goes directly to your ad account, never through me. I charge a flat 25% admin fee on the ad spend.</p>
-      <p>Example: R5,000/month total on Meta Ads:</p>
-      <div class="split-table">
+      <p id="mc-modelline">You set the total monthly amount. It splits into an admin fee and the ad spend. Ad spend goes directly to your ad account, never through me. I charge a flat 25% admin fee on the ad spend.</p>
+      <p id="split-ex">Example: R5,000/month total on Meta Ads:</p>
+      <div id="split-za" class="split-table">
         <div class="split-row"><span>Ad spend into your account</span><span>R4,000</span></div>
         <div class="split-row"><span>Admin fee (25% of ad spend)</span><span>R1,000</span></div>
         <div class="split-row"><span>Testing budget (weeks 1–2)</span><span>R800</span></div>
         <div class="split-row"><span>Live ad spend (weeks 3–4+)</span><span>R3,200</span></div>
         <div class="split-row"><span>Total</span><span>R5,000/mo</span></div>
+      </div>
+      <div id="split-us" class="split-table" style="display:none;">
+        <div class="split-row"><span>Ad spend into your account</span><span>$3,846</span></div>
+        <div class="split-row"><span>Admin fee (30% of ad spend)</span><span>$1,154</span></div>
+        <div class="split-row"><span>Testing budget (weeks 1–2)</span><span>$769</span></div>
+        <div class="split-row"><span>Live ad spend (weeks 3–4+)</span><span>$3,077</span></div>
+        <div class="split-row"><span>Total</span><span>$5,000/mo</span></div>
       </div>
       <p style="margin-top:1rem;font-size:0.82rem;">No lock-in. Month to month. Cancel anytime. Use the <a href="/calculator.html" style="color:var(--meta);">campaign calculator</a> to build your own estimate.</p>
     </div>
@@ -179,14 +262,14 @@
     <h2 class="section-title fade-in">More than just ads.</h2>
     <p class="section-sub fade-in">Optional extras you can bolt onto any campaign. Pay only for what you need.</p>
     <div class="addons-grid fade-in">
-      <div class="addon-card"><div class="addon-icon" style="background:rgba(123,104,238,0.12);color:#7B68EE;">PM</div><div class="addon-name">Project Management</div><div class="addon-tool">ClickUp</div><div class="addon-price">R650/mo</div></div>
-      <div class="addon-card"><div class="addon-icon" style="background:rgba(255,122,89,0.12);color:#FF7A59;">CRM</div><div class="addon-name">CRM</div><div class="addon-tool">HubSpot / Pipedrive</div><div class="addon-price">R1,250/mo</div></div>
-      <div class="addon-card"><div class="addon-icon" style="background:rgba(8,102,255,0.12);color:#0866FF;">LP</div><div class="addon-name">Landing Pages</div><div class="addon-tool">Carrd / Unbounce</div><div class="addon-price">R1,950/mo</div></div>
-      <div class="addon-card"><div class="addon-icon" style="background:rgba(52,168,83,0.12);color:#34A853;">WEB</div><div class="addon-name">Website</div><div class="addon-tool">Wix / Webflow</div><div class="addon-price">R2,100/mo</div></div>
-      <div class="addon-card"><div class="addon-icon" style="background:rgba(255,155,0,0.12);color:#FF9B00;">@</div><div class="addon-name">Email Marketing</div><div class="addon-tool">Mailchimp / Brevo</div><div class="addon-price">R1,250/mo</div></div>
-      <div class="addon-card"><div class="addon-icon" style="background:rgba(37,211,102,0.12);color:#25D366;">WA</div><div class="addon-name">WhatsApp Automation</div><div class="addon-tool">Chatfuel / WhatChimp</div><div class="addon-price">R1,500/mo</div></div>
-      <div class="addon-card"><div class="addon-icon" style="background:rgba(66,133,244,0.12);color:#4285F4;">DA</div><div class="addon-name">Analytics Dashboard</div><div class="addon-tool">Looker Studio</div><div class="addon-price">R600/mo</div></div>
-      <div class="addon-card"><div class="addon-icon" style="background:rgba(162,89,255,0.12);color:#A259FF;">AD</div><div class="addon-name">Ad Creative</div><div class="addon-tool">Canva Pro + Copy</div><div class="addon-price">R1,450/mo</div></div>
+      <div class="addon-card"><div class="addon-icon" style="background:rgba(123,104,238,0.12);color:#7B68EE;">PM</div><div class="addon-name">Project Management</div><div class="addon-tool">ClickUp</div><div class="addon-price" data-aid2="pm">R650/mo</div></div>
+      <div class="addon-card"><div class="addon-icon" style="background:rgba(255,122,89,0.12);color:#FF7A59;">CRM</div><div class="addon-name">CRM</div><div class="addon-tool">HubSpot / Pipedrive</div><div class="addon-price" data-aid2="crm">R1,250/mo</div></div>
+      <div class="addon-card"><div class="addon-icon" style="background:rgba(8,102,255,0.12);color:#0866FF;">LP</div><div class="addon-name">Landing Pages</div><div class="addon-tool">Carrd / Unbounce</div><div class="addon-price" data-aid2="lp">R1,950/mo</div></div>
+      <div class="addon-card"><div class="addon-icon" style="background:rgba(52,168,83,0.12);color:#34A853;">WEB</div><div class="addon-name">Website</div><div class="addon-tool">Wix / Webflow</div><div class="addon-price" data-aid2="web">R2,100/mo</div></div>
+      <div class="addon-card"><div class="addon-icon" style="background:rgba(255,155,0,0.12);color:#FF9B00;">@</div><div class="addon-name">Email Marketing</div><div class="addon-tool">Mailchimp / Brevo</div><div class="addon-price" data-aid2="email">R1,250/mo</div></div>
+      <div class="addon-card"><div class="addon-icon" style="background:rgba(37,211,102,0.12);color:#25D366;">WA</div><div class="addon-name">WhatsApp Automation</div><div class="addon-tool">Chatfuel / WhatChimp</div><div class="addon-price" data-aid2="wa">R1,500/mo</div></div>
+      <div class="addon-card"><div class="addon-icon" style="background:rgba(66,133,244,0.12);color:#4285F4;">DA</div><div class="addon-name">Analytics Dashboard</div><div class="addon-tool">Looker Studio</div><div class="addon-price" data-aid2="analytics">R600/mo</div></div>
+      <div class="addon-card"><div class="addon-icon" style="background:rgba(162,89,255,0.12);color:#A259FF;">AD</div><div class="addon-name">Ad Creative</div><div class="addon-tool">Canva Pro + Copy</div><div class="addon-price" data-aid2="creative">R1,450/mo</div></div>
     </div>
   </div>
 </section>
